@@ -13,6 +13,8 @@
 		965CEA65256FD57800ACE673 /* Teko-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 965CEA60256FD57700ACE673 /* Teko-SemiBold.ttf */; };
 		965CEA66256FD57800ACE673 /* Teko-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 965CEA61256FD57800ACE673 /* Teko-Light.ttf */; };
 		965CEA67256FD57800ACE673 /* Teko-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 965CEA62256FD57800ACE673 /* Teko-Bold.ttf */; };
+		965CEAA22570105600ACE673 /* FindFoodTrucksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965CEAA12570105600ACE673 /* FindFoodTrucksViewController.swift */; };
+		9684FE2C2570570400830C46 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684FE2B2570570400830C46 /* Company.swift */; };
 		96BB8999256F1A7500B5AD7B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96BB8998256F1A7500B5AD7B /* GoogleService-Info.plist */; };
 		96BB89B5256F2B3D00B5AD7B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96BB89B4256F2B3D00B5AD7B /* Images.xcassets */; };
 		96BB89BD256F2C4000B5AD7B /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BB89BC256F2C4000B5AD7B /* UIColor+Hex.swift */; };
@@ -52,6 +54,8 @@
 		965CEA60256FD57700ACE673 /* Teko-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Teko-SemiBold.ttf"; path = "../../../../../../Downloads/Teko/Teko-SemiBold.ttf"; sourceTree = "<group>"; };
 		965CEA61256FD57800ACE673 /* Teko-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Teko-Light.ttf"; path = "../../../../../../Downloads/Teko/Teko-Light.ttf"; sourceTree = "<group>"; };
 		965CEA62256FD57800ACE673 /* Teko-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Teko-Bold.ttf"; path = "../../../../../../Downloads/Teko/Teko-Bold.ttf"; sourceTree = "<group>"; };
+		965CEAA12570105600ACE673 /* FindFoodTrucksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindFoodTrucksViewController.swift; sourceTree = "<group>"; };
+		9684FE2B2570570400830C46 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		96BB8998256F1A7500B5AD7B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		96BB89B4256F2B3D00B5AD7B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		96BB89BC256F2C4000B5AD7B /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
@@ -219,6 +223,7 @@
 		96EB9365250EBDA200ED0AB1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9684FE2B2570570400830C46 /* Company.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -260,6 +265,7 @@
 			isa = PBXGroup;
 			children = (
 				96EB9370250EBFB500ED0AB1 /* HomeViewController.swift */,
+				965CEAA12570105600ACE673 /* FindFoodTrucksViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -560,7 +566,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				96EB9336250EB95C00ED0AB1 /* AppDelegate.swift in Sources */,
+				965CEAA22570105600ACE673 /* FindFoodTrucksViewController.swift in Sources */,
 				96BB89BD256F2C4000B5AD7B /* UIColor+Hex.swift in Sources */,
+				9684FE2C2570570400830C46 /* Company.swift in Sources */,
 				96EB9371250EBFB500ED0AB1 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

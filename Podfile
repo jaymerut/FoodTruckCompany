@@ -7,6 +7,8 @@ target 'FoodTruckCompany' do
 
   pod 'IGListKit', '~> 4.0.0'
   pod 'Firebase/Analytics'
+  pod 'Firebase/Core' 
+  pod 'Firebase/Firestore'
   pod 'SnapKit'
 
   # Pods for FoodTruckCompany
