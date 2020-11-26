@@ -5,6 +5,9 @@ target 'FoodTruckCompany' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
+  pod 'IGListKit', '~> 4.0.0'
+  pod 'Firebase/Analytics'
+
   # Pods for FoodTruckCompany
 
   target 'FoodTruckCompanyTests' do
