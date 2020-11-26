@@ -1,0 +1,6 @@
+framework module Pods_FoodTruckCompanyTests {
+  umbrella header "Pods-FoodTruckCompanyTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
