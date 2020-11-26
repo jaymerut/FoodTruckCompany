@@ -64,7 +64,7 @@ class HomeViewController: UIViewController {
     }()
     private lazy var buttonFind: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Find Food Trucks", for: .normal)
+        button.setTitle("Find Nearby Food Trucks", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.black, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
