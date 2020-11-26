@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarHome.image = UIImage(named: "home_icon")
         
         let mainVC = HomeViewController()
-        mainVC.tabBarItem = tabBarHome
+        //mainVC.tabBarItem = tabBarHome
 
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = [mainVC]
@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBarItem.appearance().titlePositionAdjustment = UIOffset.init(horizontal: 0, vertical: -5)
         UITabBar.appearance().unselectedItemTintColor = .white
         
-        window!.rootViewController = tabBarController
+        window!.rootViewController = mainVC
         window!.makeKeyAndVisible()
         
         FirebaseApp.configure()
