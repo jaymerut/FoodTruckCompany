@@ -183,15 +183,20 @@ class HomeViewController: UIViewController {
         }
     }
     
+    // MARK: UIResponders
     @objc private func buttonLogin_TouchUpInside(sender: UIButton) {
         
     }
     
     @objc private func buttonFind_TouchUpInside(sender: UIButton) {
-        
+        self.navigateToFindFoodTrucks()
     }
     
-    
+    // MARK: Navigation Logic
+    private func navigateToFindFoodTrucks() {
+        let destinationVC = FindFoodTrucksViewController.init()
+        self.navigationController?.pushViewController(destinationVC, animated: true)
+    }
     
     // MARK: - Public API
     
