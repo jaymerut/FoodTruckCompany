@@ -115,7 +115,7 @@ class HomeViewController: UIViewController {
         
     }
     override func viewDidLayoutSubviews() {
-        //super.viewDidLayoutSubviews()
+        super.viewDidLayoutSubviews()
         self.viewFoodTruckBackground.layer.cornerRadius = self.viewBackgroundContainer.frame.size.width/2
     }
     
@@ -185,7 +185,7 @@ class HomeViewController: UIViewController {
     
     // MARK: UIResponders
     @objc private func buttonLogin_TouchUpInside(sender: UIButton) {
-        
+        self.navigateToLogin()
     }
     
     @objc private func buttonFind_TouchUpInside(sender: UIButton) {
@@ -195,6 +195,10 @@ class HomeViewController: UIViewController {
     // MARK: Navigation Logic
     private func navigateToFindFoodTrucks() {
         let destinationVC = FindFoodTrucksViewController.init()
+        self.navigationController?.pushViewController(destinationVC, animated: true)
+    }
+    private func navigateToLogin() {
+        let destinationVC = LoginViewController.init()
         self.navigationController?.pushViewController(destinationVC, animated: true)
     }
     

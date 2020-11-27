@@ -93,9 +93,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
              
             self.companies = results
             self.documents = snapshot.documents
-            self.getUserCoordinates()
-            //self.tableView.reloadData()
-             
+            self.getUserCoordinates()             
         }
         
         // Setup
