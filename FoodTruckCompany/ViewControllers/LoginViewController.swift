@@ -253,6 +253,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private func doesUserExist() -> Bool {
         for user in self.users {
             if user.email == self.textFieldEmail.text && user.password == self.textFieldPassword.text {
+                SwiftAppDefaults.shared.user = user
                 return true
             }
         }

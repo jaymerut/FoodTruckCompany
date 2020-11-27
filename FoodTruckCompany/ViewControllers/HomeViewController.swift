@@ -194,6 +194,7 @@ class HomeViewController: UIViewController {
     
     // MARK: Navigation Logic
     private func navigateToFindFoodTrucks() {
+        print("User: \(SwiftAppDefaults.shared.user!.email)")
         let destinationVC = FindFoodTrucksViewController.init()
         self.navigationController?.pushViewController(destinationVC, animated: true)
     }

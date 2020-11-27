@@ -8,10 +8,21 @@
 
 import Foundation
 
-struct User {
-    var email: String
-    var name: String
-    var password: String
+class User: NSObject, NSCoding {
+    required init?(coder: NSCoder) {
+        email = coder.decodeObject(forKey: "email") as? String ?? ""
+        name = coder.decodeObject(forKey: "name") as? String ?? ""
+        password = coder.decodeObject(forKey: "password") as? String ?? ""
+    }
+    
+    func encode(with coder: NSCoder) {
+        coder.encode(email, forKey: "email")
+        coder.encode(name, forKey: "name")
+    }
+    
+    var email: String = ""
+    var name: String = ""
+    var password: String = ""
      
     var dictionary: [String: Any] {
         return [
@@ -20,10 +31,19 @@ struct User {
             "password": password
         ]
     }
-}
-
-extension User {
-    init?(dictionary: [String : Any], id: String) {
+    
+    override init() {
+        super.init()
+    }
+    init(email: String, name: String, password: String) {
+        super.init()
+        
+        self.email = email
+        self.name = name
+        self.password = password
+    }
+    
+    convenience init?(dictionary: [String : Any], id: String) {
         guard   let email = dictionary["email"] as? String,
             let name = dictionary["name"] as? String,
             let password = dictionary["password"] as? String
