@@ -62,6 +62,18 @@ class HomeViewController: UIViewController {
         
         return button
     }()
+    private lazy var buttonViewPortal: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("View Dealer Portal", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.black, for: .highlighted)
+        button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
+        button.backgroundColor = UIColor.init(hex: "0x055e86")
+        button.layer.cornerRadius = 32.5
+        button.addTarget(self, action: #selector(buttonViewPortal_TouchUpInside), for: .touchUpInside)
+        
+        return button
+    }()
     private lazy var buttonFind: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("Find Nearby Food Trucks", for: .normal)
@@ -105,6 +117,15 @@ class HomeViewController: UIViewController {
         self.view.backgroundColor = .white
         // Setup
         setupHomeViewController()
+        
+        if SwiftAppDefaults.shared.user == nil {
+            self.buttonLogin.isHidden = false
+            self.buttonViewPortal.isHidden = true
+        } else {
+            self.buttonLogin.isHidden = true
+            self.buttonViewPortal.isHidden = false
+        }
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -115,7 +136,7 @@ class HomeViewController: UIViewController {
         
     }
     override func viewDidLayoutSubviews() {
-        //super.viewDidLayoutSubviews()
+        super.viewDidLayoutSubviews()
         self.viewFoodTruckBackground.layer.cornerRadius = self.viewBackgroundContainer.frame.size.width/2
     }
     
@@ -156,6 +177,16 @@ class HomeViewController: UIViewController {
             make.height.equalTo(65)
         }
         
+        // Button ViewPortal
+        self.view.addSubview(self.buttonViewPortal)
+        self.buttonViewPortal.snp.makeConstraints { (make) in
+            make.bottom.equalTo(self.buttonFind.snp.top).offset(-20)
+            make.centerX.equalTo(self.view.snp.centerX)
+            make.left.equalTo(self.view.snp.left).offset(20)
+            make.right.equalTo(self.view.snp.right).offset(-20)
+            make.height.equalTo(65)
+        }
+        
         self.view.addSubview(self.viewBackgroundContainer)
         self.viewBackgroundContainer.snp.makeConstraints { (make) in
             make.top.equalTo(self.view.snp.top).offset(60)
@@ -185,7 +216,11 @@ class HomeViewController: UIViewController {
     
     // MARK: UIResponders
     @objc private func buttonLogin_TouchUpInside(sender: UIButton) {
-        
+        self.navigateToLogin()
+    }
+    
+    @objc private func buttonViewPortal_TouchUpInside(sender: UIButton) {
+        self.navigateToDealerPortal()
     }
     
     @objc private func buttonFind_TouchUpInside(sender: UIButton) {
@@ -195,6 +230,13 @@ class HomeViewController: UIViewController {
     // MARK: Navigation Logic
     private func navigateToFindFoodTrucks() {
         let destinationVC = FindFoodTrucksViewController.init()
+        self.navigationController?.pushViewController(destinationVC, animated: true)
+    }
+    private func navigateToDealerPortal() {
+        // TODO
+    }
+    private func navigateToLogin() {
+        let destinationVC = LoginViewController.init()
         self.navigationController?.pushViewController(destinationVC, animated: true)
     }
     

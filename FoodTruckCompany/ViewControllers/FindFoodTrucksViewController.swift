@@ -84,8 +84,8 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
             }
              
             let results = snapshot.documents.map { (document) -> Company in
-                if let task = Company(dictionary: document.data(), id: document.documentID) {
-                    return task
+                if let company = Company(dictionary: document.data(), id: document.documentID) {
+                    return company
                 } else {
                     fatalError("Unable to initialize type \(Company.self) with dictionary \(document.data())")
                 }
@@ -94,8 +94,6 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
             self.companies = results
             self.documents = snapshot.documents
             self.getUserCoordinates()
-            //self.tableView.reloadData()
-             
         }
         
         // Setup
