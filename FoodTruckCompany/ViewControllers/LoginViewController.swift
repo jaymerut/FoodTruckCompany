@@ -244,7 +244,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self.documents = snapshot.documents
             
             if self.doesUserExist() {
-                self.displayMessage(title: "Success", message: "Successfully logged in.")
+                self.navigateToHome()
+                
             } else {
                 self.displayMessage(title: "Error", message: "Invalid credentials. Please try again.")
             }
@@ -279,6 +280,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @objc private func gestureTap_Tap(gesture: UITapGestureRecognizer) {
         self.view.endEditing(true)
+    }
+    
+    // MARK: Navigation Logic
+    private func navigateToHome() {
+        let mainVC = HomeViewController()
+        let destinationNC = UINavigationController(rootViewController: mainVC)
+        destinationNC.navigationBar.barTintColor = UIColor.init(hex: "0x055e86")
+        destinationNC.navigationBar.tintColor = .white
+        destinationNC.navigationBar.isTranslucent = false
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.window?.rootViewController = destinationNC
     }
     
     
