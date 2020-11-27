@@ -18,6 +18,7 @@ class User: NSObject, NSCoding {
     func encode(with coder: NSCoder) {
         coder.encode(email, forKey: "email")
         coder.encode(name, forKey: "name")
+        coder.encode(password, forKey: "password")
     }
     
     var email: String = ""
