@@ -8,11 +8,16 @@
 
 import UIKit
 import SnapKit
+import FirebaseFirestore
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
     // MARK: - Variables
+    private var documents: [DocumentSnapshot] = []
+    public var users: [User] = []
+    private var listener : ListenerRegistration!
+    
     private lazy var containerView: UIView = {
         let view = UIView.init(frame: .zero)
         view.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
@@ -83,6 +88,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         return button
     }()
+    
+    fileprivate var query: Query? {
+        didSet {
+            if let listener = listener {
+                listener.remove()
+            }
+        }
+    }
     
     // MARK: - Initialization
     private func customInitLoginViewController() {
@@ -179,9 +192,88 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    fileprivate func baseQuery() -> Query {
+        return Firestore.firestore().collection("Users")
+    }
+    
+    private func verifyForm() -> Bool {
+        if self.textFieldEmail.text?.count == 0 && self.textFieldPassword.text?.count == 0 {
+            self.displayMessage(title: "Error", message: "Please enter in an email and password.")
+            return false
+        } else if self.textFieldEmail.text?.count == 0 {
+            self.displayMessage(title: "Error", message: "Please enter in an email")
+            return false
+        } else if self.textFieldPassword.text?.count == 0 {
+            self.displayMessage(title: "Error", message: "Please enter in a password")
+            return false
+        } else {
+            return true
+        }
+    }
+    private func verifyEmail() -> Bool {
+        //Create a regex string
+        let stricterFilterString = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+        let emailTest = NSPredicate(format: "SELF MATCHES %@", stricterFilterString)
+        
+        //return true if email address is valid
+        if emailTest.evaluate(with: self.textFieldEmail.text) {
+            return true
+        } else {
+            self.displayMessage(title: "Error", message: "Email is in an invalid format.")
+            return false
+        }
+    }
+    private func login() {
+        self.query = baseQuery()
+        self.listener =  query?.addSnapshotListener { (documents, error) in
+            guard let snapshot = documents else {
+                print("Error fetching documents results: \(error!)")
+                self.displayMessage(title: "Error", message: "Couldn't retrieve information. Please try again later.")
+                return
+            }
+             
+            let results = snapshot.documents.map { (document) -> User in
+                if let user = User(dictionary: document.data(), id: document.documentID) {
+                    return user
+                } else {
+                    fatalError("Unable to initialize type \(User.self) with dictionary \(document.data())")
+                }
+            }
+             
+            self.users = results
+            self.documents = snapshot.documents
+            
+            if self.doesUserExist() {
+                self.displayMessage(title: "Success", message: "Successfully logged in.")
+            } else {
+                self.displayMessage(title: "Error", message: "Invalid credentials. Please try again.")
+            }
+        }
+    }
+    private func doesUserExist() -> Bool {
+        for user in self.users {
+            if user.email == self.textFieldEmail.text && user.password == self.textFieldPassword.text {
+                return true
+            }
+        }
+        return false
+    }
+    
+    private func displayMessage(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+
+        self.present(alert, animated: true)
+    }
+    
     // MARK: UIResponders
     @objc private func buttonLogin_TouchUpInside(sender: UIButton) {
-        
+        if self.verifyForm() {
+            if self.verifyEmail() {
+                self.login()
+            }
+        }
     }
     
     @objc private func gestureTap_Tap(gesture: UITapGestureRecognizer) {

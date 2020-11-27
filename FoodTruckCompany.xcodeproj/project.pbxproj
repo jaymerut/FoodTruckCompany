@@ -18,6 +18,7 @@
 		9684FE75257097B500830C46 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684FE74257097B500830C46 /* LoginViewController.swift */; };
 		9684FE832570AE8A00830C46 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684FE822570AE8A00830C46 /* RegisterViewController.swift */; };
 		9684FE932570BC4300830C46 /* KaushanScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9684FE922570BC4300830C46 /* KaushanScript-Regular.ttf */; };
+		9684FE982570BED300830C46 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684FE972570BED300830C46 /* User.swift */; };
 		96BB8999256F1A7500B5AD7B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96BB8998256F1A7500B5AD7B /* GoogleService-Info.plist */; };
 		96BB89B5256F2B3D00B5AD7B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96BB89B4256F2B3D00B5AD7B /* Images.xcassets */; };
 		96BB89BD256F2C4000B5AD7B /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BB89BC256F2C4000B5AD7B /* UIColor+Hex.swift */; };
@@ -62,6 +63,7 @@
 		9684FE74257097B500830C46 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9684FE822570AE8A00830C46 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		9684FE922570BC4300830C46 /* KaushanScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "KaushanScript-Regular.ttf"; path = "../../../../../../Downloads/Kaushan_Script 2/KaushanScript-Regular.ttf"; sourceTree = "<group>"; };
+		9684FE972570BED300830C46 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		96BB8998256F1A7500B5AD7B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		96BB89B4256F2B3D00B5AD7B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		96BB89BC256F2C4000B5AD7B /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				9684FE2B2570570400830C46 /* Company.swift */,
+				9684FE972570BED300830C46 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -579,6 +582,7 @@
 				96EB9336250EB95C00ED0AB1 /* AppDelegate.swift in Sources */,
 				9684FE832570AE8A00830C46 /* RegisterViewController.swift in Sources */,
 				965CEAA22570105600ACE673 /* FindFoodTrucksViewController.swift in Sources */,
+				9684FE982570BED300830C46 /* User.swift in Sources */,
 				96BB89BD256F2C4000B5AD7B /* UIColor+Hex.swift in Sources */,
 				9684FE2C2570570400830C46 /* Company.swift in Sources */,
 				96EB9371250EBFB500ED0AB1 /* HomeViewController.swift in Sources */,
