@@ -1,0 +1,6 @@
+framework module Pods_TruckYumsTests {
+  umbrella header "Pods-TruckYumsTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
