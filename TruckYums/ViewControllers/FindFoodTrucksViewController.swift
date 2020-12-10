@@ -10,16 +10,13 @@ import UIKit
 import SnapKit
 import MapKit
 import CoreLocation
-import Firebase
 
 
 class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     
     // MARK: - Variables
-    private var documents: [DocumentSnapshot] = []
     public var companies: [Company] = []
-    private var listener : ListenerRegistration!
     
     let distanceSpan: Double = 50
     private lazy var mapView: MKMapView = {
@@ -41,13 +38,11 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         
         return manager
     }()
-    fileprivate var query: Query? {
-        didSet {
-            if let listener = listener {
-                listener.remove()
-            }
-        }
-    }
+    private lazy var firebaseCloudRead: FirebaseCloudRead = {
+        let firebaseCloudRead = FirebaseCloudRead.init()
+        
+        return firebaseCloudRead
+    }()
     
     // MARK: - Initialization
     private func customInitFindFoodTrucksViewController() {
@@ -75,24 +70,9 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        self.query = baseQuery()
-        self.listener =  query?.addSnapshotListener { (documents, error) in
-            guard let snapshot = documents else {
-                print("Error fetching documents results: \(error!)")
-                self.getUserCoordinates()
-                return
-            }
-             
-            let results = snapshot.documents.map { (document) -> Company in
-                if let company = Company(dictionary: document.data(), id: document.documentID) {
-                    return company
-                } else {
-                    fatalError("Unable to initialize type \(Company.self) with dictionary \(document.data())")
-                }
-            }
-             
-            self.companies = results
-            self.documents = snapshot.documents
+        
+        self.firebaseCloudRead.firebaseReadCompanies { (companies) in
+            self.companies = companies ?? [Company]()
             self.getUserCoordinates()
         }
         
@@ -124,9 +104,6 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         self.locationManager.requestWhenInUseAuthorization()
         
         self.locationManager.startUpdatingLocation()
-    }
-    fileprivate func baseQuery() -> Query {
-        return Firestore.firestore().collection("Companies").limit(to: 50)
     }
     
     // MARK: Delegate Methods

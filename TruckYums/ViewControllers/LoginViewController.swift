@@ -8,16 +8,19 @@
 
 import UIKit
 import SnapKit
-import FirebaseFirestore
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
     // MARK: - Variables
-    private var documents: [DocumentSnapshot] = []
     public var users: [User] = []
-    private var listener : ListenerRegistration!
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView.init(style: .medium)
+        activityIndicator.color = .black
+        
+        return activityIndicator
+    }()
     private lazy var containerView: UIView = {
         let view = UIView.init(frame: .zero)
         view.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
@@ -79,6 +82,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private lazy var buttonLogin: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("Login", for: .normal)
+        button.setTitle("", for: .selected)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.black, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
@@ -89,13 +93,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
-    fileprivate var query: Query? {
-        didSet {
-            if let listener = listener {
-                listener.remove()
-            }
-        }
-    }
+    private lazy var firebaseCloudRead: FirebaseCloudRead = {
+        let firebaseCloudRead = FirebaseCloudRead.init()
+        
+        return firebaseCloudRead
+    }()
     
     // MARK: - Initialization
     private func customInitLoginViewController() {
@@ -178,6 +180,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.height.equalTo(50)
         }
         
+        self.textFieldEmail.addSubview(self.activityIndicator)
+        self.activityIndicator.snp.makeConstraints { (make) in
+            make.centerY.equalTo(self.textFieldEmail.snp.centerY)
+            make.right.equalTo(self.textFieldEmail.snp.right).offset(-10)
+            make.height.equalTo(25)
+            make.width.equalTo(25)
+        }
+        
         self.containerView.addSubview(self.viewImageContainer)
         self.viewImageContainer.snp.makeConstraints { (make) in
             make.top.equalTo(self.containerView.snp.top).offset(20)
@@ -190,10 +200,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.labelTitle.snp.makeConstraints { (make) in
             make.edges.equalTo(self.viewImageContainer)
         }
-    }
-    
-    fileprivate func baseQuery() -> Query {
-        return Firestore.firestore().collection("Users")
     }
     
     private func verifyForm() -> Bool {
@@ -224,24 +230,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     private func login() {
-        self.query = baseQuery()
-        self.listener =  query?.addSnapshotListener { (documents, error) in
-            guard let snapshot = documents else {
-                print("Error fetching documents results: \(error!)")
-                self.displayMessage(title: "Error", message: "Couldn't retrieve information. Please try again later.")
-                return
-            }
-             
-            let results = snapshot.documents.map { (document) -> User in
-                if let user = User(dictionary: document.data(), id: document.documentID) {
-                    return user
-                } else {
-                    fatalError("Unable to initialize type \(User.self) with dictionary \(document.data())")
-                }
-            }
-             
-            self.users = results
-            self.documents = snapshot.documents
+        self.firebaseCloudRead.firebaseReadUsers { (users) in
+            self.users = users ?? [User]()
             
             if self.doesUserExist() {
                 self.navigateToHome()
@@ -249,6 +239,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             } else {
                 self.displayMessage(title: "Error", message: "Invalid credentials. Please try again.")
             }
+            
+            self.hideActivityIndicator()
         }
     }
     private func doesUserExist() -> Bool {
@@ -269,12 +261,26 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.present(alert, animated: true)
     }
     
+    private func showActivityIndicator() {
+        self.view.isUserInteractionEnabled = false
+        self.activityIndicator.startAnimating()
+    }
+    private func hideActivityIndicator() {
+        self.view.isUserInteractionEnabled = true
+        self.activityIndicator.stopAnimating()
+    }
+    
     // MARK: UIResponders
     @objc private func buttonLogin_TouchUpInside(sender: UIButton) {
+        self.showActivityIndicator()
         if self.verifyForm() {
             if self.verifyEmail() {
                 self.login()
+            } else {
+                self.hideActivityIndicator()
             }
+        } else {
+            self.hideActivityIndicator()
         }
     }
     
