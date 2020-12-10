@@ -18,6 +18,12 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView.init(style: .medium)
+        activityIndicator.color = .white
+        
+        return activityIndicator
+    }()
     private lazy var buttonLogout: UIButton = {
         let button = UIButton.init(type: .custom)
         button.setTitle("Logout", for: .normal)
@@ -137,6 +143,12 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         return manager
     }()
     
+    private lazy var firebaseCloudUpdate: FirebaseCloudUpdate = {
+        let firebaseCloudUpdate = FirebaseCloudUpdate.init()
+        
+        return firebaseCloudUpdate
+    }()
+    
     // MARK: - Initialization
     private func customInitDealerPortalViewController() {
         
@@ -212,7 +224,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
             make.top.equalTo(self.view.snp.top).offset(20)
             make.left.equalTo(self.view.snp.left).offset(15)
             make.right.equalTo(self.view.snp.right).offset(-15)
-            make.bottom.equalTo(self.buttonChangeLocation.snp.top).offset(-15)
+            make.bottom.equalTo(self.buttonUpdate.snp.top).offset(-15)
         }
         
         
@@ -263,9 +275,19 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         }
     }
     private func getUserCoordinates() {
-       // self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
         
         self.locationManager.startUpdatingLocation()
+    }
+    private func showActivityIndicator() {
+        self.view.isUserInteractionEnabled = false
+        self.navigationItem.setRightBarButton(UIBarButtonItem.init(customView: self.activityIndicator), animated: false)
+        self.activityIndicator.startAnimating()
+    }
+    private func hideActivityIndicator() {
+        self.view.isUserInteractionEnabled = true
+        self.activityIndicator.stopAnimating()
+        self.navigationItem.setRightBarButton(UIBarButtonItem.init(customView: self.buttonLogout), animated: false)
     }
     
     // MARK: UIResponders
@@ -274,10 +296,29 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         self.navigateToHome()
     }
     @objc private func buttonUpdate_TouchUpInside(sender: UIButton) {
-        // TODO
+        self.showActivityIndicator()
+        
+        let modifiedUser: User = User.init()
+        modifiedUser.email = self.textFieldEmail.text ?? ""
+        modifiedUser.name = self.textFieldName.text ?? ""
+        modifiedUser.phonenumber = self.textFieldPhoneNumber.text ?? ""
+        modifiedUser.company = SwiftAppDefaults.shared.user?.company ?? ""
+        
+        self.firebaseCloudUpdate.firebaseUpdateUser(modifiedUser: modifiedUser) { (user) in
+            if user != nil {
+                SwiftAppDefaults.shared.user = user
+            }
+            self.hideActivityIndicator()
+            self.buttonUpdate.isHidden = true
+        }
     }
     @objc private func buttonChangeLocation_TouchUpInside(sender: UIButton) {
-        // TODO
+        self.showActivityIndicator()
+        
+        self.firebaseCloudUpdate.firebaseUpdateLocation(company: SwiftAppDefaults.shared.user?.company ?? "", latitude: self.latitude, longitude: self.longitude) {
+            
+            self.hideActivityIndicator()
+        }
     }
     @objc private func textFieldDidChange(sender: UITextField) {
         self.buttonUpdate.isHidden = false
@@ -333,7 +374,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == CLAuthorizationStatus.authorizedAlways || status == CLAuthorizationStatus.authorizedWhenInUse {
             manager.startUpdatingLocation()
-        } else {
+        } else if status == CLAuthorizationStatus.denied {
             self.buttonChangeLocation.isHidden = true
             setupDealerPortalViewController()
         }
