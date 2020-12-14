@@ -45,6 +45,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return label
     }()
     
+    private lazy var imageViewLogo: UIImageView = {
+        let imageView = UIImageView.init(frame: .zero)
+        imageView.image = UIImage.init(named: "logo")
+        imageView.contentMode = .scaleAspectFit
+        
+        return imageView
+    }()
+    
     private lazy var textFieldEmail: UITextField = {
         let textField = UITextField(frame: .zero)
         textField.autocorrectionType = .no
@@ -153,7 +161,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.left.equalTo(self.view.snp.left).offset(20)
             make.right.equalTo(self.view.snp.right).offset(-20)
             make.centerY.equalTo(self.view.snp.centerY)
-            make.height.equalTo(325)
+            make.height.equalTo(425)
         }
         
         self.containerView.addSubview(self.buttonLogin)
@@ -190,14 +198,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         self.containerView.addSubview(self.viewImageContainer)
         self.viewImageContainer.snp.makeConstraints { (make) in
-            make.top.equalTo(self.containerView.snp.top).offset(20)
-            make.left.equalTo(self.containerView.snp.left).offset(20)
-            make.right.equalTo(self.containerView.snp.right).offset(-20)
-            make.bottom.equalTo(self.textFieldEmail.snp.top).offset(-20)
+            make.top.equalTo(self.containerView.snp.top)
+            make.left.equalTo(self.containerView.snp.left)
+            make.right.equalTo(self.containerView.snp.right)
+            make.bottom.equalTo(self.textFieldEmail.snp.top)
         }
         
-        self.viewImageContainer.addSubview(self.labelTitle)
-        self.labelTitle.snp.makeConstraints { (make) in
+        self.viewImageContainer.addSubview(self.imageViewLogo)
+        self.imageViewLogo.snp.makeConstraints { (make) in
             make.edges.equalTo(self.viewImageContainer)
         }
     }

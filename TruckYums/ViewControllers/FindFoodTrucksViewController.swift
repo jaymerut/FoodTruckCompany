@@ -27,6 +27,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         mapView.showsScale = true
         mapView.showsCompass = false
         mapView.showsUserLocation = true
+        mapView.delegate = self
         
         return mapView
     }()
@@ -105,8 +106,28 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         
         self.locationManager.startUpdatingLocation()
     }
+    private func getCompanyFromName(name: String) -> Company {
+        for company: Company in self.companies {
+            if company.name == name {
+                return company
+            }
+        }
+        return Company.init(name: "", latitude: 0, longitude: 0, linkedwith: "", venderverified: false, cuisine: "", phonenumber: "", siteurl: "", lastupdated: "", hours: "")
+    }
+    
+    // MARK: Navigation Logic
+    private func navigateToCompanyDetail(company: String) {
+        let destinationVC = CompanyDetailViewController.init()
+        destinationVC.modalPresentationStyle = .overFullScreen
+        destinationVC.modalTransitionStyle = .crossDissolve
+        destinationVC.company = self.getCompanyFromName(name: company)
+        
+        self.present(destinationVC, animated: true, completion: nil)
+    }
     
     // MARK: Delegate Methods
+    
+    // CLLocation Delegate Methods
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         let region = MKCoordinateRegion.init(center: newLocation.coordinate, latitudinalMeters: self.distanceSpan, longitudinalMeters: self.distanceSpan)
         self.mapView.setRegion(region, animated: true)
@@ -134,6 +155,14 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == CLAuthorizationStatus.authorizedAlways || status == CLAuthorizationStatus.authorizedWhenInUse {
             manager.startUpdatingLocation()
+        }
+    }
+    
+    // MKMapView Delegate Methods
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print(view.annotation?.title ?? "")
+        if (view.annotation?.title ?? "")?.count ?? 0 > 0 && (view.annotation?.title ?? "") != "My Location" {
+            self.navigateToCompanyDetail(company: (view.annotation?.title ?? "") ?? "")
         }
     }
     

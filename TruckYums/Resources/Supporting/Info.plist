@@ -29,7 +29,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Teko-Bold.ttf</string>
-		<string>Teko-Light.tff</string>
+		<string>Teko-Light.ttf</string>
 		<string>Teko-Medium.ttf</string>
 		<string>Teko-Regular.ttf</string>
 		<string>Teko-SemiBold.ttf</string>
