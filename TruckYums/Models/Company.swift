@@ -14,6 +14,12 @@ struct Company {
     var longitude: Double
     var linkedwith: String
     var venderverified: Bool
+    var cuisine: String
+    var phonenumber: String
+    var siteurl: String
+    var lastupdated: String
+    var hours: String
+    
      
     var dictionary: [String: Any] {
         return [
@@ -21,7 +27,12 @@ struct Company {
             "latitude": latitude,
             "longitude": longitude,
             "linkedwith": linkedwith,
-            "venderverified": venderverified
+            "venderverified": venderverified,
+            "cuisine": cuisine,
+            "phonenumber": phonenumber,
+            "siteurl": siteurl,
+            "lastupdated": lastupdated,
+            "hours": hours
         ]
     }
 }
@@ -35,9 +46,14 @@ extension Company {
             let latitude = dictionary["latitude"] as? Double,
             let longitude = dictionary["longitude"] as? Double,
             let linkedwith = dictionary["linkedwith"] as? String,
-            let venderverified = dictionary["venderverified"] as? Bool
+            let venderverified = dictionary["venderverified"] as? Bool,
+            let cuisine = dictionary["cuisine"] as? String,
+            let phonenumber = dictionary["phonenumber"] as? String,
+            let siteurl = dictionary["siteurl"] as? String,
+            let lastupdated = dictionary["lastupdated"] as? String,
+            let hours = dictionary["hours"] as? String
             else { return nil }
          
-        self.init(name: name, latitude: latitude, longitude: longitude, linkedwith: linkedwith, venderverified: venderverified)
+        self.init(name: name, latitude: latitude, longitude: longitude, linkedwith: linkedwith, venderverified: venderverified, cuisine: cuisine, phonenumber: phonenumber, siteurl: siteurl, lastupdated: lastupdated, hours: hours)
     }
 }

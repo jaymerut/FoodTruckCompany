@@ -28,26 +28,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "96EB9347250EB96000ED0AB1"
-               BuildableName = "TruckYumsTests.xctest"
-               BlueprintName = "TruckYumsTests"
-               ReferencedContainer = "container:TruckYums.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "96EB9352250EB96000ED0AB1"
-               BuildableName = "TruckYumsUITests.xctest"
-               BlueprintName = "TruckYumsUITests"
-               ReferencedContainer = "container:TruckYums.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -16,6 +16,7 @@
 		965CEAA22570105600ACE673 /* FindFoodTrucksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965CEAA12570105600ACE673 /* FindFoodTrucksViewController.swift */; };
 		9672811E2581088600F482BC /* FirebaseCloudRead.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9672811D2581088600F482BC /* FirebaseCloudRead.swift */; };
 		967281AA2581115900F482BC /* FirebaseCloudUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967281A92581115900F482BC /* FirebaseCloudUpdate.swift */; };
+		96835F9B2586CF1700C87844 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96835F9A2586CF1700C87844 /* GoogleService-Info.plist */; };
 		9684FE2C2570570400830C46 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684FE2B2570570400830C46 /* Company.swift */; };
 		9684FE75257097B500830C46 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684FE74257097B500830C46 /* LoginViewController.swift */; };
 		9684FE832570AE8A00830C46 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684FE822570AE8A00830C46 /* RegisterViewController.swift */; };
@@ -23,7 +24,7 @@
 		9684FE982570BED300830C46 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684FE972570BED300830C46 /* User.swift */; };
 		9684FE9E25713ADB00830C46 /* SwiftAppDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684FE9D25713ADB00830C46 /* SwiftAppDefaults.swift */; };
 		9684FEB225719E4D00830C46 /* DealerPortalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684FEB125719E4D00830C46 /* DealerPortalViewController.swift */; };
-		96BB8999256F1A7500B5AD7B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96BB8998256F1A7500B5AD7B /* GoogleService-Info.plist */; };
+		96B2C3E52582EA3000F15941 /* CompanyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B2C3E42582EA3000F15941 /* CompanyDetailViewController.swift */; };
 		96BB89B5256F2B3D00B5AD7B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96BB89B4256F2B3D00B5AD7B /* Images.xcassets */; };
 		96BB89BD256F2C4000B5AD7B /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BB89BC256F2C4000B5AD7B /* UIColor+Hex.swift */; };
 		96EB9336250EB95C00ED0AB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EB9335250EB95C00ED0AB1 /* AppDelegate.swift */; };
@@ -67,6 +68,7 @@
 		965CEAA12570105600ACE673 /* FindFoodTrucksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindFoodTrucksViewController.swift; sourceTree = "<group>"; };
 		9672811D2581088600F482BC /* FirebaseCloudRead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCloudRead.swift; sourceTree = "<group>"; };
 		967281A92581115900F482BC /* FirebaseCloudUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCloudUpdate.swift; sourceTree = "<group>"; };
+		96835F9A2586CF1700C87844 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9684FE2B2570570400830C46 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		9684FE74257097B500830C46 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9684FE822570AE8A00830C46 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -74,7 +76,7 @@
 		9684FE972570BED300830C46 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9684FE9D25713ADB00830C46 /* SwiftAppDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftAppDefaults.swift; sourceTree = "<group>"; };
 		9684FEB125719E4D00830C46 /* DealerPortalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealerPortalViewController.swift; sourceTree = "<group>"; };
-		96BB8998256F1A7500B5AD7B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		96B2C3E42582EA3000F15941 /* CompanyDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDetailViewController.swift; sourceTree = "<group>"; };
 		96BB89B4256F2B3D00B5AD7B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		96BB89BC256F2C4000B5AD7B /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		96EB9332250EB95C00ED0AB1 /* TruckYums.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TruckYums.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -322,6 +324,7 @@
 				9684FE74257097B500830C46 /* LoginViewController.swift */,
 				9684FE822570AE8A00830C46 /* RegisterViewController.swift */,
 				9684FEB125719E4D00830C46 /* DealerPortalViewController.swift */,
+				96B2C3E42582EA3000F15941 /* CompanyDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -352,7 +355,7 @@
 		96EB936E250EBDFB00ED0AB1 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
-				96BB8998256F1A7500B5AD7B /* GoogleService-Info.plist */,
+				96835F9A2586CF1700C87844 /* GoogleService-Info.plist */,
 				96EB9343250EB95F00ED0AB1 /* Info.plist */,
 			);
 			path = Supporting;
@@ -493,8 +496,8 @@
 				965CEA65256FD57800ACE673 /* Teko-SemiBold.ttf in Resources */,
 				96BB89B5256F2B3D00B5AD7B /* Images.xcassets in Resources */,
 				965CEA63256FD57800ACE673 /* Teko-Medium.ttf in Resources */,
+				96835F9B2586CF1700C87844 /* GoogleService-Info.plist in Resources */,
 				96EB933F250EB95F00ED0AB1 /* Assets.xcassets in Resources */,
-				96BB8999256F1A7500B5AD7B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,6 +628,7 @@
 				9684FEB225719E4D00830C46 /* DealerPortalViewController.swift in Sources */,
 				9684FE75257097B500830C46 /* LoginViewController.swift in Sources */,
 				96EB9336250EB95C00ED0AB1 /* AppDelegate.swift in Sources */,
+				96B2C3E52582EA3000F15941 /* CompanyDetailViewController.swift in Sources */,
 				9684FE9E25713ADB00830C46 /* SwiftAppDefaults.swift in Sources */,
 				9684FE832570AE8A00830C46 /* RegisterViewController.swift in Sources */,
 				965CEAA22570105600ACE673 /* FindFoodTrucksViewController.swift in Sources */,
