@@ -36,32 +36,32 @@ class User: NSObject, NSCoding {
             "email": email,
             "name": name,
             "password": password,
-            "phonenumber": phonenumber,
-            "company": company
+            "phonenumber": phonenumber
+            //"company": company
         ]
     }
     
     override init() {
         super.init()
     }
-    init(email: String, name: String, password: String, phonenumber: String, company: String) {
+    init(email: String, name: String, password: String, phonenumber: String) {
         super.init()
         
         self.email = email
         self.name = name
         self.password = password
         self.phonenumber = phonenumber
-        self.company = company
+        //self.company = company
     }
     
     convenience init?(dictionary: [String : Any], id: String) {
         guard   let email = dictionary["email"] as? String,
             let name = dictionary["name"] as? String,
             let password = dictionary["password"] as? String,
-            let phonenumber = dictionary["phonenumber"] as? String,
-            let company = dictionary["company"] as? String
+            let phonenumber = dictionary["phonenumber"] as? String
+            //let company = dictionary["company"] as? String
             else { return nil }
          
-        self.init(email: email, name: name, password: password, phonenumber: phonenumber, company: company)
+        self.init(email: email, name: name, password: password, phonenumber: phonenumber)
     }
 }

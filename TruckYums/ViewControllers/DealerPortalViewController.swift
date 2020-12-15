@@ -17,6 +17,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     // MARK: - Variables
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
+    private var oldPhoneNumberValue: String = ""
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView.init(style: .medium)
@@ -121,13 +122,14 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         textField.autocapitalizationType = .none
         textField.delegate = self
         textField.font = UIFont(name: "Teko-Regular", size: 18.0)
-        textField.placeholder = "Enter Phone Number"
+        textField.placeholder = "(XXX) XXX-XXXX"
         textField.text = SwiftAppDefaults.shared.user?.phonenumber
         textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
         textField.layer.borderWidth = 2
         textField.layer.cornerRadius = 6.0
         textField.leftView = UIView.init(frame: CGRect.init(x: 0.0, y: 0.0, width: 10.0, height: 1.0))
         textField.leftViewMode = .always
+        textField.keyboardType = .numberPad
         textField.returnKeyType = .next
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         
@@ -358,6 +360,32 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         
         return true
     }
+    public func textFieldDidChangeSelection(_ textField: UITextField) {
+
+        if textField == self.textFieldPhoneNumber && self.oldPhoneNumberValue.count < self.textFieldPhoneNumber.text?.count ?? 0 {
+            let numString = textField.text?.replacingOccurrences(of: "[^\\d+]", with: "", options: [.regularExpression])
+            if (numString?.count == 1) {
+                self.textFieldPhoneNumber.text = "(\(numString ?? "")"
+            } else if (numString?.count == 3) {
+                self.textFieldPhoneNumber.text = "(\(numString ?? "")) "
+            } else if (numString?.count == 6) {
+                let firstSubString = numString?.substring(with: 0..<3)
+                let secondSubstring = numString?.substring(with: 3..<6)
+                self.textFieldPhoneNumber.text = "(\(firstSubString ?? "")) \(secondSubstring ?? "")-"
+            }
+        }
+        
+        self.oldPhoneNumberValue = self.textFieldPhoneNumber.text ?? ""
+    }
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if (textField == self.textFieldPhoneNumber && string != "") {
+            let numString = textField.text?.replacingOccurrences(of: "[^\\d+]", with: "", options: [.regularExpression])
+            if ((numString?.count ?? 0) + 1 > 10) {
+                return false
+            }
+        }
+        return true
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
@@ -370,6 +398,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         
         manager.stopUpdatingLocation()
     }
+    
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == CLAuthorizationStatus.authorizedAlways || status == CLAuthorizationStatus.authorizedWhenInUse {
