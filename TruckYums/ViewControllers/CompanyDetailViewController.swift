@@ -341,6 +341,8 @@ class CompanyDetailViewController: UIViewController {
             make.left.equalTo(self.viewLinkContainer.snp.left)
         }
         
+        
+        
         // ImageView Directions
         self.viewLinkContainer.addSubview(self.imageViewDirections)
         self.imageViewDirections.snp.makeConstraints { (make) in
@@ -351,6 +353,9 @@ class CompanyDetailViewController: UIViewController {
             make.width.equalTo(20)
         }
         
+        let tapDirections: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(gestureDirections_Tap))
+        self.imageViewDirections.addGestureRecognizer(tapDirections)
+        self.imageViewDirections.isUserInteractionEnabled = true
         
         // Label Site
         self.viewLinkContainer.addSubview(self.labelSite)
@@ -358,6 +363,11 @@ class CompanyDetailViewController: UIViewController {
             make.top.equalTo(self.labelDirections.snp.bottom).offset(5)
             make.left.equalTo(self.viewLinkContainer.snp.left)
         }
+        
+        let tapSite: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(gestureSite_Tap))
+        //tapSite.cancelsTouchesInView = false
+        self.imageViewSite.addGestureRecognizer(tapSite)
+        self.imageViewSite.isUserInteractionEnabled = true
         
         // ImageView Site
         self.viewLinkContainer.addSubview(self.imageViewSite)
@@ -402,6 +412,12 @@ class CompanyDetailViewController: UIViewController {
     
     // MARK: UIResponders
     @objc private func buttonPhoneNumber_TouchUpInside(sender: UIButton) {
+        // TODO
+    }
+    @objc private func gestureDirections_Tap(gesture: UITapGestureRecognizer) {
+        // TODO
+    }
+    @objc private func gestureSite_Tap(gesture: UITapGestureRecognizer) {
         // TODO
     }
     @objc private func buttonClose_TouchUpInside(sender: UIButton) {

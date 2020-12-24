@@ -718,8 +718,8 @@
             filePath = "TruckYums/ViewControllers/CompanyDetailViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "408"
-            endingLineNumber = "408"
+            startingLineNumber = "424"
+            endingLineNumber = "424"
             landmarkName = "buttonClose_TouchUpInside(sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -830,8 +830,8 @@
             filePath = "TruckYums/ViewControllers/CompanyDetailViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "387"
-            endingLineNumber = "387"
+            startingLineNumber = "397"
+            endingLineNumber = "397"
             landmarkName = "updateValues()"
             landmarkType = "7">
          </BreakpointContent>
