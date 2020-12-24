@@ -38,12 +38,19 @@ class FirebaseCloudRead: NSObject {
     
     // MARK: - Private API
     fileprivate func baseQuery(collectionName: String) -> Query {
+        // Uncomment when new fields are added and need to reset cache
+        Firestore.firestore().clearPersistence { (error) in
+            print(error as Any)
+        }
+ 
         return Firestore.firestore().collection(collectionName)
     }
     
     
     // MARK: - Public API
     public func firebaseReadCompanies(completion: @escaping (_ companies: [Company]?) -> Void) {
+        self.query = nil
+        self.listener = nil
         self.query = baseQuery(collectionName: "Companies")
         self.listener =  query?.addSnapshotListener { (documents, error) in
             guard let snapshot = documents else {

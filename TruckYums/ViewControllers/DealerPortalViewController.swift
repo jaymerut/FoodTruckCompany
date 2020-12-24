@@ -17,6 +17,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     // MARK: - Variables
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
+    private var oldPhoneNumberValue: String = ""
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView.init(style: .medium)
@@ -89,6 +90,25 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         
         return textField
     }()
+    private lazy var labelCompanyName: UILabel = {
+        let label = UILabel.init(frame: .zero)
+        label.font = UIFont.init(name: "Teko-Medium", size: 24.0)
+        label.text = "Company Name "
+        
+        return label
+    }()
+    private lazy var textFieldCompanyName: UITextField = {
+        let textField = UITextField(frame: .zero)
+        textField.delegate = self
+        textField.font = UIFont(name: "Teko-Regular", size: 18.0)
+        textField.placeholder = "Company Name"
+        textField.text = SwiftAppDefaults.shared.user?.company
+        textField.leftView = UIView.init(frame: CGRect.init(x: 0.0, y: 0.0, width: 10.0, height: 1.0))
+        textField.leftViewMode = .always
+        textField.isEnabled = false
+        
+        return textField
+    }()
     private lazy var labelEmail: UILabel = {
         let label = UILabel.init(frame: .zero)
         label.font = UIFont.init(name: "Teko-Medium", size: 24.0)
@@ -100,7 +120,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         let textField = UITextField(frame: .zero)
         textField.delegate = self
         textField.font = UIFont(name: "Teko-Regular", size: 18.0)
-        textField.placeholder = "Enter Email"
+        textField.placeholder = "Email"
         textField.text = SwiftAppDefaults.shared.user?.email
         textField.leftView = UIView.init(frame: CGRect.init(x: 0.0, y: 0.0, width: 10.0, height: 1.0))
         textField.leftViewMode = .always
@@ -121,17 +141,32 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         textField.autocapitalizationType = .none
         textField.delegate = self
         textField.font = UIFont(name: "Teko-Regular", size: 18.0)
-        textField.placeholder = "Enter Phone Number"
+        textField.placeholder = "(XXX) XXX-XXXX"
         textField.text = SwiftAppDefaults.shared.user?.phonenumber
         textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
         textField.layer.borderWidth = 2
         textField.layer.cornerRadius = 6.0
         textField.leftView = UIView.init(frame: CGRect.init(x: 0.0, y: 0.0, width: 10.0, height: 1.0))
         textField.leftViewMode = .always
+        textField.keyboardType = .numberPad
         textField.returnKeyType = .next
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         
         return textField
+    }()
+    private lazy var labelCuisine: UILabel = {
+        let label = UILabel.init(frame: .zero)
+        label.font = UIFont.init(name: "Teko-Medium", size: 24.0)
+        label.text = "Cuisine "
+        
+        return label
+    }()
+    private lazy var labelHours: UILabel = {
+        let label = UILabel.init(frame: .zero)
+        label.font = UIFont.init(name: "Teko-Medium", size: 24.0)
+        label.text = "Hours "
+        
+        return label
     }()
     
     private lazy var locationManager: CLLocationManager = {
@@ -244,16 +279,31 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
             make.height.equalTo(30)
         }
         
+        // Company Name
+        self.containerView.addSubview(self.labelCompanyName)
+        self.labelCompanyName.snp.makeConstraints { (make) in
+            make.top.equalTo(self.labelName.snp.bottom).offset(10)
+            make.left.equalTo(self.containerView.snp.left)
+            make.height.equalTo(30)
+        }
+        self.containerView.addSubview(self.textFieldCompanyName)
+        self.textFieldCompanyName.snp.makeConstraints { (make) in
+            make.top.equalTo(self.textFieldName.snp.bottom).offset(10)
+            make.left.equalTo(self.labelCompanyName.snp.right)
+            make.right.equalTo(self.containerView.snp.right)
+            make.height.equalTo(30)
+        }
+        
         // Email
         self.containerView.addSubview(self.labelEmail)
         self.labelEmail.snp.makeConstraints { (make) in
-            make.top.equalTo(self.labelName.snp.bottom).offset(10)
+            make.top.equalTo(self.labelCompanyName.snp.bottom).offset(10)
             make.left.equalTo(self.containerView.snp.left)
             make.height.equalTo(30)
         }
         self.containerView.addSubview(self.textFieldEmail)
         self.textFieldEmail.snp.makeConstraints { (make) in
-            make.top.equalTo(self.textFieldName.snp.bottom).offset(10)
+            make.top.equalTo(self.textFieldCompanyName.snp.bottom).offset(10)
             make.left.equalTo(self.labelEmail.snp.right)
             make.right.equalTo(self.containerView.snp.right)
             make.height.equalTo(30)
@@ -273,6 +323,23 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
             make.right.equalTo(self.containerView.snp.right)
             make.height.equalTo(30)
         }
+        
+        // Cuisine
+        self.containerView.addSubview(self.labelCuisine)
+        self.labelCuisine.snp.makeConstraints { (make) in
+            make.top.equalTo(self.labelPhoneNumber.snp.bottom).offset(10)
+            make.left.equalTo(self.containerView.snp.left)
+            make.height.equalTo(30)
+        }
+        
+        // Hours
+        self.containerView.addSubview(self.labelHours)
+        self.labelHours.snp.makeConstraints { (make) in
+            make.top.equalTo(self.labelCuisine.snp.bottom).offset(10)
+            make.left.equalTo(self.containerView.snp.left)
+            make.height.equalTo(30)
+        }
+        
     }
     private func getUserCoordinates() {
         self.locationManager.requestWhenInUseAuthorization()
@@ -288,6 +355,14 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         self.view.isUserInteractionEnabled = true
         self.activityIndicator.stopAnimating()
         self.navigationItem.setRightBarButton(UIBarButtonItem.init(customView: self.buttonLogout), animated: false)
+    }
+    private func retrieveCurrentDateTime() -> String {
+        let dateFormatter : DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd, yyyy hh:mm a"
+        let date = Date()
+        let dateString = dateFormatter.string(from: date)
+        
+        return dateString
     }
     
     // MARK: UIResponders
@@ -308,9 +383,18 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
             if user != nil {
                 SwiftAppDefaults.shared.user = user
             }
-            self.hideActivityIndicator()
-            self.buttonUpdate.isHidden = true
+            
+            let modifiedCompany: Company = Company.init()
+            modifiedCompany.name = self.textFieldCompanyName.text ?? ""
+            modifiedCompany.phonenumber = self.textFieldPhoneNumber.text ?? ""
+            modifiedCompany.lastupdated = self.retrieveCurrentDateTime()
+            
+            self.firebaseCloudUpdate.firebaseUpdateCompany(modifiedCompany: modifiedCompany) { (company) in
+                self.hideActivityIndicator()
+                self.buttonUpdate.isHidden = true
+            }
         }
+        
     }
     @objc private func buttonChangeLocation_TouchUpInside(sender: UIButton) {
         self.showActivityIndicator()
@@ -358,6 +442,32 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         
         return true
     }
+    public func textFieldDidChangeSelection(_ textField: UITextField) {
+
+        if textField == self.textFieldPhoneNumber && self.oldPhoneNumberValue.count < self.textFieldPhoneNumber.text?.count ?? 0 {
+            let numString = textField.text?.replacingOccurrences(of: "[^\\d+]", with: "", options: [.regularExpression])
+            if (numString?.count == 1) {
+                self.textFieldPhoneNumber.text = "(\(numString ?? "")"
+            } else if (numString?.count == 3) {
+                self.textFieldPhoneNumber.text = "(\(numString ?? "")) "
+            } else if (numString?.count == 6) {
+                let firstSubString = numString?.substring(with: 0..<3)
+                let secondSubstring = numString?.substring(with: 3..<6)
+                self.textFieldPhoneNumber.text = "(\(firstSubString ?? "")) \(secondSubstring ?? "")-"
+            }
+        }
+        
+        self.oldPhoneNumberValue = self.textFieldPhoneNumber.text ?? ""
+    }
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if (textField == self.textFieldPhoneNumber && string != "") {
+            let numString = textField.text?.replacingOccurrences(of: "[^\\d+]", with: "", options: [.regularExpression])
+            if ((numString?.count ?? 0) + 1 > 10) {
+                return false
+            }
+        }
+        return true
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
@@ -370,6 +480,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         
         manager.stopUpdatingLocation()
     }
+    
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == CLAuthorizationStatus.authorizedAlways || status == CLAuthorizationStatus.authorizedWhenInUse {

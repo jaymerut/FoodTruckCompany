@@ -25,6 +25,7 @@
 		9684FE9E25713ADB00830C46 /* SwiftAppDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684FE9D25713ADB00830C46 /* SwiftAppDefaults.swift */; };
 		9684FEB225719E4D00830C46 /* DealerPortalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684FEB125719E4D00830C46 /* DealerPortalViewController.swift */; };
 		96B2C3E52582EA3000F15941 /* CompanyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B2C3E42582EA3000F15941 /* CompanyDetailViewController.swift */; };
+		96B78EB8258832D50067C147 /* String+Substring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B78EB7258832D50067C147 /* String+Substring.swift */; };
 		96BB89B5256F2B3D00B5AD7B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96BB89B4256F2B3D00B5AD7B /* Images.xcassets */; };
 		96BB89BD256F2C4000B5AD7B /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BB89BC256F2C4000B5AD7B /* UIColor+Hex.swift */; };
 		96EB9336250EB95C00ED0AB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EB9335250EB95C00ED0AB1 /* AppDelegate.swift */; };
@@ -77,6 +78,7 @@
 		9684FE9D25713ADB00830C46 /* SwiftAppDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftAppDefaults.swift; sourceTree = "<group>"; };
 		9684FEB125719E4D00830C46 /* DealerPortalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealerPortalViewController.swift; sourceTree = "<group>"; };
 		96B2C3E42582EA3000F15941 /* CompanyDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDetailViewController.swift; sourceTree = "<group>"; };
+		96B78EB7258832D50067C147 /* String+Substring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Substring.swift"; sourceTree = "<group>"; };
 		96BB89B4256F2B3D00B5AD7B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		96BB89BC256F2C4000B5AD7B /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		96EB9332250EB95C00ED0AB1 /* TruckYums.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TruckYums.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -182,6 +184,14 @@
 			path = AppDefaults;
 			sourceTree = "<group>";
 		};
+		96B78EB6258832C20067C147 /* String */ = {
+			isa = PBXGroup;
+			children = (
+				96B78EB7258832D50067C147 /* String+Substring.swift */,
+			);
+			path = String;
+			sourceTree = "<group>";
+		};
 		96BB8989256F184F00B5AD7B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +212,7 @@
 		96BB89BA256F2C2400B5AD7B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				96B78EB6258832C20067C147 /* String */,
 				96BB89BB256F2C2900B5AD7B /* UIColor */,
 			);
 			path = Extensions;
@@ -625,6 +636,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96B78EB8258832D50067C147 /* String+Substring.swift in Sources */,
 				9684FEB225719E4D00830C46 /* DealerPortalViewController.swift in Sources */,
 				9684FE75257097B500830C46 /* LoginViewController.swift in Sources */,
 				96EB9336250EB95C00ED0AB1 /* AppDelegate.swift in Sources */,
