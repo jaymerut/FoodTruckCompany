@@ -412,7 +412,13 @@ class CompanyDetailViewController: UIViewController {
     
     // MARK: UIResponders
     @objc private func buttonPhoneNumber_TouchUpInside(sender: UIButton) {
-        // TODO
+        if let url = URL(string: "tel://\(self.company.phonenumber.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)"), UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
     }
     @objc private func gestureDirections_Tap(gesture: UITapGestureRecognizer) {
         // TODO
