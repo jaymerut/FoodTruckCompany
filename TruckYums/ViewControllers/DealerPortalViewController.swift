@@ -67,8 +67,8 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     
     private lazy var labelName: UILabel = {
         let label = UILabel.init(frame: .zero)
-        label.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        label.text = "Name "
+        label.font = UIFont.init(name: "Teko-Regular", size: 24.0)
+        label.text = "Name: "
         
         return label
     }()
@@ -92,8 +92,8 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     }()
     private lazy var labelCompanyName: UILabel = {
         let label = UILabel.init(frame: .zero)
-        label.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        label.text = "Company Name "
+        label.font = UIFont.init(name: "Teko-Regular", size: 24.0)
+        label.text = "Company Name: "
         
         return label
     }()
@@ -111,8 +111,8 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     }()
     private lazy var labelEmail: UILabel = {
         let label = UILabel.init(frame: .zero)
-        label.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        label.text = "Email"
+        label.font = UIFont.init(name: "Teko-Regular", size: 24.0)
+        label.text = "Email: "
         
         return label
     }()
@@ -130,8 +130,8 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     }()
     private lazy var labelPhoneNumber: UILabel = {
         let label = UILabel.init(frame: .zero)
-        label.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        label.text = "Phone Number "
+        label.font = UIFont.init(name: "Teko-Regular", size: 24.0)
+        label.text = "Phone Number: "
         
         return label
     }()
@@ -156,17 +156,53 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     }()
     private lazy var labelCuisine: UILabel = {
         let label = UILabel.init(frame: .zero)
-        label.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        label.text = "Cuisine "
+        label.font = UIFont.init(name: "Teko-Regular", size: 24.0)
+        label.text = "Cuisine: "
         
         return label
     }()
+    private lazy var textFieldCuisine: UITextField = {
+        let textField = UITextField(frame: .zero)
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        textField.delegate = self
+        textField.font = UIFont(name: "Teko-Regular", size: 18.0)
+        textField.placeholder = "Enter Cuisine"
+        textField.text = SwiftAppDefaults.shared.company?.cuisine
+        textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
+        textField.layer.borderWidth = 2
+        textField.layer.cornerRadius = 6.0
+        textField.leftView = UIView.init(frame: CGRect.init(x: 0.0, y: 0.0, width: 10.0, height: 1.0))
+        textField.leftViewMode = .always
+        textField.returnKeyType = .next
+        textField.addTarget(self, action: #selector(textFieldDidSelect), for: .editingDidBegin)
+        
+        return textField
+    }()
     private lazy var labelHours: UILabel = {
         let label = UILabel.init(frame: .zero)
-        label.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        label.text = "Hours "
+        label.font = UIFont.init(name: "Teko-Regular", size: 24.0)
+        label.text = "Hours: "
         
         return label
+    }()
+    private lazy var textFieldHours: UITextField = {
+        let textField = UITextField(frame: .zero)
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        textField.delegate = self
+        textField.font = UIFont(name: "Teko-Regular", size: 18.0)
+        textField.placeholder = "Enter Hours"
+        textField.text = SwiftAppDefaults.shared.company?.hours
+        textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
+        textField.layer.borderWidth = 2
+        textField.layer.cornerRadius = 6.0
+        textField.leftView = UIView.init(frame: CGRect.init(x: 0.0, y: 0.0, width: 10.0, height: 1.0))
+        textField.leftViewMode = .always
+        textField.returnKeyType = .next
+        textField.addTarget(self, action: #selector(textFieldDidSelect), for: .editingDidBegin)
+        
+        return textField
     }()
     
     private lazy var locationManager: CLLocationManager = {
@@ -331,12 +367,26 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
             make.left.equalTo(self.containerView.snp.left)
             make.height.equalTo(30)
         }
+        self.containerView.addSubview(self.textFieldCuisine)
+        self.textFieldCuisine.snp.makeConstraints { (make) in
+            make.top.equalTo(self.textFieldPhoneNumber.snp.bottom).offset(10)
+            make.left.equalTo(self.labelCuisine.snp.right)
+            make.right.equalTo(self.containerView.snp.right)
+            make.height.equalTo(30)
+        }
         
         // Hours
         self.containerView.addSubview(self.labelHours)
         self.labelHours.snp.makeConstraints { (make) in
             make.top.equalTo(self.labelCuisine.snp.bottom).offset(10)
             make.left.equalTo(self.containerView.snp.left)
+            make.height.equalTo(30)
+        }
+        self.containerView.addSubview(self.textFieldHours)
+        self.textFieldHours.snp.makeConstraints { (make) in
+            make.top.equalTo(self.textFieldCuisine.snp.bottom).offset(10)
+            make.left.equalTo(self.labelHours.snp.right)
+            make.right.equalTo(self.containerView.snp.right)
             make.height.equalTo(30)
         }
         
@@ -390,6 +440,10 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
             modifiedCompany.lastupdated = self.retrieveCurrentDateTime()
             
             self.firebaseCloudUpdate.firebaseUpdateCompany(modifiedCompany: modifiedCompany) { (company) in
+                if company != nil {
+                    SwiftAppDefaults.shared.company = company
+                }
+                
                 self.hideActivityIndicator()
                 self.buttonUpdate.isHidden = true
             }
@@ -405,6 +459,14 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         }
     }
     @objc private func textFieldDidChange(sender: UITextField) {
+        self.buttonUpdate.isHidden = false
+    }
+    @objc private func textFieldDidSelect(sender: UITextField) {
+        if sender == self.textFieldCuisine {
+
+        } else if sender == self.textFieldHours {
+
+        }
         self.buttonUpdate.isHidden = false
     }
     @objc private func gestureTap_Tap(gesture: UITapGestureRecognizer) {
