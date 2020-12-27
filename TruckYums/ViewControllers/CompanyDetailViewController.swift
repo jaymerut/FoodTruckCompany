@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+import WebKit
+import MapKit
+import SafariServices
 
 class CompanyDetailViewController: UIViewController {
     
@@ -159,7 +161,6 @@ class CompanyDetailViewController: UIViewController {
         button.clipsToBounds = true
         button.layer.cornerRadius = 20.0
         button.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        
         return button
     }()
     
@@ -341,6 +342,8 @@ class CompanyDetailViewController: UIViewController {
             make.left.equalTo(self.viewLinkContainer.snp.left)
         }
         
+        
+        
         // ImageView Directions
         self.viewLinkContainer.addSubview(self.imageViewDirections)
         self.imageViewDirections.snp.makeConstraints { (make) in
@@ -351,6 +354,9 @@ class CompanyDetailViewController: UIViewController {
             make.width.equalTo(20)
         }
         
+        let tapDirections: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(gestureDirections_Tap))
+        self.imageViewDirections.addGestureRecognizer(tapDirections)
+        self.imageViewDirections.isUserInteractionEnabled = true
         
         // Label Site
         self.viewLinkContainer.addSubview(self.labelSite)
@@ -358,6 +364,11 @@ class CompanyDetailViewController: UIViewController {
             make.top.equalTo(self.labelDirections.snp.bottom).offset(5)
             make.left.equalTo(self.viewLinkContainer.snp.left)
         }
+        
+        let tapSite: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(gestureSite_Tap))
+        //tapSite.cancelsTouchesInView = false
+        self.imageViewSite.addGestureRecognizer(tapSite)
+        self.imageViewSite.isUserInteractionEnabled = true
         
         // ImageView Site
         self.viewLinkContainer.addSubview(self.imageViewSite)
@@ -400,9 +411,38 @@ class CompanyDetailViewController: UIViewController {
         self.buttonPhoneNumber.setTitle(self.company.phonenumber, for: .normal)
     }
     
+    // MARK: Navigation Logic
+    private func navigateToWebView(urlString: String) {
+        let url = URL(string: "https://\(urlString)")!
+        let webView: SFSafariViewController = SFSafariViewController.init(url: url)
+        webView.preferredBarTintColor = UIColor.init(hex: "0x055e86")
+        webView.preferredControlTintColor = .white
+        self.present(webView, animated: true, completion: nil)
+    }
+    func navigateToMapsAppWithDirections(to coordinate: CLLocationCoordinate2D, destinationName name: String) {
+      let options = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+      let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
+      let mapItem = MKMapItem(placemark: placemark)
+      mapItem.name = name
+      mapItem.openInMaps(launchOptions: options)
+    }
+    
     // MARK: UIResponders
     @objc private func buttonPhoneNumber_TouchUpInside(sender: UIButton) {
-        // TODO
+        if let url = URL(string: "tel://\(self.company.phonenumber.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)"), UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+    @objc private func gestureDirections_Tap(gesture: UITapGestureRecognizer) {
+        let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: self.company.latitude, longitude: self.company.longitude)
+        self.navigateToMapsAppWithDirections(to: coordinate, destinationName: self.company.name)
+    }
+    @objc private func gestureSite_Tap(gesture: UITapGestureRecognizer) {
+        self.navigateToWebView(urlString: self.company.siteurl)
     }
     @objc private func buttonClose_TouchUpInside(sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
