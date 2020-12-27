@@ -165,6 +165,28 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
             self.navigateToCompanyDetail(company: (view.annotation?.title ?? "") ?? "")
         }
     }
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if (annotation.title == "My Location") {
+            return nil
+        }
+        let reuseId = "test"
+
+        var anView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
+        if anView == nil {
+            anView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            anView?.canShowCallout = true
+        }
+        else {
+            anView?.annotation = annotation
+        }
+
+        //Set annotation-specific properties **AFTER**
+        //the view is dequeued or created...
+
+        anView?.image = UIImage(named:"image_annotation")
+
+        return anView
+    }
     
     // MARK: - Public API
     
