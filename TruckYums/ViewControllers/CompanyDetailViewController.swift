@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+import WebKit
+import MapKit
+import SafariServices
 
 class CompanyDetailViewController: UIViewController {
     
@@ -159,7 +161,6 @@ class CompanyDetailViewController: UIViewController {
         button.clipsToBounds = true
         button.layer.cornerRadius = 20.0
         button.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        
         return button
     }()
     
@@ -410,6 +411,22 @@ class CompanyDetailViewController: UIViewController {
         self.buttonPhoneNumber.setTitle(self.company.phonenumber, for: .normal)
     }
     
+    // MARK: Navigation Logic
+    private func navigateToWebView(urlString: String) {
+        let url = URL(string: "https://\(urlString)")!
+        let webView: SFSafariViewController = SFSafariViewController.init(url: url)
+        webView.preferredBarTintColor = UIColor.init(hex: "0x055e86")
+        webView.preferredControlTintColor = .white
+        self.present(webView, animated: true, completion: nil)
+    }
+    func navigateToMapsAppWithDirections(to coordinate: CLLocationCoordinate2D, destinationName name: String) {
+      let options = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+      let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
+      let mapItem = MKMapItem(placemark: placemark)
+      mapItem.name = name
+      mapItem.openInMaps(launchOptions: options)
+    }
+    
     // MARK: UIResponders
     @objc private func buttonPhoneNumber_TouchUpInside(sender: UIButton) {
         if let url = URL(string: "tel://\(self.company.phonenumber.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)"), UIApplication.shared.canOpenURL(url) {
@@ -421,10 +438,11 @@ class CompanyDetailViewController: UIViewController {
         }
     }
     @objc private func gestureDirections_Tap(gesture: UITapGestureRecognizer) {
-        // TODO
+        let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: self.company.latitude, longitude: self.company.longitude)
+        self.navigateToMapsAppWithDirections(to: coordinate, destinationName: self.company.name)
     }
     @objc private func gestureSite_Tap(gesture: UITapGestureRecognizer) {
-        // TODO
+        self.navigateToWebView(urlString: self.company.siteurl)
     }
     @objc private func buttonClose_TouchUpInside(sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
