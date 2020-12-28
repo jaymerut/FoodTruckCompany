@@ -1,5 +1,5 @@
 //
-//  HoursSelectViewController.swift
+//  SelectCuisineValueViewController.swift
 //  TruckYums
 //
 //  Created by Jayme Rutkoski on 12/27/20.
@@ -8,11 +8,15 @@
 
 import UIKit
 
-class HoursSelectViewController: UIViewController {
+
+class SelectCuisineValueViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
     
     // MARK: - Variables
-    public var hours: String = ""
-    public var delegate: HoursSelectDelegate?
+    public var cuisine: String = ""
+    public var delegate: SelectCuisineValueDelegate?
+    
+    private var cuisineArray: [String] = ["American", "BBQ", "Breakfast", "Chinese", "French", "Greek", "Grill", "Hamburger", "Indian", "Italian", "Japanese", "Mexican", "Pizza", "Steak", "Thai"]
     
     private lazy var contentView: UIView = {
         let view = UIView(frame: .zero)
@@ -28,15 +32,10 @@ class HoursSelectViewController: UIViewController {
         return view
     }()
     
-    private lazy var datePickerFrom: UIDatePicker = {
-        let picker = UIDatePicker(frame: .zero)
-        picker.datePickerMode = .time
-        
-        return picker
-    }()
-    private lazy var datePickerTo: UIDatePicker = {
-        let picker = UIDatePicker(frame: .zero)
-        picker.datePickerMode = .time
+    private lazy var picker: UIPickerView = {
+        let picker = UIPickerView(frame: .zero)
+        picker.delegate = self
+        picker.dataSource = self
         
         return picker
     }()
@@ -68,25 +67,24 @@ class HoursSelectViewController: UIViewController {
         return button
     }()
     
-    
     // MARK: - Initialization
-    private func customInitHoursSelectViewController() {
+    private func customInitSelectCuisineValueViewController() {
         
     }
     convenience init() {
         self.init(nibName: nil, bundle: nil)
         
-        customInitHoursSelectViewController()
+        customInitSelectCuisineValueViewController()
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        customInitHoursSelectViewController()
+        customInitSelectCuisineValueViewController()
     }
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
-        customInitHoursSelectViewController()
+        customInitSelectCuisineValueViewController()
     }
     
     
@@ -98,7 +96,7 @@ class HoursSelectViewController: UIViewController {
         self.view.backgroundColor = .init(white: 0.0, alpha: 0.6)
         
         // Setup
-        setupHoursSelectViewController()
+        setupSelectCuisineValueViewController()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -112,7 +110,7 @@ class HoursSelectViewController: UIViewController {
     
     
     // MARK: - Private API
-    private func setupHoursSelectViewController() {
+    private func setupSelectCuisineValueViewController() {
         
         // Content View
         self.view.addSubview(self.contentView)
@@ -147,27 +145,17 @@ class HoursSelectViewController: UIViewController {
         self.contentView.addSubview(self.viewContainer)
         self.viewContainer.snp.makeConstraints { (make) in
             make.top.equalTo(self.contentView.snp.top).offset(10)
-            make.left.equalTo(self.contentView.snp.left).offset(10)
-            make.right.equalTo(self.contentView.snp.right).offset(-10)
+            make.left.equalTo(self.contentView.snp.left).offset(40)
+            make.right.equalTo(self.contentView.snp.right).offset(-40)
             make.bottom.equalTo(self.buttonClose.snp.top)
-            make.height.equalTo(140)
+            make.height.equalTo(280)
         }
         
-        // Date Picker From
-        self.viewContainer.addSubview(self.datePickerFrom)
-        self.datePickerFrom.snp.makeConstraints { (make) in
+        // Picker
+        self.viewContainer.addSubview(self.picker)
+        self.picker.snp.makeConstraints { (make) in
             make.top.equalTo(self.viewContainer.snp.top)
             make.left.equalTo(self.viewContainer.snp.left)
-            make.right.equalTo(self.viewContainer.snp.centerX)
-            make.centerY.equalTo(self.viewContainer.snp.centerY)
-            make.bottom.equalTo(self.viewContainer.snp.bottom)
-        }
-        
-        // Date Picker To
-        self.viewContainer.addSubview(self.datePickerTo)
-        self.datePickerTo.snp.makeConstraints { (make) in
-            make.top.equalTo(self.viewContainer.snp.top)
-            make.left.equalTo(self.viewContainer.snp.centerX)
             make.right.equalTo(self.viewContainer.snp.right)
             make.centerY.equalTo(self.viewContainer.snp.centerY)
             make.bottom.equalTo(self.viewContainer.snp.bottom)
@@ -177,49 +165,37 @@ class HoursSelectViewController: UIViewController {
     }
     
     private func updateValues() {
-        self.datePickerFrom.date = self.extractFromHours(hours: self.hours)
-        self.datePickerTo.date = self.extractToHours(hours: self.hours)
-    }
-    
-    private func extractFromHours(hours: String) -> Date {
-        let stringComponents = hours.components(separatedBy: " - ")
-        let hoursFrom = stringComponents[0]
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h:mm a"
-        let date = dateFormatter.date(from: hoursFrom) ?? Date.init()
-
-        return date
-    }
-    private func extractToHours(hours: String) -> Date {
-        let stringComponents = hours.components(separatedBy: " - ")
-        let hoursTo = stringComponents[1]
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h:mm a"
-        let date = dateFormatter.date(from: hoursTo) ?? Date.init()
-        
-        return date
-    }
-    private func getHoursString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h:mm a"
-        let hoursFrom = dateFormatter.string(from: self.datePickerFrom.date)
-        let hoursTo = dateFormatter.string(from: self.datePickerTo.date)
-        return hoursFrom + " - " + hoursTo
+        self.picker.selectRow(self.cuisineArray.firstIndex(of: self.cuisine) ?? 0, inComponent: 0, animated: true)
     }
     
     // MARK: UIResponders
     @objc private func buttonClose_TouchUpInside(sender: UIButton) {
-        self.delegate?.closedHours()
+        self.delegate?.closedCuisine()
         self.dismiss(animated: true, completion: nil)
     }
     @objc private func buttonApply_TouchUpInside(sender: UIButton) {
-        self.delegate?.updateHours(hours: self.getHoursString())
+        self.delegate?.updateCuisine(cuisine: self.cuisine)
         self.dismiss(animated: true, completion: nil)
     }
+    
     
     
     // MARK: - Public API
     
+    // MARK: Delegate Methods
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return self.cuisineArray[row]
+    }
     
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
     
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return cuisineArray.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.cuisine = self.cuisineArray[row]
+    }
 }

@@ -15,7 +15,12 @@ protocol HoursSelectDelegate {
     func closedHours()
 }
 
-class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocationManagerDelegate, HoursSelectDelegate {
+protocol SelectCuisineValueDelegate {
+    func updateCuisine(cuisine: String)
+    func closedCuisine()
+}
+
+class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocationManagerDelegate, HoursSelectDelegate, SelectCuisineValueDelegate {
     
     
     // MARK: - Variables
@@ -53,10 +58,10 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     private lazy var buttonChangeLocation: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("Update With Current Location", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.setTitleColor(.black, for: .highlighted)
+        button.setTitleColor(.init(hex: 0x455409), for: .normal)
+        button.setTitleColor(.white, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        button.backgroundColor = UIColor.init(hex: "0xACC649")
+        button.backgroundColor = UIColor.init(hex: "0xCDDC91")
         button.layer.cornerRadius = 32.5
         button.addTarget(self, action: #selector(buttonChangeLocation_TouchUpInside), for: .touchUpInside)
         
@@ -414,7 +419,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     }
     private func retrieveCurrentDateTime() -> String {
         let dateFormatter : DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd, yyyy hh:mm a"
+        dateFormatter.dateFormat = "MMM dd, yyyy h:mm a"
         let date = Date()
         let dateString = dateFormatter.string(from: date)
         
@@ -471,7 +476,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     }
     @objc private func textFieldDidSelect(sender: UITextField) {
         if sender == self.textFieldCuisine {
-
+            self.navigateToSelectCuisine(cuisine: self.textFieldCuisine.text ?? "")
         } else if sender == self.textFieldHours {
             self.navigateToHoursSelect(hours: self.textFieldHours.text ?? "6:00 AM - 8:00 PM")
         }
@@ -496,6 +501,15 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         destinationVC.modalPresentationStyle = .overFullScreen
         destinationVC.modalTransitionStyle = .crossDissolve
         destinationVC.hours = hours
+        destinationVC.delegate = self
+        
+        self.present(destinationVC, animated: true, completion: nil)
+    }
+    private func navigateToSelectCuisine(cuisine: String) {
+        let destinationVC = SelectCuisineValueViewController.init()
+        destinationVC.modalPresentationStyle = .overFullScreen
+        destinationVC.modalTransitionStyle = .crossDissolve
+        destinationVC.cuisine = cuisine
         destinationVC.delegate = self
         
         self.present(destinationVC, animated: true, completion: nil)
@@ -577,6 +591,15 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     }
     func closedHours() {
         self.textFieldHours.resignFirstResponder()
+    }
+    
+    func updateCuisine(cuisine: String) {
+        self.textFieldCuisine.text = cuisine
+        self.textFieldCuisine.resignFirstResponder()
+        self.buttonUpdate.isHidden = false
+    }
+    func closedCuisine() {
+        self.textFieldCuisine.resignFirstResponder()
     }
     
 }
