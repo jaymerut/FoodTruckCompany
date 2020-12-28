@@ -10,8 +10,12 @@ import UIKit
 import SnapKit
 import CoreLocation
 
+protocol HoursSelectDelegate {
+    func updateHours(hours: String)
+    func closedHours()
+}
 
-class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocationManagerDelegate {
+class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocationManagerDelegate, HoursSelectDelegate {
     
     
     // MARK: - Variables
@@ -175,6 +179,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         textField.leftView = UIView.init(frame: CGRect.init(x: 0.0, y: 0.0, width: 10.0, height: 1.0))
         textField.leftViewMode = .always
         textField.returnKeyType = .next
+        textField.inputView = UIView.init(frame: .zero)
         textField.addTarget(self, action: #selector(textFieldDidSelect), for: .editingDidBegin)
         
         return textField
@@ -200,6 +205,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         textField.leftView = UIView.init(frame: CGRect.init(x: 0.0, y: 0.0, width: 10.0, height: 1.0))
         textField.leftViewMode = .always
         textField.returnKeyType = .next
+        textField.inputView = UIView.init(frame: .zero)
         textField.addTarget(self, action: #selector(textFieldDidSelect), for: .editingDidBegin)
         
         return textField
@@ -438,6 +444,8 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
             modifiedCompany.name = self.textFieldCompanyName.text ?? ""
             modifiedCompany.phonenumber = self.textFieldPhoneNumber.text ?? ""
             modifiedCompany.lastupdated = self.retrieveCurrentDateTime()
+            modifiedCompany.hours = self.textFieldHours.text ?? ""
+            modifiedCompany.cuisine = self.textFieldCuisine.text ?? ""
             
             self.firebaseCloudUpdate.firebaseUpdateCompany(modifiedCompany: modifiedCompany) { (company) in
                 if company != nil {
@@ -465,9 +473,8 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         if sender == self.textFieldCuisine {
 
         } else if sender == self.textFieldHours {
-
+            self.navigateToHoursSelect(hours: self.textFieldHours.text ?? "6:00 AM - 8:00 PM")
         }
-        self.buttonUpdate.isHidden = false
     }
     @objc private func gestureTap_Tap(gesture: UITapGestureRecognizer) {
         self.view.endEditing(true)
@@ -483,6 +490,15 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = destinationNC
+    }
+    private func navigateToHoursSelect(hours: String) {
+        let destinationVC = HoursSelectViewController.init()
+        destinationVC.modalPresentationStyle = .overFullScreen
+        destinationVC.modalTransitionStyle = .crossDissolve
+        destinationVC.hours = hours
+        destinationVC.delegate = self
+        
+        self.present(destinationVC, animated: true, completion: nil)
     }
     
     // MARK: - Public API
@@ -504,6 +520,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         
         return true
     }
+
     public func textFieldDidChangeSelection(_ textField: UITextField) {
 
         if textField == self.textFieldPhoneNumber && self.oldPhoneNumberValue.count < self.textFieldPhoneNumber.text?.count ?? 0 {
@@ -551,6 +568,15 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
             self.buttonChangeLocation.isHidden = true
             setupDealerPortalViewController()
         }
+    }
+    
+    func updateHours(hours: String) {
+        self.textFieldHours.text = hours
+        self.textFieldHours.resignFirstResponder()
+        self.buttonUpdate.isHidden = false
+    }
+    func closedHours() {
+        self.textFieldHours.resignFirstResponder()
     }
     
 }
