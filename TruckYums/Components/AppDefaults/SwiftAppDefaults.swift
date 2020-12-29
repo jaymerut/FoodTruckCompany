@@ -19,24 +19,41 @@ class SwiftAppDefaults: NSObject {
     private var defaults: UserDefaults
     
     private struct Keys {
-            public static let user = "AppDefaults.Keys.user"
+        public static let user = "AppDefaults.Keys.user"
+        public static let company = "AppDefaults.Keys.company"
     }
     
     public var user: User? {
-            get {
-                guard let encodedObj = UserDefaults.standard.object(forKey: Keys.user) as? NSData else {
-                    return nil
-                }
-                return NSKeyedUnarchiver.unarchiveObject(with: encodedObj as Data) as! User
+        get {
+            guard let encodedObj = UserDefaults.standard.object(forKey: Keys.user) as? NSData else {
+                return nil
             }
-            set {
-                guard let user = newValue, let encodedObj = NSKeyedArchiver.archivedData(withRootObject: user) as? NSData else {
-                    defaults.removeObject(forKey: Keys.user)
-                    return
-                }
-                defaults.set(encodedObj, forKey: Keys.user)
-            }
+            return NSKeyedUnarchiver.unarchiveObject(with: encodedObj as Data) as! User
         }
+        set {
+            guard let user = newValue, let encodedObj = NSKeyedArchiver.archivedData(withRootObject: user) as? NSData else {
+                defaults.removeObject(forKey: Keys.user)
+                return
+            }
+            defaults.set(encodedObj, forKey: Keys.user)
+        }
+    }
+    
+    public var company: Company? {
+        get {
+            guard let encodedObj = UserDefaults.standard.object(forKey: Keys.company) as? NSData else {
+                return nil
+            }
+            return NSKeyedUnarchiver.unarchiveObject(with: encodedObj as Data) as! Company
+        }
+        set {
+            guard let company = newValue, let encodedObj = NSKeyedArchiver.archivedData(withRootObject: company) as? NSData else {
+                defaults.removeObject(forKey: Keys.company)
+                return
+            }
+            defaults.set(encodedObj, forKey: Keys.company)
+        }
+    }
     
     // MARK: - Initialization
     private func customInitSwiftAppDefaults() {

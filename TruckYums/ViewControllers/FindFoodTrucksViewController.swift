@@ -130,7 +130,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     // CLLocation Delegate Methods
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         let region = MKCoordinateRegion.init(center: newLocation.coordinate, latitudinalMeters: self.distanceSpan, longitudinalMeters: self.distanceSpan)
-        self.mapView.setRegion(region, animated: true)
+        self.mapView.setRegion(region, animated: false)
         self.mapView.showsUserLocation = true
         }
     

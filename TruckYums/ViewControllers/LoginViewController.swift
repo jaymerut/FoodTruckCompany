@@ -13,7 +13,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
     // MARK: - Variables
-    public var users: [User] = []
+    private var users: [User] = []
+    private var companies: [Company] = []
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView.init(style: .medium)
@@ -255,6 +256,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         for user in self.users {
             if user.email == self.textFieldEmail.text && user.password == self.textFieldPassword.text {
                 SwiftAppDefaults.shared.user = user
+                
+                self.firebaseCloudRead.firebaseReadCompanies { (companies) in
+                    self.companies = companies ?? [Company]()
+                    
+                    for company in self.companies {
+                        if company.name == user.company {
+                            SwiftAppDefaults.shared.company = company
+                        }
+                    }
+                }
                 return true
             }
         }
