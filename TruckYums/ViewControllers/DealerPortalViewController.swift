@@ -231,6 +231,12 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         return firebaseCloudUpdate
     }()
     
+    private lazy var dateTimeHelper: DateTimeHelper = {
+        let helper = DateTimeHelper.init()
+        
+        return helper
+    }()
+    
     // MARK: - Initialization
     private func customInitDealerPortalViewController() {
         
@@ -417,14 +423,6 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         self.activityIndicator.stopAnimating()
         self.navigationItem.setRightBarButton(UIBarButtonItem.init(customView: self.buttonLogout), animated: false)
     }
-    private func retrieveCurrentDateTime() -> String {
-        let dateFormatter : DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd, yyyy h:mm a"
-        let date = Date()
-        let dateString = dateFormatter.string(from: date)
-        
-        return dateString
-    }
     
     // MARK: UIResponders
     @objc private func buttonLogout_TouchUpInside(sender: UIButton) {
@@ -448,7 +446,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
             let modifiedCompany: Company = Company.init()
             modifiedCompany.name = self.textFieldCompanyName.text ?? ""
             modifiedCompany.phonenumber = self.textFieldPhoneNumber.text ?? ""
-            modifiedCompany.lastupdated = self.retrieveCurrentDateTime()
+            modifiedCompany.lastupdated = self.dateTimeHelper.retrieveCurrentDateTime()
             modifiedCompany.hours = self.textFieldHours.text ?? ""
             modifiedCompany.cuisine = self.textFieldCuisine.text ?? ""
             
