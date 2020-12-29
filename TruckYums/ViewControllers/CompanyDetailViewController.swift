@@ -33,6 +33,14 @@ class CompanyDetailViewController: UIViewController {
         
         return view
     }()
+    private lazy var stackViewHeader: UIStackView = {
+        let stackView = UIStackView(frame: .zero)
+        stackView.alignment = .center
+        stackView.spacing = 10
+        stackView.axis = .horizontal
+        
+        return stackView
+    }()
     private lazy var viewInfoContainer: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = UIColor.white
@@ -44,6 +52,13 @@ class CompanyDetailViewController: UIViewController {
         view.backgroundColor = UIColor.white
         
         return view
+    }()
+    
+    private lazy var imageViewOpenClosed: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        imageView.contentMode = .scaleAspectFit
+        
+        return imageView
     }()
     
     private lazy var labelHeader: UILabel = {
@@ -164,7 +179,11 @@ class CompanyDetailViewController: UIViewController {
         return button
     }()
     
-    
+    private lazy var dateTimeHelper: DateTimeHelper = {
+        let helper = DateTimeHelper.init()
+        
+        return helper
+    }()
     
     // MARK: - Initialization
     private func customInitCompanyDetailViewController() {
@@ -227,17 +246,30 @@ class CompanyDetailViewController: UIViewController {
             make.top.equalTo(self.contentView.snp.top)
             make.left.equalTo(self.contentView.snp.left)
             make.right.equalTo(self.contentView.snp.right)
-            make.height.greaterThanOrEqualTo(50)
+            make.height.equalTo(50)
+        }
+        
+        // StackView Header
+        self.viewHeader.addSubview(self.stackViewHeader)
+        self.stackViewHeader.snp.makeConstraints { (make) in
+            make.top.equalTo(self.viewHeader.snp.top)
+            make.bottom.equalTo(self.viewHeader.snp.bottom)
+            make.centerX.equalTo(self.viewHeader.snp.centerX)
         }
         
         // Label Header
-        self.viewHeader.addSubview(self.labelHeader)
+        self.stackViewHeader.addArrangedSubview(self.labelHeader)
         self.labelHeader.snp.makeConstraints { (make) in
-            make.top.equalTo(self.viewHeader.snp.top)
-            make.left.equalTo(self.viewHeader.snp.left)
-            make.right.equalTo(self.viewHeader.snp.right)
-            make.centerX.equalTo(self.viewHeader.snp.centerX)
-            make.centerY.equalTo(self.viewHeader.snp.centerY)
+            make.centerY.equalTo(self.stackViewHeader.snp.centerY)
+            //make.height.equalTo(30)
+        }
+        
+        // ImageView OpenClosed
+        self.stackViewHeader.addArrangedSubview(self.imageViewOpenClosed)
+        self.imageViewOpenClosed.snp.makeConstraints { (make) in
+            make.centerY.equalTo(self.stackViewHeader.snp.centerY).offset(-6)
+            make.height.equalTo(35)
+            make.width.equalTo(35)
         }
         
         // Close Button
@@ -409,6 +441,15 @@ class CompanyDetailViewController: UIViewController {
         }
         
         self.buttonPhoneNumber.setTitle(self.company.phonenumber, for: .normal)
+        
+        self.imageViewOpenClosed.image = self.retrieveOpenClosedImage()
+    }
+    private func retrieveOpenClosedImage() -> UIImage {
+        if (self.dateTimeHelper.isHoursOpen(hours: self.company.hours)) {
+            return UIImage(named: "image_open_sign")!
+        } else {
+            return UIImage(named: "image_closed_sign")!
+        }
     }
     
     // MARK: Navigation Logic

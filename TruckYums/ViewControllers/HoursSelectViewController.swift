@@ -68,6 +68,11 @@ class HoursSelectViewController: UIViewController {
         return button
     }()
     
+    private lazy var dateTimeHelper: DateTimeHelper = {
+        let helper = DateTimeHelper.init()
+        
+        return helper
+    }()
     
     // MARK: - Initialization
     private func customInitHoursSelectViewController() {
@@ -177,28 +182,10 @@ class HoursSelectViewController: UIViewController {
     }
     
     private func updateValues() {
-        self.datePickerFrom.date = self.extractFromHours(hours: self.hours)
-        self.datePickerTo.date = self.extractToHours(hours: self.hours)
+        self.datePickerFrom.date = self.dateTimeHelper.extractFromHours(hours: self.hours)
+        self.datePickerTo.date = self.dateTimeHelper.extractToHours(hours: self.hours)
     }
     
-    private func extractFromHours(hours: String) -> Date {
-        let stringComponents = hours.components(separatedBy: " - ")
-        let hoursFrom = stringComponents[0]
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h:mm a"
-        let date = dateFormatter.date(from: hoursFrom) ?? Date.init()
-
-        return date
-    }
-    private func extractToHours(hours: String) -> Date {
-        let stringComponents = hours.components(separatedBy: " - ")
-        let hoursTo = stringComponents[1]
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h:mm a"
-        let date = dateFormatter.date(from: hoursTo) ?? Date.init()
-        
-        return date
-    }
     private func getHoursString() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm a"
