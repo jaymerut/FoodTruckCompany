@@ -13,7 +13,7 @@ class DateTimeHelper: NSObject {
     
     
     // MARK: - Variables
-    
+    let dateFormatter = DateFormatter()
     
     
     // MARK: - Initialization
@@ -30,11 +30,10 @@ class DateTimeHelper: NSObject {
     
     // MARK: - Private API
     private func retrieveCurrentTime() -> Date {
-        let dateFormatter : DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h:mm a"
+        self.dateFormatter.dateFormat = "h:mm a"
         var date = Date()
-        let dateString = dateFormatter.string(from: date)
-        date = dateFormatter.date(from: dateString) ?? Date.init()
+        let dateString = self.dateFormatter.string(from: date)
+        date = self.dateFormatter.date(from: dateString) ?? Date.init()
         
         return date
     }
@@ -42,29 +41,39 @@ class DateTimeHelper: NSObject {
     
     // MARK: - Public API
     public func retrieveCurrentDateTime() -> String {
-        let dateFormatter : DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd, yyyy h:mm a"
+        self.dateFormatter.dateFormat = "MMM dd, yyyy h:mm a"
         let date = Date()
-        let dateString = dateFormatter.string(from: date)
+        let dateString = self.dateFormatter.string(from: date)
+        
+        return dateString
+    }
+    public func retrieveCurrentWeekDay() -> String {
+        self.dateFormatter.dateFormat = "EEEE"
+        let date = Date()
+        let dateString = self.dateFormatter.string(from: date)
         
         return dateString
     }
     
     public func extractFromHours(hours: String) -> Date {
-        let stringComponents = hours.components(separatedBy: " - ")
+        var stringComponents = hours.components(separatedBy: " - ")
+        if stringComponents.count < 2 {
+            stringComponents = hours.components(separatedBy: " – ")
+        }
         let hoursFrom = stringComponents[0]
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h:mm a"
-        let date = dateFormatter.date(from: hoursFrom) ?? Date.init()
+        self.dateFormatter.dateFormat = "h:mm a"
+        let date = self.dateFormatter.date(from: hoursFrom) ?? Date.init()
 
         return date
     }
     public func extractToHours(hours: String) -> Date {
-        let stringComponents = hours.components(separatedBy: " - ")
+        var stringComponents = hours.components(separatedBy: " - ")
+        if stringComponents.count < 2 {
+            stringComponents = hours.components(separatedBy: " – ")
+        }
         let hoursTo = stringComponents[1]
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h:mm a"
-        let date = dateFormatter.date(from: hoursTo) ?? Date.init()
+        self.dateFormatter.dateFormat = "h:mm a"
+        let date = self.dateFormatter.date(from: hoursTo) ?? Date.init()
         
         return date
     }
@@ -72,6 +81,8 @@ class DateTimeHelper: NSObject {
     public func isHoursOpen(hours: String) -> Bool {
         if (hours == "") {
             return true
+        } else if (hours == "Closed") {
+            return false
         }
         let hoursFromDate = self.extractFromHours(hours: hours)
         let hoursToDate = self.extractToHours(hours: hours)

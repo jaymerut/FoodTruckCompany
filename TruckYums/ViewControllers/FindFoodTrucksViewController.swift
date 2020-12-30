@@ -49,6 +49,11 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         
         return helper
     }()
+    private lazy var googlePlacesAPI: GooglePlacesAPI = {
+        let api = GooglePlacesAPI()
+        
+        return api
+    }()
     private lazy var dateTimeHelper: DateTimeHelper = {
         let helper = DateTimeHelper()
         
@@ -56,6 +61,11 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     }()
     private lazy var mkPOICategoryHelper: MKPointOfInterestCategoryHelper = {
         let helper = MKPointOfInterestCategoryHelper()
+        
+        return helper
+    }()
+    private lazy var googlePlaceHelper: GooglePlaceHelper = {
+        let helper = GooglePlaceHelper()
         
         return helper
     }()
@@ -123,16 +133,6 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         
         self.locationManager.startUpdatingLocation()
     }
-    /*
-    private func getCompanyFromName(name: String) -> Company {
-        for company: Company in self.companies {
-            if company.name == name {
-                return company
-            }
-        }
-        return Company.init(name: "", latitude: 0, longitude: 0, linkedwith: "", venderverified: false, cuisine: "", phonenumber: "", siteurl: "", lastupdated: "", hours: "")
-    }
- */
     
     // MARK: Navigation Logic
     private func navigateToCompanyDetail(company: String) {
@@ -162,7 +162,45 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
               latitudinalMeters: 50000,
               longitudinalMeters: 60000)
         
+        self.googlePlacesAPI.getSearchNearby(keyword: "food+truck", latitude: locValue.latitude, longitude: locValue.longitude, radius: 30000) { (response) in
+            let result: GooglePlaceNearby = response.value!
+            
+            var index: Int = 0
+            for place in result.results {
+                self.googlePlacesAPI.getPlaceDetails(placeID: place.placeID, fields: ["name","formatted_phone_number","geometry","opening_hours","types","website"]) { (details) in
+                    if (details.value != nil) {
+                        let detailsResult: GooglePlaceDetails = details.value!
+                        
+                        let convertedCompany = self.googlePlaceHelper.convertGooglePlaceDetailsToCompany(details: detailsResult)
+                        
+                        let keyExists = self.companies[convertedCompany.name]
+                        if (keyExists == nil) {
+                            self.companies[convertedCompany.name] = convertedCompany
+                        }
+                    }
+                    
+                    if result.results.count <= index + 1 {
+                        for (key, value) in self.companies {
+                            let annotation = MKPointAnnotation()
+                            annotation.title = key
+                            annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
+                            self.mapView.addAnnotation(annotation)
+                        }
+                        
+                        let mapCamera = MKMapCamera(lookingAtCenter: locValue, fromEyeCoordinate: locValue, eyeAltitude: 15000)
+                        self.mapView.setCamera(mapCamera, animated: true)
+                        
+                        manager.stopUpdatingLocation()
+                    }
+                    index+=1
+                }
+            }
+            
+            
+        }
         
+        // Apple Maps Search (Not as good as GooglePlacesAPI for now)
+        /*
         self.queryHelper.searchBy(naturalLanguageQuery: "food truck", region: region, coordinates: locValue) { (response, error) in
             
             for mapItem in response?.mapItems ?? [MKMapItem]() {
@@ -194,6 +232,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
             
             manager.stopUpdatingLocation()
         }
+ */
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
