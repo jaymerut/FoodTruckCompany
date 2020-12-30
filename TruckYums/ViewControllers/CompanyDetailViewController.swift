@@ -89,20 +89,6 @@ class CompanyDetailViewController: UIViewController {
         
         return label
     }()
-    private lazy var labelSite: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.font = UIFont.init(name: "Teko-Regular", size: 22.0)
-        label.text = "Site "
-        
-        return label
-    }()
-    private lazy var labelDirections: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.font = UIFont.init(name: "Teko-Regular", size: 22.0)
-        label.text = "Directions "
-        
-        return label
-    }()
     private lazy var labelVerified: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = UIFont.init(name: "Teko-Regular", size: 22.0)
@@ -118,19 +104,44 @@ class CompanyDetailViewController: UIViewController {
         return label
     }()
     
-    private lazy var imageViewSite: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "image_site")
+    private lazy var buttonPhoneNumber: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "image_call"), for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
+        button.titleLabel?.font = UIFont.init(name: "Teko-Regular", size: 16.0)
+        button.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 5)
+        button.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: 5, bottom: 0, right: 0)
+        button.setTitle(self.company.phonenumber, for: .normal)
+        button.addTarget(self, action: #selector(buttonPhoneNumber_TouchUpInside), for: .touchUpInside)
         
-        return imageView
+        return button
     }()
-    private lazy var imageViewDirections: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "image_directions")
+    private lazy var buttonDirections: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "image_directions"), for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
+        button.titleLabel?.font = UIFont.init(name: "Teko-Regular", size: 18.0)
+        button.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 5)
+        button.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: 5, bottom: 0, right: 0)
+        button.setTitle("Get Directions", for: .normal)
+        button.addTarget(self, action: #selector(buttonDirections_TouchUpInside), for: .touchUpInside)
         
-        return imageView
+        return button
+    }()
+    private lazy var buttonSite: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "image_site"), for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
+        button.titleLabel?.font = UIFont.init(name: "Teko-Regular", size: 18.0)
+        button.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 5)
+        button.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: 5, bottom: 0, right: 0)
+        button.setTitle("View Site", for: .normal)
+        button.addTarget(self, action: #selector(buttonSite_TouchUpInside), for: .touchUpInside)
+        
+        return button
     }()
     private lazy var imageViewVerified: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -138,22 +149,7 @@ class CompanyDetailViewController: UIViewController {
         
         return imageView
     }()
-    
-    private lazy var buttonPhoneNumber: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: "image_call"), for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.setTitleColor(.black, for: .highlighted)
-        button.titleLabel?.font = UIFont.init(name: "Teko-Regular", size: 18.0)
-        button.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 5)
-        button.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: 5, bottom: 0, right: 0)
-        button.backgroundColor = UIColor.init(hex: "0x055e86")
-        button.layer.cornerRadius = 15.0
-        button.addTarget(self, action: #selector(buttonPhoneNumber_TouchUpInside), for: .touchUpInside)
-        
-        return button
-    }()
-    
+
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         collectionView.backgroundColor = .white
@@ -292,7 +288,7 @@ class CompanyDetailViewController: UIViewController {
         // Label Hours
         self.viewInfoContainer.addSubview(self.labelHours)
         self.labelHours.snp.makeConstraints { (make) in
-            make.top.equalTo(self.viewInfoContainer.snp.top)
+            make.top.equalTo(self.viewInfoContainer.snp.top).offset(4)
             make.left.equalTo(self.viewInfoContainer.snp.left)
             make.height.equalTo(20)
         }
@@ -300,7 +296,7 @@ class CompanyDetailViewController: UIViewController {
         // Label Hours Value
         self.viewInfoContainer.addSubview(self.labelHoursValue)
         self.labelHoursValue.snp.makeConstraints { (make) in
-            make.top.equalTo(self.viewInfoContainer.snp.top)
+            make.top.equalTo(self.viewInfoContainer.snp.top).offset(4)
             make.left.equalTo(self.labelHours.snp.right)
             make.centerY.equalTo(self.labelHours.snp.centerY)
         }
@@ -308,7 +304,7 @@ class CompanyDetailViewController: UIViewController {
         // Label Cuisine
         self.viewInfoContainer.addSubview(self.labelCuisine)
         self.labelCuisine.snp.makeConstraints { (make) in
-            make.top.equalTo(self.labelHours.snp.bottom).offset(5)
+            make.top.equalTo(self.labelHours.snp.bottom).offset(11)
             make.left.equalTo(self.viewInfoContainer.snp.left)
             make.height.equalTo(20)
         }
@@ -316,88 +312,86 @@ class CompanyDetailViewController: UIViewController {
         // Label Cuisine Value
         self.viewInfoContainer.addSubview(self.labelCuisineValue)
         self.labelCuisineValue.snp.makeConstraints { (make) in
-            make.top.equalTo(self.labelHours.snp.bottom).offset(5)
+            make.top.equalTo(self.labelHours.snp.bottom).offset(11)
             make.left.equalTo(self.labelCuisine.snp.right)
             make.centerY.equalTo(self.labelCuisine.snp.centerY)
         }
-        
-        // Button PhoneNumber
-        self.viewInfoContainer.addSubview(self.buttonPhoneNumber)
-        self.buttonPhoneNumber.snp.makeConstraints { (make) in
-            make.top.equalTo(self.labelCuisine.snp.bottom).offset(5)
-            make.left.equalTo(self.viewInfoContainer.snp.left)
-            make.width.equalTo(150)
-            make.height.equalTo(30)
-        }
-        
-        // View Link Container
-        self.collectionView.addSubview(self.viewLinkContainer)
-        self.viewLinkContainer.snp.makeConstraints { (make) in
-            make.top.equalTo(self.collectionView.snp.top)
-            make.left.equalTo(self.viewInfoContainer.snp.right).offset(10)
-            make.height.equalTo(100)
-            make.width.equalTo(100)
-        }
-        
+ 
         // Label Verified
-        self.viewLinkContainer.addSubview(self.labelVerified)
+        self.viewInfoContainer.addSubview(self.labelVerified)
         self.labelVerified.snp.makeConstraints { (make) in
-            make.top.equalTo(self.viewLinkContainer.snp.top)
-            make.left.equalTo(self.viewLinkContainer.snp.left)
+            make.top.equalTo(self.labelCuisine.snp.bottom).offset(11)
+            make.left.equalTo(self.viewInfoContainer.snp.left)
         }
         
         // ImageView Verified
-        self.viewLinkContainer.addSubview(self.imageViewVerified)
+        self.viewInfoContainer.addSubview(self.imageViewVerified)
         self.imageViewVerified.snp.makeConstraints { (make) in
-            make.top.equalTo(self.viewLinkContainer.snp.top)
+            make.top.equalTo(self.labelCuisine.snp.bottom).offset(11)
             make.left.equalTo(self.labelVerified.snp.right)
             make.centerY.equalTo(self.labelVerified.snp.centerY)
             make.height.equalTo(20)
             make.width.equalTo(20)
         }
         
-        // Label Directions
-        self.viewLinkContainer.addSubview(self.labelDirections)
-        self.labelDirections.snp.makeConstraints { (make) in
-            make.top.equalTo(self.labelVerified.snp.bottom).offset(5)
+        // View Link Container
+        self.collectionView.addSubview(self.viewLinkContainer)
+        self.viewLinkContainer.snp.makeConstraints { (make) in
+            make.top.equalTo(self.collectionView.snp.top)
+            make.left.equalTo(self.viewInfoContainer.snp.right).offset(5)
+            make.height.equalTo(100)
+            make.width.equalTo(100)
+        }
+        
+        // Button PhoneNumber
+        self.viewLinkContainer.addSubview(self.buttonPhoneNumber)
+        self.buttonPhoneNumber.snp.makeConstraints { (make) in
+            make.top.equalTo(self.viewLinkContainer.snp.top)
             make.left.equalTo(self.viewLinkContainer.snp.left)
+            make.height.equalTo(30)
+            make.width.equalTo(100)
+        }
+        self.buttonPhoneNumber.imageView!.snp.makeConstraints { (make) in
+            make.left.equalTo(self.buttonPhoneNumber.snp.left)
+            make.centerY.equalTo(self.buttonPhoneNumber.snp.centerY)
+        }
+        self.buttonPhoneNumber.titleLabel!.snp.makeConstraints { (make) in
+            make.left.equalTo(self.buttonPhoneNumber.imageView!.snp.right).offset(5)
+            make.centerY.equalTo(self.buttonPhoneNumber.snp.centerY)
         }
         
-        
-        
-        // ImageView Directions
-        self.viewLinkContainer.addSubview(self.imageViewDirections)
-        self.imageViewDirections.snp.makeConstraints { (make) in
-            make.top.equalTo(self.labelVerified.snp.bottom).offset(5)
-            make.left.equalTo(self.labelDirections.snp.right)
-            make.centerY.equalTo(self.labelDirections.snp.centerY)
-            make.height.equalTo(20)
-            make.width.equalTo(20)
-        }
-        
-        let tapDirections: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(gestureDirections_Tap))
-        self.imageViewDirections.addGestureRecognizer(tapDirections)
-        self.imageViewDirections.isUserInteractionEnabled = true
-        
-        // Label Site
-        self.viewLinkContainer.addSubview(self.labelSite)
-        self.labelSite.snp.makeConstraints { (make) in
-            make.top.equalTo(self.labelDirections.snp.bottom).offset(5)
+        // Button Directions
+        self.viewLinkContainer.addSubview(self.buttonDirections)
+        self.buttonDirections.snp.makeConstraints { (make) in
+            make.top.equalTo(self.buttonPhoneNumber.snp.bottom)
             make.left.equalTo(self.viewLinkContainer.snp.left)
+            make.height.equalTo(30)
+            make.width.equalTo(100)
+        }
+        self.buttonDirections.imageView!.snp.makeConstraints { (make) in
+            make.left.equalTo(self.buttonDirections.snp.left)
+            make.centerY.equalTo(self.buttonDirections.snp.centerY)
+        }
+        self.buttonDirections.titleLabel!.snp.makeConstraints { (make) in
+            make.left.equalTo(self.buttonDirections.imageView!.snp.right).offset(5)
+            make.centerY.equalTo(self.buttonDirections.snp.centerY)
         }
         
-        let tapSite: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(gestureSite_Tap))
-        self.imageViewSite.addGestureRecognizer(tapSite)
-        self.imageViewSite.isUserInteractionEnabled = true
-        
-        // ImageView Site
-        self.viewLinkContainer.addSubview(self.imageViewSite)
-        self.imageViewSite.snp.makeConstraints { (make) in
-            make.top.equalTo(self.labelDirections.snp.bottom).offset(5)
-            make.left.equalTo(self.labelSite.snp.right)
-            make.centerY.equalTo(self.labelSite.snp.centerY)
-            make.height.equalTo(20)
-            make.width.equalTo(20)
+        // Button Site
+        self.viewLinkContainer.addSubview(self.buttonSite)
+        self.buttonSite.snp.makeConstraints { (make) in
+            make.top.equalTo(self.buttonDirections.snp.bottom)
+            make.left.equalTo(self.viewLinkContainer.snp.left)
+            make.height.equalTo(30)
+            make.width.equalTo(100)
+        }
+        self.buttonSite.imageView!.snp.makeConstraints { (make) in
+            make.left.equalTo(self.buttonSite.snp.left)
+            make.centerY.equalTo(self.buttonSite.snp.centerY)
+        }
+        self.buttonSite.titleLabel!.snp.makeConstraints { (make) in
+            make.left.equalTo(self.buttonSite.imageView!.snp.right).offset(5)
+            make.centerY.equalTo(self.buttonSite.snp.centerY)
         }
         
         // Label Last Updated
@@ -426,11 +420,9 @@ class CompanyDetailViewController: UIViewController {
         }
         
         if self.company.siteurl.count == 0 {
-            self.labelSite.isHidden = true
-            self.imageViewSite.isHidden = true
+            self.buttonSite.isHidden = true
         }
         
-        self.buttonPhoneNumber.setTitle(self.company.phonenumber, for: .normal)
         self.buttonPhoneNumber.isHidden = self.company.phonenumber.count == 0
         
         self.imageViewOpenClosed.image = self.retrieveOpenClosedImage()
@@ -474,11 +466,11 @@ class CompanyDetailViewController: UIViewController {
             }
         }
     }
-    @objc private func gestureDirections_Tap(gesture: UITapGestureRecognizer) {
+    @objc private func buttonDirections_TouchUpInside(sender: UIButton) {
         let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: self.company.latitude, longitude: self.company.longitude)
         self.navigateToMapsAppWithDirections(to: coordinate, destinationName: self.company.name)
     }
-    @objc private func gestureSite_Tap(gesture: UITapGestureRecognizer) {
+    @objc private func buttonSite_TouchUpInside(sender: UIButton) {
         self.navigateToWebView(urlString: self.company.siteurl)
     }
     @objc private func buttonClose_TouchUpInside(sender: UIButton) {
