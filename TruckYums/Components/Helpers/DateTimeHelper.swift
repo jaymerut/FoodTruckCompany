@@ -70,6 +70,9 @@ class DateTimeHelper: NSObject {
     }
     
     public func isHoursOpen(hours: String) -> Bool {
+        if (hours == "") {
+            return true
+        }
         let hoursFromDate = self.extractFromHours(hours: hours)
         let hoursToDate = self.extractToHours(hours: hours)
         let currentTime = self.retrieveCurrentTime()

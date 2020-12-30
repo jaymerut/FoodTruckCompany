@@ -16,7 +16,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     
     
     // MARK: - Variables
-    public var companies: [Company] = []
+    public var companies: [String: Company] = [:]
     
     let distanceSpan: Double = 50
     private lazy var mapView: MKMapView = {
@@ -43,6 +43,21 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         let firebaseCloudRead = FirebaseCloudRead.init()
         
         return firebaseCloudRead
+    }()
+    private lazy var queryHelper: QueryHelper = {
+        let helper = QueryHelper()
+        
+        return helper
+    }()
+    private lazy var dateTimeHelper: DateTimeHelper = {
+        let helper = DateTimeHelper()
+        
+        return helper
+    }()
+    private lazy var mkPOICategoryHelper: MKPointOfInterestCategoryHelper = {
+        let helper = MKPointOfInterestCategoryHelper()
+        
+        return helper
     }()
     
     // MARK: - Initialization
@@ -73,7 +88,9 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         self.view.backgroundColor = .white
         
         self.firebaseCloudRead.firebaseReadCompanies { (companies) in
-            self.companies = companies ?? [Company]()
+            for company in companies ?? [Company]() {
+                self.companies[company.name] = company
+            }
             self.getUserCoordinates()
         }
         
@@ -106,6 +123,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         
         self.locationManager.startUpdatingLocation()
     }
+    /*
     private func getCompanyFromName(name: String) -> Company {
         for company: Company in self.companies {
             if company.name == name {
@@ -114,13 +132,14 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         }
         return Company.init(name: "", latitude: 0, longitude: 0, linkedwith: "", venderverified: false, cuisine: "", phonenumber: "", siteurl: "", lastupdated: "", hours: "")
     }
+ */
     
     // MARK: Navigation Logic
     private func navigateToCompanyDetail(company: String) {
         let destinationVC = CompanyDetailViewController.init()
         destinationVC.modalPresentationStyle = .overFullScreen
         destinationVC.modalTransitionStyle = .crossDissolve
-        destinationVC.company = self.getCompanyFromName(name: company)
+        destinationVC.company = self.companies[company] ?? Company()
         
         self.present(destinationVC, animated: true, completion: nil)
     }
@@ -138,18 +157,43 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         
         let currentLocation:CLLocation = locations.last ?? CLLocation.init()
+        let region = MKCoordinateRegion(
+              center: currentLocation.coordinate,
+              latitudinalMeters: 50000,
+              longitudinalMeters: 60000)
         
-        for company in self.companies {
-            let annotation = MKPointAnnotation()
-            annotation.title = company.name
-            annotation.coordinate = CLLocationCoordinate2D(latitude: company.latitude, longitude: company.longitude)
-            mapView.addAnnotation(annotation)
+        
+        self.queryHelper.searchBy(naturalLanguageQuery: "food truck", region: region, coordinates: locValue) { (response, error) in
+            
+            for mapItem in response?.mapItems ?? [MKMapItem]() {
+                let company = Company()
+                company.name = mapItem.name ?? ""
+                company.phonenumber = mapItem.phoneNumber ?? ""
+                company.siteurl = mapItem.url?.absoluteString ?? ""
+                company.longitude = mapItem.placemark.coordinate.longitude
+                company.latitude = mapItem.placemark.coordinate.latitude
+                company.cuisine = self.mkPOICategoryHelper.convertRawValueToStringValue(rawValue: mapItem.pointOfInterestCategory?.rawValue ?? "")
+                company.venderverified = false
+                company.lastupdated = self.dateTimeHelper.retrieveCurrentDateTime()
+                
+                let keyExists = self.companies[company.name]
+                if (keyExists == nil) {
+                    self.companies[company.name] = company
+                }
+            }
+            
+            for (key, value) in self.companies {
+                let annotation = MKPointAnnotation()
+                annotation.title = key
+                annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
+                self.mapView.addAnnotation(annotation)
+            }
+            
+            let mapCamera = MKMapCamera(lookingAtCenter: locValue, fromEyeCoordinate: locValue, eyeAltitude: 15000)
+            self.mapView.setCamera(mapCamera, animated: true)
+            
+            manager.stopUpdatingLocation()
         }
-        
-        let mapCamera = MKMapCamera(lookingAtCenter: locValue, fromEyeCoordinate: locValue, eyeAltitude: 15000)
-        mapView.setCamera(mapCamera, animated: true)
-        
-        manager.stopUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -160,7 +204,6 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     
     // MKMapView Delegate Methods
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print(view.annotation?.title ?? "")
         if (view.annotation?.title ?? "")?.count ?? 0 > 0 && (view.annotation?.title ?? "") != "My Location" {
             self.navigateToCompanyDetail(company: (view.annotation?.title ?? "") ?? "")
         }
