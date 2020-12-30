@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5E8E10FE919FEE9AF87A6FE0 /* Pods_TruckYums.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF53B2AD6510846A0365E1A6 /* Pods_TruckYums.framework */; };
+		961ED139259BDD570012E55F /* QueryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961ED138259BDD570012E55F /* QueryHelper.swift */; };
+		961ED13E259C124E0012E55F /* MKPointOfInterestCategoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961ED13D259C124E0012E55F /* MKPointOfInterestCategoryHelper.swift */; };
 		965CEA63256FD57800ACE673 /* Teko-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 965CEA5E256FD57700ACE673 /* Teko-Medium.ttf */; };
 		965CEA64256FD57800ACE673 /* Teko-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 965CEA5F256FD57700ACE673 /* Teko-Regular.ttf */; };
 		965CEA65256FD57800ACE673 /* Teko-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 965CEA60256FD57700ACE673 /* Teko-SemiBold.ttf */; };
@@ -64,6 +66,8 @@
 		58C9DF1BA68B1CBD76BC257E /* Pods_TruckYumsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TruckYumsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78DB5E43E1A7979907A05F10 /* Pods-TruckYumsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TruckYumsTests.release.xcconfig"; path = "Target Support Files/Pods-TruckYumsTests/Pods-TruckYumsTests.release.xcconfig"; sourceTree = "<group>"; };
 		82AFF82C09CDFEF7CB625B86 /* Pods-TruckYums-TruckYumsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TruckYums-TruckYumsUITests.debug.xcconfig"; path = "Target Support Files/Pods-TruckYums-TruckYumsUITests/Pods-TruckYums-TruckYumsUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		961ED138259BDD570012E55F /* QueryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryHelper.swift; sourceTree = "<group>"; };
+		961ED13D259C124E0012E55F /* MKPointOfInterestCategoryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKPointOfInterestCategoryHelper.swift; sourceTree = "<group>"; };
 		965CEA5E256FD57700ACE673 /* Teko-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Teko-Medium.ttf"; path = "../../../../../../Downloads/Teko/Teko-Medium.ttf"; sourceTree = "<group>"; };
 		965CEA5F256FD57700ACE673 /* Teko-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Teko-Regular.ttf"; path = "../../../../../../Downloads/Teko/Teko-Regular.ttf"; sourceTree = "<group>"; };
 		965CEA60256FD57700ACE673 /* Teko-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Teko-SemiBold.ttf"; path = "../../../../../../Downloads/Teko/Teko-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -201,6 +205,8 @@
 			isa = PBXGroup;
 			children = (
 				968CFE1B259A38FB00AA282B /* DateTimeHelper.swift */,
+				961ED138259BDD570012E55F /* QueryHelper.swift */,
+				961ED13D259C124E0012E55F /* MKPointOfInterestCategoryHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -662,9 +668,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				96B78EB8258832D50067C147 /* String+Substring.swift in Sources */,
+				961ED13E259C124E0012E55F /* MKPointOfInterestCategoryHelper.swift in Sources */,
 				9684FEB225719E4D00830C46 /* DealerPortalViewController.swift in Sources */,
 				9684FE75257097B500830C46 /* LoginViewController.swift in Sources */,
 				968CFE1C259A38FB00AA282B /* DateTimeHelper.swift in Sources */,
+				961ED139259BDD570012E55F /* QueryHelper.swift in Sources */,
 				96EB9336250EB95C00ED0AB1 /* AppDelegate.swift in Sources */,
 				968CFDBF2598DBFF00AA282B /* HoursSelectViewController.swift in Sources */,
 				96B2C3E52582EA3000F15941 /* CompanyDetailViewController.swift in Sources */,

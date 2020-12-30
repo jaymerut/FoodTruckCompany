@@ -33,14 +33,7 @@ class CompanyDetailViewController: UIViewController {
         
         return view
     }()
-    private lazy var stackViewHeader: UIStackView = {
-        let stackView = UIStackView(frame: .zero)
-        stackView.alignment = .center
-        stackView.spacing = 10
-        stackView.axis = .horizontal
-        
-        return stackView
-    }()
+
     private lazy var viewInfoContainer: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = UIColor.white
@@ -66,6 +59,7 @@ class CompanyDetailViewController: UIViewController {
         label.font = UIFont.init(name: "Teko-Medium", size: 24.0)
         label.textColor = .white
         label.textAlignment = .center
+        label.numberOfLines = 0
         
         return label
     }()
@@ -246,30 +240,25 @@ class CompanyDetailViewController: UIViewController {
             make.top.equalTo(self.contentView.snp.top)
             make.left.equalTo(self.contentView.snp.left)
             make.right.equalTo(self.contentView.snp.right)
-            make.height.equalTo(50)
-        }
-        
-        // StackView Header
-        self.viewHeader.addSubview(self.stackViewHeader)
-        self.stackViewHeader.snp.makeConstraints { (make) in
-            make.top.equalTo(self.viewHeader.snp.top)
-            make.bottom.equalTo(self.viewHeader.snp.bottom)
-            make.centerX.equalTo(self.viewHeader.snp.centerX)
-        }
-        
-        // Label Header
-        self.stackViewHeader.addArrangedSubview(self.labelHeader)
-        self.labelHeader.snp.makeConstraints { (make) in
-            make.centerY.equalTo(self.stackViewHeader.snp.centerY)
-            //make.height.equalTo(30)
+            make.height.greaterThanOrEqualTo(50)
         }
         
         // ImageView OpenClosed
-        self.stackViewHeader.addArrangedSubview(self.imageViewOpenClosed)
+        self.viewHeader.addSubview(self.imageViewOpenClosed)
         self.imageViewOpenClosed.snp.makeConstraints { (make) in
-            make.centerY.equalTo(self.stackViewHeader.snp.centerY).offset(-6)
+            make.right.equalTo(self.viewHeader.snp.right).offset(-10)
+            make.centerY.equalTo(self.viewHeader.snp.centerY)
             make.height.equalTo(35)
             make.width.equalTo(35)
+        }
+        
+        // Label Header
+        self.viewHeader.addSubview(self.labelHeader)
+        self.labelHeader.snp.makeConstraints { (make) in
+            make.top.equalTo(self.viewHeader.snp.top).offset(5)
+            make.left.equalTo(self.viewHeader.snp.left).offset(50)
+            make.right.equalTo(self.imageViewOpenClosed.snp.left).offset(-5)
+            make.bottom.equalTo(self.viewHeader.snp.bottom).offset(-5)
         }
         
         // Close Button
@@ -398,7 +387,6 @@ class CompanyDetailViewController: UIViewController {
         }
         
         let tapSite: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(gestureSite_Tap))
-        //tapSite.cancelsTouchesInView = false
         self.imageViewSite.addGestureRecognizer(tapSite)
         self.imageViewSite.isUserInteractionEnabled = true
         
@@ -425,10 +413,12 @@ class CompanyDetailViewController: UIViewController {
     }
     private func updateValues() {
         self.labelHeader.text = self.company.name
-        self.labelHoursValue.text = self.company.hours
+        self.labelHoursValue.text = self.company.hours.count > 0 ? self.company.hours : "Call For Hours"
         self.labelCuisineValue.text = self.company.cuisine
         self.labelLastUpdated.text = "Last Updated: \(self.company.lastupdated)"
         
+        self.labelCuisine.isHidden = self.company.cuisine.count == 0
+        self.labelCuisineValue.isHidden = self.company.cuisine.count == 0
         if self.company.venderverified {
             self.imageViewVerified.image = UIImage(named: "image_vender_verified")
         } else {
@@ -441,6 +431,7 @@ class CompanyDetailViewController: UIViewController {
         }
         
         self.buttonPhoneNumber.setTitle(self.company.phonenumber, for: .normal)
+        self.buttonPhoneNumber.isHidden = self.company.phonenumber.count == 0
         
         self.imageViewOpenClosed.image = self.retrieveOpenClosedImage()
     }
@@ -454,7 +445,12 @@ class CompanyDetailViewController: UIViewController {
     
     // MARK: Navigation Logic
     private func navigateToWebView(urlString: String) {
-        let url = URL(string: "https://\(urlString)")!
+        var url: URL
+        if urlString.hasPrefix("http://") || urlString.hasPrefix("https://") {
+            url = URL(string: urlString)!
+        } else {
+            url = URL(string: "https://\(urlString)")!
+        }
         let webView: SFSafariViewController = SFSafariViewController.init(url: url)
         webView.preferredBarTintColor = UIColor.init(hex: "0x055e86")
         webView.preferredControlTintColor = .white
