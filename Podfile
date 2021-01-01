@@ -10,6 +10,7 @@ target 'TruckYums' do
   pod 'Firebase/Core' 
   pod 'Firebase/Firestore'
   pod 'SnapKit'
+  pod 'Alamofire', '~> 5.2'
 
   # Pods for TruckYums
 
