@@ -359,10 +359,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     @objc private func gestureTap_ForgotPassword(gesture: UITapGestureRecognizer) {
-        print("Forgot Password tapped")
+        self.navigateToForgotPassword()
     }
     @objc private func gestureTap_Register(gesture: UITapGestureRecognizer) {
-        print("Register tapped")
+        self.navigateToRegister()
     }
     
     // MARK: Navigation Logic
@@ -375,6 +375,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = destinationNC
+    }
+    private func navigateToForgotPassword() {
+        let destinationVC = ForgotPasswordViewController.init()
+        destinationVC.modalPresentationStyle = .overFullScreen
+        destinationVC.modalTransitionStyle = .crossDissolve
+        
+        self.present(destinationVC, animated: true, completion: nil)
+    }
+    private func navigateToRegister() {
+        let destinationVC = RegisterViewController.init()
+        
+        self.navigationController?.pushViewController(destinationVC, animated: true)
     }
     
     

@@ -182,6 +182,9 @@ class HoursSelectViewController: UIViewController {
     }
     
     private func updateValues() {
+        if (self.hours.count == 0) {
+            self.hours = "6:00 AM - 8:00 PM"
+        }
         self.datePickerFrom.date = self.dateTimeHelper.extractFromHours(hours: self.hours)
         self.datePickerTo.date = self.dateTimeHelper.extractToHours(hours: self.hours)
     }
