@@ -35,7 +35,7 @@ class ForgotPasswordViewController: UIViewController {
         label.font = UIFont.init(name: "Teko-Medium", size: 24.0)
         label.textColor = .white
         label.textAlignment = .center
-        label.numberOfLines = 0
+        label.text = "Forgot Password"
         
         return label
     }()
@@ -122,6 +122,14 @@ class ForgotPasswordViewController: UIViewController {
             make.left.equalTo(self.contentView.snp.left)
             make.right.equalTo(self.contentView.snp.right)
             make.height.greaterThanOrEqualTo(50)
+        }
+        
+        // Label Header
+        self.viewHeader.addSubview(self.labelHeader)
+        self.labelHeader.snp.makeConstraints { (make) in
+            make.top.equalTo(self.viewHeader.snp.top).offset(5)
+            make.centerX.equalTo(self.viewHeader.snp.centerX)
+            make.bottom.equalTo(self.viewHeader.snp.bottom).offset(-5)
         }
         
         // Close Button

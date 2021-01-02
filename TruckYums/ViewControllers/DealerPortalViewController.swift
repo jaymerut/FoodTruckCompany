@@ -34,6 +34,16 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         
         return activityIndicator
     }()
+    
+    private lazy var labelTitle: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.text = "Edit Your Information"
+        label.font = UIFont(name: "Teko-Medium", size: 24)
+        label.textColor = .white
+        
+        return label
+    }()
+    
     private lazy var buttonLogout: UIButton = {
         let button = UIButton.init(type: .custom)
         button.setTitle("Logout", for: .normal)
@@ -287,6 +297,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.navigationItem.titleView = self.labelTitle
         
         // Setup
         self.getUserCoordinates()

@@ -14,6 +14,14 @@ class HomeViewController: UIViewController {
     
     
     // MARK: - Variables
+    private lazy var labelTitle: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.text = "TruckYums"
+        label.font = UIFont(name: "Teko-Medium", size: 24)
+        label.textColor = .white
+        
+        return label
+    }()
     private lazy var imageViewMapPreview: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.contentMode = .scaleAspectFill
@@ -64,7 +72,7 @@ class HomeViewController: UIViewController {
     }()
     private lazy var buttonViewPortal: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("View Dealer Portal", for: .normal)
+        button.setTitle("View Vender Portal", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.black, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
@@ -76,7 +84,7 @@ class HomeViewController: UIViewController {
     }()
     private lazy var buttonFind: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Find Nearby Food Trucks", for: .normal)
+        button.setTitle("Find Nearby Food Venders", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.black, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
@@ -115,6 +123,8 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = .white
+        self.navigationItem.titleView = self.labelTitle
+        
         // Setup
         setupHomeViewController()
         
