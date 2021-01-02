@@ -215,6 +215,30 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         
         return textField
     }()
+    private lazy var labelSiteURL: UILabel = {
+        let label = UILabel.init(frame: .zero)
+        label.font = UIFont.init(name: "Teko-Regular", size: 24.0)
+        label.text = "Site URL: "
+        
+        return label
+    }()
+    private lazy var textFieldSiteURL: UITextField = {
+        let textField = UITextField(frame: .zero)
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        textField.delegate = self
+        textField.font = UIFont(name: "Teko-Regular", size: 18.0)
+        textField.placeholder = "Enter Site Url"
+        textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
+        textField.layer.borderWidth = 2
+        textField.layer.cornerRadius = 6.0
+        textField.leftView = UIView.init(frame: CGRect.init(x: 0.0, y: 0.0, width: 10.0, height: 1.0))
+        textField.leftViewMode = .always
+        textField.returnKeyType = .next
+        textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        
+        return textField
+    }()
     
     private lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager.init()
@@ -407,6 +431,21 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
             make.height.equalTo(30)
         }
         
+        // SiteUrl
+        self.containerView.addSubview(self.labelSiteURL)
+        self.labelSiteURL.snp.makeConstraints { (make) in
+            make.top.equalTo(self.labelHours.snp.bottom).offset(10)
+            make.left.equalTo(self.containerView.snp.left)
+            make.height.equalTo(30)
+        }
+        self.containerView.addSubview(self.textFieldSiteURL)
+        self.textFieldSiteURL.snp.makeConstraints { (make) in
+            make.top.equalTo(self.textFieldHours.snp.bottom).offset(10)
+            make.left.equalTo(self.labelSiteURL.snp.right)
+            make.right.equalTo(self.containerView.snp.right)
+            make.height.equalTo(30)
+        }
+        
     }
     private func getUserCoordinates() {
         self.locationManager.requestWhenInUseAuthorization()
@@ -449,6 +488,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
             modifiedCompany.lastupdated = self.dateTimeHelper.retrieveCurrentDateTime()
             modifiedCompany.hours = self.textFieldHours.text ?? ""
             modifiedCompany.cuisine = self.textFieldCuisine.text ?? ""
+            modifiedCompany.siteurl = self.textFieldSiteURL.text ?? ""
             
             self.firebaseCloudUpdate.firebaseUpdateCompany(modifiedCompany: modifiedCompany) { (company) in
                 if company != nil {
@@ -527,6 +567,8 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == self.textFieldName {
             self.textFieldPhoneNumber.becomeFirstResponder()
+        } else if textField == self.textFieldPhoneNumber {
+            self.textFieldSiteURL.becomeFirstResponder()
         }
         textField.resignFirstResponder()
         

@@ -489,7 +489,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
     }
     private func doesCompanyExist(companies: [Company]) -> Bool {
         for company in companies {
-            if company.name.lowercased() == self.textFieldCompanyName.text?.lowercased() {
+            if company.name.lowercased() == self.textFieldCompanyName.text?.lowercased() && company.venderverified {
                 return true
             }
         }
