@@ -102,6 +102,34 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
+    private lazy var labelRegister: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.font = UIFont.init(name: "Teko-Regular", size: 22.0)
+        label.textAlignment = .center
+        label.isUserInteractionEnabled = true
+        
+        let text = NSMutableAttributedString(string: "New Food Vender? Register Here")
+        text.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.thick.rawValue, range: NSRange(location: "New Food Vender? ".count, length: "Register Here".count))
+        text.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hex: 0x09a0e5), range: NSRange(location: "New Food Vender? ".count, length: "Register Here".count))
+        label.attributedText = text
+        
+        return label
+    }()
+    
+    private lazy var labelForgotPassword: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.font = UIFont.init(name: "Teko-Regular", size: 20.0)
+        label.textAlignment = .center
+        label.textColor = .init(hex: 0x09a0e5)
+        label.isUserInteractionEnabled = true
+        
+        let attributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue]
+        let attributedText = NSAttributedString(string: "Forgot Password?", attributes: attributes)
+        label.attributedText = attributedText
+        
+        return label
+    }()
+    
     private lazy var firebaseCloudRead: FirebaseCloudRead = {
         let firebaseCloudRead = FirebaseCloudRead.init()
         
@@ -157,27 +185,51 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         self.view.addGestureRecognizer(gestureTap)
         
+        let gestureTapForgotPassword: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(gestureTap_ForgotPassword))
+        
+        self.labelForgotPassword.addGestureRecognizer(gestureTapForgotPassword)
+        
+        let gestureTapRegister: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(gestureTap_Register))
+        
+        self.labelRegister.addGestureRecognizer(gestureTapRegister)
+        
         self.view.addSubview(self.containerView)
         self.containerView.snp.makeConstraints { (make) in
             make.left.equalTo(self.view.snp.left).offset(20)
             make.right.equalTo(self.view.snp.right).offset(-20)
             make.centerY.equalTo(self.view.snp.centerY)
-            make.height.equalTo(425)
+            make.height.equalTo(475)
+        }
+        
+        self.containerView.addSubview(self.labelRegister)
+        self.labelRegister.snp.makeConstraints { (make) in
+            make.left.equalTo(self.containerView.snp.left).offset(20)
+            make.right.equalTo(self.containerView.snp.right).offset(-20)
+            make.bottom.equalTo(self.containerView.snp.bottom).offset(-20)
+            make.height.equalTo(20)
         }
         
         self.containerView.addSubview(self.buttonLogin)
         self.buttonLogin.snp.makeConstraints { (make) in
             make.left.equalTo(self.containerView.snp.left).offset(20)
             make.right.equalTo(self.containerView.snp.right).offset(-20)
-            make.bottom.equalTo(self.containerView.snp.bottom).offset(-20)
+            make.bottom.equalTo(self.labelRegister.snp.top).offset(-10)
             make.height.equalTo(60)
+        }
+        
+        self.containerView.addSubview(self.labelForgotPassword)
+        self.labelForgotPassword.snp.makeConstraints { (make) in
+            make.left.equalTo(self.containerView.snp.left).offset(20)
+            make.right.equalTo(self.containerView.snp.right).offset(-20)
+            make.bottom.equalTo(self.buttonLogin.snp.top).offset(-30)
+            make.height.equalTo(20)
         }
         
         self.containerView.addSubview(self.textFieldPassword)
         self.textFieldPassword.snp.makeConstraints { (make) in
             make.left.equalTo(self.containerView.snp.left).offset(20)
             make.right.equalTo(self.containerView.snp.right).offset(-20)
-            make.bottom.equalTo(self.buttonLogin.snp.top).offset(-30)
+            make.bottom.equalTo(self.labelForgotPassword.snp.top).offset(-10)
             make.height.equalTo(50)
         }
         
@@ -306,6 +358,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @objc private func gestureTap_Tap(gesture: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
+    @objc private func gestureTap_ForgotPassword(gesture: UITapGestureRecognizer) {
+        self.navigateToForgotPassword()
+    }
+    @objc private func gestureTap_Register(gesture: UITapGestureRecognizer) {
+        self.navigateToRegister()
+    }
     
     // MARK: Navigation Logic
     private func navigateToHome() {
@@ -317,6 +375,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = destinationNC
+    }
+    private func navigateToForgotPassword() {
+        let destinationVC = ForgotPasswordViewController.init()
+        destinationVC.modalPresentationStyle = .overFullScreen
+        destinationVC.modalTransitionStyle = .crossDissolve
+        
+        self.present(destinationVC, animated: true, completion: nil)
+    }
+    private func navigateToRegister() {
+        let destinationVC = RegisterViewController.init()
+        
+        self.navigationController?.pushViewController(destinationVC, animated: true)
     }
     
     

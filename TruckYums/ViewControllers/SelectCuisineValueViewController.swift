@@ -174,6 +174,9 @@ class SelectCuisineValueViewController: UIViewController, UIPickerViewDelegate, 
         self.dismiss(animated: true, completion: nil)
     }
     @objc private func buttonApply_TouchUpInside(sender: UIButton) {
+        if self.cuisine.count == 0 {
+            self.cuisine = self.cuisineArray[0]
+        }
         self.delegate?.updateCuisine(cuisine: self.cuisine)
         self.dismiss(animated: true, completion: nil)
     }
