@@ -102,6 +102,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
+    private lazy var labelNavTitle: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.text = "Login"
+        label.font = UIFont(name: "Teko-Medium", size: 24)
+        label.textColor = .white
+        
+        return label
+    }()
     private lazy var labelRegister: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = UIFont.init(name: "Teko-Regular", size: 22.0)
@@ -162,6 +170,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.navigationItem.titleView = self.labelNavTitle
         
         // Setup
         setupLoginViewController()

@@ -27,6 +27,15 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         return view
     }()
     
+    private lazy var labelTitle: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.text = "Registration"
+        label.font = UIFont(name: "Teko-Medium", size: 24)
+        label.textColor = .white
+        
+        return label
+    }()
+    
     private lazy var textFieldEmail: UITextField = {
         let textField = UITextField(frame: .zero)
         textField.autocorrectionType = .no
@@ -247,6 +256,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.navigationItem.titleView = self.labelTitle
         
         // Setup
         setupRegisterViewController()

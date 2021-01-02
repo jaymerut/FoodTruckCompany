@@ -19,6 +19,16 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     public var companies: [String: Company] = [:]
     
     let distanceSpan: Double = 50
+    
+    private lazy var labelTitle: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.text = "Nearby Food Venders"
+        label.font = UIFont(name: "Teko-Medium", size: 24)
+        label.textColor = .white
+        
+        return label
+    }()
+    
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView.init(frame: .zero)
         mapView.mapType = .standard
@@ -96,6 +106,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.navigationItem.titleView = self.labelTitle
         
         self.firebaseCloudRead.firebaseReadCompanies { (companies) in
             for company in companies ?? [Company]() {
