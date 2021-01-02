@@ -74,8 +74,20 @@ class FirebaseCloudUpdate: NSObject {
                 completion(modifiedUser)
             }
         }
-        
-        
+    }
+    public func firebaseUpdateUserPassword(modifiedUser: User, completion: @escaping (_ user: User?) -> Void) {
+        let collection = Firestore.firestore().collection("Users")
+ 
+        collection.document(modifiedUser.email).updateData(["password": modifiedUser.password,]) {
+            err in
+            if let err = err {
+                print("Error updating document: \(err)")
+                completion(nil)
+            } else {
+                print("Document succesfully updated")
+                completion(modifiedUser)
+            }
+        }
     }
     public func firebaseUpdateCompany(modifiedCompany: Company, completion: @escaping (_ user: Company?) -> Void) {
         let collection = Firestore.firestore().collection("Companies")

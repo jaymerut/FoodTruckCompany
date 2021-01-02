@@ -307,7 +307,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 self.navigateToHome()
                 
             } else {
-                self.displayMessage(title: "Error", message: "Invalid credentials. Please try again.")
+                self.displayMessage(title: "Error", message: "Invalid credentials. Please try again. Remember that email is case-sensitive.")
             }
             
             self.hideActivityIndicator()

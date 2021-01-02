@@ -17,7 +17,14 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
     private let colorRequired: UIColor = UIColor.init(hex: "0xDC3C4A")!
     private let colorNotRequired: UIColor = UIColor.init(hex: "0xE8ECF0")!
     private let colorCompleted: UIColor = UIColor.init(hex: "0x3CDC7E")!
+    private var users: [User] = []
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView.init(style: .medium)
+        activityIndicator.color = .black
+        
+        return activityIndicator
+    }()
     private lazy var contentView: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = UIColor.white
@@ -177,6 +184,17 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
+    private lazy var firebaseCloudRead: FirebaseCloudRead = {
+        let firebaseCloudRead = FirebaseCloudRead.init()
+        
+        return firebaseCloudRead
+    }()
+    private lazy var firebaseCloudUpdate: FirebaseCloudUpdate = {
+        let firebaseCloudUpdate = FirebaseCloudUpdate.init()
+        
+        return firebaseCloudUpdate
+    }()
+    
     // MARK: - Initialization
     private func customInitForgotPasswordViewController() {
         
@@ -283,6 +301,15 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
             make.height.equalTo(150)
         }
         
+        // Activity Indicator
+        self.collectionView.addSubview(self.activityIndicator)
+        self.activityIndicator.snp.makeConstraints { (make) in
+            make.centerX.equalTo(self.collectionView.snp.centerX)
+            make.centerY.equalTo(self.collectionView.snp.centerY)
+            make.height.equalTo(25)
+            make.width.equalTo(25)
+        }
+        
         // Email
         self.collectionView.addSubview(self.labelEmail)
         self.labelEmail.snp.makeConstraints { (make) in
@@ -346,12 +373,42 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    private func changePassword() -> Bool {
+    private func changePassword() {
+        self.showActivityIndicator()
+        
         if verifyForm() {
-            return true
-        } else {
-            return false
+            
+            self.firebaseCloudRead.firebaseReadUsers { (users) in
+                self.users = users ?? [User]()
+                
+                if self.doesUserExist() {
+                    
+                    let modifiedUser: User = User.init()
+                    modifiedUser.email = self.textFieldEmail.text ?? ""
+                    modifiedUser.password = self.textFieldPassword.text ?? ""
+                    
+                    self.firebaseCloudUpdate.firebaseUpdateUserPassword(modifiedUser: modifiedUser) { (user) in
+                        if user != nil {
+                            self.displaySuccess(title: "Success", message: "Password successfully updated!")
+                            self.hideActivityIndicator()
+                        }
+                    }
+                } else {
+                    self.displayMessage(title: "Error", message: "Incorrect email or name. Please try again. Remember that email is case-sensitive.")
+                    self.hideActivityIndicator()
+                }
+            }
+            
         }
+
+    }
+    private func doesUserExist() -> Bool {
+        for user in self.users {
+            if user.email == self.textFieldEmail.text && user.name.lowercased() == self.textFieldName.text?.lowercased() {
+                return true
+            }
+        }
+        return false
     }
     
     private func verifyForm() -> Bool {
@@ -360,10 +417,12 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
             self.textFieldPassword.text?.count == 0 ||
             self.textFieldPasswordRepeat.text?.count == 0 {
             self.displayMessage(title: "Error", message: "Please enter values in the required fields")
+            self.hideActivityIndicator()
             return false
         } else if self.verifyPasswords() {
             return true
         } else {
+            self.hideActivityIndicator()
             return false
         }
     }
@@ -384,15 +443,31 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
 
         self.present(alert, animated: true)
     }
+    private func displaySuccess(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }))
+
+        self.present(alert, animated: true)
+    }
+    
+    private func showActivityIndicator() {
+        self.view.isUserInteractionEnabled = false
+        self.activityIndicator.startAnimating()
+    }
+    private func hideActivityIndicator() {
+        self.view.isUserInteractionEnabled = true
+        self.activityIndicator.stopAnimating()
+    }
     
     // MARK: UIResponders
     @objc private func buttonClose_TouchUpInside(sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
     @objc private func buttonApply_TouchUpInside(sender: UIButton) {
-        if self.changePassword() {
-            self.dismiss(animated: true, completion: nil)
-        }
+        self.changePassword()
     }
     @objc private func gestureTap_Tap(gesture: UITapGestureRecognizer) {
         self.view.endEditing(true)
