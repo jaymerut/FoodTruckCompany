@@ -13,6 +13,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
     
     
     // MARK: - Variables
+    private var userApproved: Bool = false
+    private var companyApproved: Bool = false
     private var oldPhoneNumberValue: String = ""
     private let colorInProgress: UIColor = UIColor.init(hex: "0x3C9ADC")!
     private let colorRequired: UIColor = UIColor.init(hex: "0xDC3C4A")!
@@ -201,6 +203,23 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         return button
     }()
     
+    private lazy var firebaseCloudRead: FirebaseCloudRead = {
+        let firebaseCloudRead = FirebaseCloudRead.init()
+        
+        return firebaseCloudRead
+    }()
+    
+    private lazy var firebaseCloudUpdate: FirebaseCloudUpdate = {
+        let firebaseCloudUpdate = FirebaseCloudUpdate.init()
+        
+        return firebaseCloudUpdate
+    }()
+    
+    private lazy var dateTimeHelper: DateTimeHelper = {
+        let helper = DateTimeHelper.init()
+        
+        return helper
+    }()
     
     // MARK: - Initialization
     private func customInitRegisterViewController() {
@@ -265,7 +284,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         self.textFieldName.snp.makeConstraints { (make) in
             make.top.equalTo(self.containerView.snp.top)
             make.left.equalTo(self.containerView.snp.left)
-            make.right.equalTo(self.containerView.snp.right)
+            make.right.equalTo(self.containerView.snp.centerX).offset(-5)
             make.height.equalTo(40)
         }
         
@@ -273,7 +292,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         self.textFieldCompanyName.snp.makeConstraints { (make) in
             make.top.equalTo(self.textFieldName.snp.bottom).offset(10)
             make.left.equalTo(self.containerView.snp.left)
-            make.right.equalTo(self.containerView.snp.right)
+            make.right.equalTo(self.containerView.snp.centerX).offset(-5)
             make.height.equalTo(40)
         }
         
@@ -281,7 +300,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         self.textFieldPhoneNumber.snp.makeConstraints { (make) in
             make.top.equalTo(self.textFieldCompanyName.snp.bottom).offset(10)
             make.left.equalTo(self.containerView.snp.left)
-            make.right.equalTo(self.containerView.snp.right)
+            make.right.equalTo(self.containerView.snp.centerX).offset(-5)
             make.height.equalTo(40)
         }
         
@@ -289,7 +308,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         self.textFieldCuisine.snp.makeConstraints { (make) in
             make.top.equalTo(self.textFieldPhoneNumber.snp.bottom).offset(10)
             make.left.equalTo(self.containerView.snp.left)
-            make.right.equalTo(self.containerView.snp.right)
+            make.right.equalTo(self.containerView.snp.centerX).offset(-5)
             make.height.equalTo(40)
         }
         
@@ -297,14 +316,14 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         self.textFieldHours.snp.makeConstraints { (make) in
             make.top.equalTo(self.textFieldCuisine.snp.bottom).offset(10)
             make.left.equalTo(self.containerView.snp.left)
-            make.right.equalTo(self.containerView.snp.right)
+            make.right.equalTo(self.containerView.snp.centerX).offset(-5)
             make.height.equalTo(40)
         }
         
         self.containerView.addSubview(self.textFieldSiteURL)
         self.textFieldSiteURL.snp.makeConstraints { (make) in
-            make.top.equalTo(self.textFieldHours.snp.bottom).offset(10)
-            make.left.equalTo(self.containerView.snp.left)
+            make.top.equalTo(self.containerView.snp.top)
+            make.left.equalTo(self.containerView.snp.centerX).offset(5)
             make.right.equalTo(self.containerView.snp.right)
             make.height.equalTo(40)
         }
@@ -312,7 +331,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         self.containerView.addSubview(self.textFieldEmail)
         self.textFieldEmail.snp.makeConstraints { (make) in
             make.top.equalTo(self.textFieldSiteURL.snp.bottom).offset(10)
-            make.left.equalTo(self.containerView.snp.left)
+            make.left.equalTo(self.containerView.snp.centerX).offset(5)
             make.right.equalTo(self.containerView.snp.right)
             make.height.equalTo(40)
         }
@@ -320,7 +339,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         self.containerView.addSubview(self.textFieldPassword)
         self.textFieldPassword.snp.makeConstraints { (make) in
             make.top.equalTo(self.textFieldEmail.snp.bottom).offset(10)
-            make.left.equalTo(self.containerView.snp.left)
+            make.left.equalTo(self.containerView.snp.centerX).offset(5)
             make.right.equalTo(self.containerView.snp.right)
             make.height.equalTo(40)
         }
@@ -328,7 +347,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         self.containerView.addSubview(self.textFieldPasswordRepeat)
         self.textFieldPasswordRepeat.snp.makeConstraints { (make) in
             make.top.equalTo(self.textFieldPassword.snp.bottom).offset(10)
-            make.left.equalTo(self.containerView.snp.left)
+            make.left.equalTo(self.containerView.snp.centerX).offset(5)
             make.right.equalTo(self.containerView.snp.right)
             make.height.equalTo(40)
         }
@@ -346,7 +365,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
             self.textFieldPasswordRepeat.text?.count == 0 {
             self.displayMessage(title: "Error", message: "Please enter values in the required fields")
             return false
-        } else if self.verifyEmail() && self.verifyPhone() && self.verifyPasswords() {
+        } else if self.verifyEmail() && self.verifyPhone() && self.verifyPasswords() && self.verifySiteURL() {
             return true
         } else {
             return false
@@ -382,6 +401,18 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         
         return true
     }
+    private func verifySiteURL() -> Bool {
+        if self.textFieldSiteURL.text?.count ?? 0 > 0 {
+            if self.textFieldSiteURL.text?.hasSuffix(".com") ?? false || self.textFieldSiteURL.text?.hasSuffix(".org") ?? false || self.textFieldSiteURL.text?.hasSuffix(".edu") ?? false {
+                return true
+            } else {
+                self.displayMessage(title: "Error", message: "The site url is in an incorrect format.")
+                return false
+            }
+        } else {
+            return true
+        }
+    }
     
     private func displayMessage(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -389,6 +420,20 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
 
         self.present(alert, animated: true)
+    }
+    
+    private func displaySuccessMessages() {
+        let firstAlert = UIAlertController(title: "Success", message: "Successfully registered!", preferredStyle: .alert)
+        firstAlert.addAction(UIAlertAction(title: "Close", style: .default, handler: { (action) in
+            let secondAlert = UIAlertController(title: "Success", message: "Remember to add your company onto the map by using 'Update With Current Location' through your dealer portal.", preferredStyle: .alert)
+            secondAlert.addAction(UIAlertAction(title: "Close", style: .default, handler: { (alert) in
+                self.navigateToHome()
+            }))
+            
+            self.present(secondAlert, animated: true)
+        }))
+        
+        self.present(firstAlert, animated: true)
     }
     
     private func showActivityIndicator() {
@@ -402,12 +447,62 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         self.navigationItem.setRightBarButton(UIBarButtonItem.init(customView: self.buttonSubmit), animated: false)
     }
     
+    private func registerUser() {
+        FirebaseCloudRead.init().firebaseReadUsers { (users) in
+            self.doesUserExist(users: users ?? [User]())
+            if self.userApproved {
+                FirebaseCloudRead.init().firebaseReadCompanies { (companies) in
+                    self.doesCompanyExist(companies: companies ?? [Company]())
+                    if self.companyApproved {
+                        let newUser: User = User.init(email: self.textFieldEmail.text!, name: self.textFieldName.text!, password: self.textFieldPassword.text!, phonenumber: self.textFieldPhoneNumber.text!, company: self.textFieldCompanyName.text!)
+                        self.firebaseCloudUpdate.firebaseAddUser(newUser: newUser) { (user) in
+                            
+                            let newCompany: Company = Company.init(name: self.textFieldCompanyName.text!, latitude: 0.0, longitude: 0.0, linkedwith: self.textFieldName.text!, venderverified: true, cuisine: self.textFieldCuisine.text!, phonenumber: self.textFieldPhoneNumber.text!, siteurl: self.textFieldSiteURL.text ?? "", lastupdated: self.dateTimeHelper.retrieveCurrentDateTime(), hours: self.textFieldHours.text!)
+                            self.firebaseCloudUpdate.firebaseAddCompany(newCompany: newCompany) { (company) in
+                                SwiftAppDefaults.shared.user = user
+                                SwiftAppDefaults.shared.company = company
+                                
+                                self.displaySuccessMessages()
+                            }
+                            
+                        }
+                    } else {
+                        self.displayMessage(title: "Error", message: "Company name already exists. Please choose another company name.")
+                        self.hideActivityIndicator()
+                    }
+                }
+            } else {
+                self.displayMessage(title: "Error", message: "Email already exists. Please choose another email.")
+                self.hideActivityIndicator()
+            }
+        }
+    }
+    
+    private func doesUserExist(users: [User]) -> Bool {
+        for user in users {
+            if user.email.lowercased() == self.textFieldEmail.text?.lowercased() {
+                return true
+            }
+        }
+        self.userApproved = true
+        return false
+    }
+    private func doesCompanyExist(companies: [Company]) -> Bool {
+        for company in companies {
+            if company.name.lowercased() == self.textFieldCompanyName.text?.lowercased() {
+                return true
+            }
+        }
+        self.companyApproved = true
+        return false
+    }
+    
     // MARK: UIResponders
     @objc private func buttonSubmit_TouchUpInside(sender: UIButton) {
         self.showActivityIndicator()
         
         if self.verifyForm() {
-            // TODO
+            self.registerUser()
         } else {
             self.hideActivityIndicator()
         }
@@ -426,6 +521,16 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
     }
     
     // MARK: Navigation Logic
+    private func navigateToHome() {
+        let mainVC = HomeViewController()
+        let destinationNC = UINavigationController(rootViewController: mainVC)
+        destinationNC.navigationBar.barTintColor = UIColor.init(hex: "0x055e86")
+        destinationNC.navigationBar.tintColor = .white
+        destinationNC.navigationBar.isTranslucent = false
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.window?.rootViewController = destinationNC
+    }
     private func navigateToHoursSelect(hours: String) {
         let destinationVC = HoursSelectViewController.init()
         destinationVC.modalPresentationStyle = .overFullScreen

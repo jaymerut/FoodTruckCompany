@@ -34,6 +34,33 @@ class FirebaseCloudUpdate: NSObject {
     
     
     // MARK: - Public API
+    public func firebaseAddUser(newUser: User, completion: @escaping (_ user: User?) -> Void) {
+        let collection = Firestore.firestore().collection("Users")
+        
+        collection.document(newUser.email).setData(["email": newUser.email, "name": newUser.name, "password": newUser.password, "phonenumber": newUser.phonenumber, "company": newUser.company]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+                completion(nil)
+            } else {
+                print("Document succesfully created")
+                completion(newUser)
+            }
+        }
+    }
+    public func firebaseAddCompany(newCompany: Company, completion: @escaping (_ company: Company?) -> Void) {
+        let collection = Firestore.firestore().collection("Companies")
+        
+        collection.document(newCompany.name).setData(["name": newCompany.name, "latitude": newCompany.latitude, "longitude": newCompany.longitude, "linkedwith": newCompany.linkedwith, "venderverified": newCompany.venderverified, "cuisine": newCompany.cuisine, "phonenumber": newCompany.phonenumber, "siteurl": newCompany.siteurl, "lastupdated": newCompany.lastupdated, "hours": newCompany.hours]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+                completion(nil)
+            } else {
+                print("Document succesfully created")
+                completion(newCompany)
+            }
+        }
+    }
+    
     public func firebaseUpdateUser(modifiedUser: User, completion: @escaping (_ user: User?) -> Void) {
         let collection = Firestore.firestore().collection("Users")
  
@@ -47,6 +74,8 @@ class FirebaseCloudUpdate: NSObject {
                 completion(modifiedUser)
             }
         }
+        
+        
     }
     public func firebaseUpdateCompany(modifiedCompany: Company, completion: @escaping (_ user: Company?) -> Void) {
         let collection = Firestore.firestore().collection("Companies")

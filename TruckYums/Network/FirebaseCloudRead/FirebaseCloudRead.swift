@@ -52,7 +52,7 @@ class FirebaseCloudRead: NSObject {
         self.query = nil
         self.listener = nil
         self.query = baseQuery(collectionName: "Companies")
-        self.listener =  query?.addSnapshotListener { (documents, error) in
+        self.listener = query?.addSnapshotListener { (documents, error) in
             guard let snapshot = documents else {
                 print("Error fetching documents results: \(error!)")
                 return
@@ -71,6 +71,8 @@ class FirebaseCloudRead: NSObject {
         }
     }
     public func firebaseReadUsers(completion: @escaping (_ users: [User]?) -> Void) {
+        self.query = nil
+        self.listener = nil
         self.query = baseQuery(collectionName: "Users")
         self.listener =  query?.addSnapshotListener { (documents, error) in
             guard let snapshot = documents else {
