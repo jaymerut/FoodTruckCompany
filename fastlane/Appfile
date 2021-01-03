@@ -1,0 +1,8 @@
+app_identifier("com.jayme.rutkoski.TruckYums") # The bundle identifier of your app
+apple_id("jaymerut@gmail.com") # Your Apple email address
+
+itc_team_id("121374380") # App Store Connect Team ID
+team_id("BT4J67MR3F") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile

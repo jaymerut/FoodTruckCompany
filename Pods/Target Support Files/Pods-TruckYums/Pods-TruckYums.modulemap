@@ -1,0 +1,6 @@
+framework module Pods_TruckYums {
+  umbrella header "Pods-TruckYums-umbrella.h"
+
+  export *
+  module * { export * }
+}
