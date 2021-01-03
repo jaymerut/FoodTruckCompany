@@ -276,7 +276,15 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         //Set annotation-specific properties **AFTER**
         //the view is dequeued or created...
 
-        anView?.image = UIImage(named:"image_annotation")
+        let companyName = (annotation.title ?? "") ?? ""
+        let company = self.companies[companyName] ?? Company.init()
+        
+        if company.venderverified {
+            anView?.image = UIImage(named:"image_verified_annotation")
+        } else {
+            anView?.image = UIImage(named:"image_annotation")
+        }
+        
 
         return anView
     }
