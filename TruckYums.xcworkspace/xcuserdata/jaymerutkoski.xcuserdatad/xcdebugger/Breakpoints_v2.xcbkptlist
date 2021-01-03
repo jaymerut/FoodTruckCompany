@@ -830,9 +830,15 @@
             filePath = "TruckYums/ViewControllers/FindFoodTrucksViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
             startingLineNumber = "289"
             endingLineNumber = "289"
             landmarkName = "mapView(_:viewFor:)"
+=======
+            startingLineNumber = "281"
+            endingLineNumber = "281"
+            landmarkName = "mapView(_:didSelect:)"
+>>>>>>> develop
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -846,10 +852,17 @@
             filePath = "TruckYums/ViewControllers/FindFoodTrucksViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
             startingLineNumber = "290"
             endingLineNumber = "290"
             landmarkName = "FindFoodTrucksViewController"
             landmarkType = "3">
+=======
+            startingLineNumber = "282"
+            endingLineNumber = "282"
+            landmarkName = "mapView(_:didSelect:)"
+            landmarkType = "7">
+>>>>>>> develop
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1136,7 +1149,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "125"
             endingLineNumber = "125"
+<<<<<<< HEAD
             landmarkName = "viewWillAppear(_:)"
+=======
+            landmarkName = "viewDidLoad()"
+>>>>>>> develop
             landmarkType = "7">
             <Locations>
                <Location
@@ -1280,7 +1297,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "265"
             endingLineNumber = "265"
+<<<<<<< HEAD
             landmarkName = "mapView(_:viewFor:)"
+=======
+            landmarkName = "locationManager(_:didUpdateLocations:)"
+>>>>>>> develop
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1871,7 +1892,13 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "316"
+<<<<<<< HEAD
             endingLineNumber = "316">
+=======
+            endingLineNumber = "316"
+            landmarkName = "adViewDidReceiveAd(_:)"
+            landmarkType = "7">
+>>>>>>> develop
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1885,7 +1912,13 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "322"
+<<<<<<< HEAD
             endingLineNumber = "322">
+=======
+            endingLineNumber = "322"
+            landmarkName = "adView(_:didFailToReceiveAdWithError:)"
+            landmarkType = "7">
+>>>>>>> develop
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1899,7 +1932,13 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "313"
+<<<<<<< HEAD
             endingLineNumber = "313">
+=======
+            endingLineNumber = "313"
+            landmarkName = "adViewDidReceiveAd(_:)"
+            landmarkType = "7">
+>>>>>>> develop
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

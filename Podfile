@@ -11,6 +11,7 @@ target 'TruckYums' do
   pod 'Firebase/Firestore'
   pod 'SnapKit'
   pod 'Alamofire', '~> 5.2'
+  pod 'Google-Mobile-Ads-SDK'
 
   # Pods for TruckYums
 
