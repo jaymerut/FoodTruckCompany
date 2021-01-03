@@ -10,16 +10,24 @@ import UIKit
 import SnapKit
 import MapKit
 import CoreLocation
+import GoogleMobileAds
 
 
-class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, GADBannerViewDelegate {
     
     
     // MARK: - Variables
     public var companies: [String: Company] = [:]
+    var bannerView: GADBannerView!
     
     let distanceSpan: Double = 50
     
+    private lazy var stackViewBannerAds: UIStackView = {
+        let stackView = UIStackView(frame: .zero)
+        stackView.axis = .vertical
+        
+        return stackView
+    }()
     private lazy var labelTitle: UILabel = {
         let label = UILabel(frame: .zero)
         label.text = "Nearby Food Venders"
@@ -108,6 +116,12 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         self.view.backgroundColor = .white
         self.navigationItem.titleView = self.labelTitle
         
+        self.bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        self.bannerView.adUnitID = "ca-app-pub-7088839014127907/5824681329"
+        self.bannerView.rootViewController = self
+        self.bannerView.delegate = self
+        self.bannerView.load(GADRequest())
+        
         self.firebaseCloudRead.firebaseReadCompanies { (companies) in
             for company in companies ?? [Company]() {
                 self.companies[company.name] = company
@@ -133,9 +147,19 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     // MARK: - Private API
     private func setupFindFoodTrucksViewController() {
         
+        self.view.addSubview(self.stackViewBannerAds)
+        self.stackViewBannerAds.snp.makeConstraints { (make) in
+            make.top.equalTo(self.view.snp.top)
+            make.left.equalTo(self.view.snp.left)
+            make.right.equalTo(self.view.snp.right)
+            make.height.equalTo(0).priority(250);
+        }
         self.view.addSubview(self.mapView)
         self.mapView.snp.makeConstraints { (make) in
-            make.edges.equalTo(self.view)
+            make.top.equalTo(self.stackViewBannerAds.snp.bottom)
+            make.left.equalTo(self.view.snp.left)
+            make.right.equalTo(self.view.snp.right)
+            make.bottom.equalTo(self.view.snp.bottom)
         }
         
     }
@@ -283,6 +307,20 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     
     // MARK: - Public API
     
+    // MARK: Delegate Methods
+    
+    /// Tells the delegate an ad request loaded an ad.
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+        self.bannerView = bannerView
+        self.stackViewBannerAds.addArrangedSubview(self.bannerView)
+        print("adViewDidReceiveAd")
+    }
+
+    /// Tells the delegate an ad request failed.
+    func adView(_ bannerView: GADBannerView,
+        didFailToReceiveAdWithError error: GADRequestError) {
+      print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
     
     
 }
