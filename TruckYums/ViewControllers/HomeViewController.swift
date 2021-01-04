@@ -60,7 +60,7 @@ class HomeViewController: UIViewController {
     
     private lazy var buttonLogin: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Login as Vender", for: .normal)
+        button.setTitle("Login as Vendor", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.black, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
@@ -72,7 +72,7 @@ class HomeViewController: UIViewController {
     }()
     private lazy var buttonViewPortal: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("View Vender Portal", for: .normal)
+        button.setTitle("View Vendor Portal", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.black, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
@@ -84,7 +84,7 @@ class HomeViewController: UIViewController {
     }()
     private lazy var buttonFind: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Find Nearby Food Venders", for: .normal)
+        button.setTitle("Find Nearby Food Vendors", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.black, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)

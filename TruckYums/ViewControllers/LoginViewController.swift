@@ -116,9 +116,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         label.textAlignment = .center
         label.isUserInteractionEnabled = true
         
-        let text = NSMutableAttributedString(string: "New Food Vender? Register Here")
-        text.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.thick.rawValue, range: NSRange(location: "New Food Vender? ".count, length: "Register Here".count))
-        text.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hex: 0x09a0e5), range: NSRange(location: "New Food Vender? ".count, length: "Register Here".count))
+        let text = NSMutableAttributedString(string: "New Food Vendor? Register Here")
+        text.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.thick.rawValue, range: NSRange(location: "New Food Vendor? ".count, length: "Register Here".count))
+        text.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hex: 0x09a0e5), range: NSRange(location: "New Food Vendor? ".count, length: "Register Here".count))
         label.attributedText = text
         
         return label
