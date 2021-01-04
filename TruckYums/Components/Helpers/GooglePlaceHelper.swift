@@ -71,7 +71,7 @@ class GooglePlaceHelper: NSObject {
         company.siteurl = details.result.website
         company.hours = self.correctHoursString(hours: details.result.openingHours.weekdayText[self.indexOfCurrentWeekDay()])
         company.lastupdated = self.dateTimeHelper.retrieveCurrentDateTime()
-        company.cuisine = "Call Vender"
+        company.cuisine = "Call Vendor"
         
         return company
     }
