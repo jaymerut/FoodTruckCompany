@@ -21,12 +21,12 @@ struct GooglePlaceDetails: Codable {
     
     // MARK: - Result
     struct Result: Codable {
-        let formattedPhoneNumber: String
-        let geometry: Geometry
-        let name: String
-        let openingHours: OpeningHours
-        let types: [String]
-        let website: String
+        let formattedPhoneNumber: String?
+        let geometry: Geometry?
+        let name: String?
+        let openingHours: OpeningHours?
+        let types: [String]?
+        let website: String?
 
         enum CodingKeys: String, CodingKey {
             case formattedPhoneNumber = "formatted_phone_number"
