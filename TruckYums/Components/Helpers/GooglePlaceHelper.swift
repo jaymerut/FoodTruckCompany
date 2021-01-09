@@ -63,13 +63,15 @@ class GooglePlaceHelper: NSObject {
     // MARK: - Public API
     public func convertGooglePlaceDetailsToCompany(details: GooglePlaceDetails) -> Company {
         let company = Company.init()
-        company.name = details.result.name
-        company.latitude = details.result.geometry.location.lat
-        company.longitude = details.result.geometry.location.lng
+        company.name = details.result.name ?? ""
+        company.latitude = details.result.geometry?.location.lat ?? 0
+        company.longitude = details.result.geometry?.location.lng ?? 0
         company.venderverified = false
-        company.phonenumber = details.result.formattedPhoneNumber
-        company.siteurl = details.result.website
-        company.hours = self.correctHoursString(hours: details.result.openingHours.weekdayText[self.indexOfCurrentWeekDay()])
+        company.phonenumber = details.result.formattedPhoneNumber ?? ""
+        company.siteurl = details.result.website ?? ""
+        if (details.result.openingHours?.weekdayText.count ?? 0 > 0) {
+            company.hours = self.correctHoursString(hours: details.result.openingHours?.weekdayText[self.indexOfCurrentWeekDay()] ?? "Closed")
+        }
         company.lastupdated = self.dateTimeHelper.retrieveCurrentDateTime()
         company.cuisine = "Call Vendor"
         
