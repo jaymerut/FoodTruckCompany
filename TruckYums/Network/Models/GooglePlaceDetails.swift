@@ -37,25 +37,25 @@ struct GooglePlaceDetails: Codable {
         
         // MARK: - Geometry
         struct Geometry: Codable {
-            let location: Location
-            let viewport: Viewport
+            let location: Location?
+            let viewport: Viewport?
             
             // MARK: - Location
             struct Location: Codable {
-                let lat, lng: Double
+                let lat, lng: Double?
             }
 
             // MARK: - Viewport
             struct Viewport: Codable {
-                let northeast, southwest: Location
+                let northeast, southwest: Location?
             }
         }
         
         // MARK: - OpeningHours
         struct OpeningHours: Codable {
-            let openNow: Bool
-            let periods: [Period]
-            let weekdayText: [String]
+            let openNow: Bool?
+            let periods: [Period]?
+            let weekdayText: [String]?
 
             enum CodingKeys: String, CodingKey {
                 case openNow = "open_now"
@@ -65,7 +65,7 @@ struct GooglePlaceDetails: Codable {
             
             // MARK: - Period
             struct Period: Codable {
-                let close, periodOpen: Close
+                let close, periodOpen: Close?
 
                 enum CodingKeys: String, CodingKey {
                     case close
@@ -75,8 +75,8 @@ struct GooglePlaceDetails: Codable {
 
             // MARK: - Close
             struct Close: Codable {
-                let day: Int
-                let time: String
+                let day: Int?
+                let time: String?
             }
         }
     }
