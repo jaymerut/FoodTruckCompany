@@ -196,41 +196,43 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
               center: currentLocation.coordinate,
               latitudinalMeters: 50000,
               longitudinalMeters: 60000)
-        
-        self.googlePlacesAPI.getSearchNearby(keyword: "food+truck", latitude: locValue.latitude, longitude: locValue.longitude, radius: 30000) { (response) in
-            let result: GooglePlaceNearby = response.value!
-            
-            var index: Int = 0
-            for place in result.results {
-                self.googlePlacesAPI.getPlaceDetails(placeID: place.placeID, fields: ["name","formatted_phone_number","geometry","opening_hours","types","website"]) { (details) in
-                    if (details.value != nil) {
-                        let detailsResult: GooglePlaceDetails = details.value!
+
+        self.googlePlacesAPI.getSearchNearby(keyword: "food+truck", latitude: locValue.latitude, longitude: locValue.longitude, radius: 60000) { (response) in
+            if response.value != nil {
+                let result: GooglePlaceNearby = response.value!
+                
+                var index: Int = 0
+                for place in result.results {
+                    self.googlePlacesAPI.getPlaceDetails(placeID: place.placeID, fields: ["name","formatted_phone_number","geometry","opening_hours","types","website"]) { (details) in
+                        print(place.placeID)
+                        //if (details.value != nil) {
+                            let detailsResult: GooglePlaceDetails = details.value!
+                            
+                            let convertedCompany = self.googlePlaceHelper.convertGooglePlaceDetailsToCompany(details: detailsResult)
+                            
+                            let keyExists = self.companies[convertedCompany.name]
+                        if (keyExists == nil && convertedCompany.name.count > 0) {
+                                self.companies[convertedCompany.name] = convertedCompany
+                            }
+                        //}
                         
-                        let convertedCompany = self.googlePlaceHelper.convertGooglePlaceDetailsToCompany(details: detailsResult)
-                        
-                        let keyExists = self.companies[convertedCompany.name]
-                        if (keyExists == nil) {
-                            self.companies[convertedCompany.name] = convertedCompany
+                        if result.results.count <= index + 1 {
+                            for (key, value) in self.companies {
+                                let annotation = MKPointAnnotation()
+                                annotation.title = key
+                                annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
+                                self.mapView.addAnnotation(annotation)
+                            }
+                            
+                            let mapCamera = MKMapCamera(lookingAtCenter: locValue, fromEyeCoordinate: locValue, eyeAltitude: 15000)
+                            self.mapView.setCamera(mapCamera, animated: true)
+                            
+                            manager.stopUpdatingLocation()
                         }
+                        index+=1
                     }
-                    
-                    if result.results.count <= index + 1 {
-                        for (key, value) in self.companies {
-                            let annotation = MKPointAnnotation()
-                            annotation.title = key
-                            annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
-                            self.mapView.addAnnotation(annotation)
-                        }
-                        
-                        let mapCamera = MKMapCamera(lookingAtCenter: locValue, fromEyeCoordinate: locValue, eyeAltitude: 15000)
-                        self.mapView.setCamera(mapCamera, animated: true)
-                        
-                        manager.stopUpdatingLocation()
-                    }
-                    index+=1
                 }
             }
-            
             
         }
         
