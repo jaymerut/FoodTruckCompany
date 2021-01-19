@@ -468,7 +468,6 @@
 			buildConfigurationList = 96EB935C250EB96000ED0AB1 /* Build configuration list for PBXNativeTarget "TruckYums" */;
 			buildPhases = (
 				3C193B2D7787A20F3904207D /* [CP] Check Pods Manifest.lock */,
-				748289C45E713A7F41224E55 /* [CP] Prepare Artifacts */,
 				96EB932E250EB95C00ED0AB1 /* Sources */,
 				96EB932F250EB95C00ED0AB1 /* Frameworks */,
 				96EB9330250EB95C00ED0AB1 /* Resources */,
@@ -508,7 +507,6 @@
 			buildConfigurationList = 96EB9362250EB96000ED0AB1 /* Build configuration list for PBXNativeTarget "TruckYumsUITests" */;
 			buildPhases = (
 				49F55817D67A02ABC5EC26AE /* [CP] Check Pods Manifest.lock */,
-				0B200A7CF070DC71455F5081 /* [CP] Prepare Artifacts */,
 				96EB934F250EB96000ED0AB1 /* Sources */,
 				96EB9350250EB96000ED0AB1 /* Frameworks */,
 				96EB9351250EB96000ED0AB1 /* Resources */,
@@ -602,23 +600,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0B200A7CF070DC71455F5081 /* [CP] Prepare Artifacts */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TruckYums-TruckYumsUITests/Pods-TruckYums-TruckYumsUITests-artifacts-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Prepare Artifacts";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TruckYums-TruckYumsUITests/Pods-TruckYums-TruckYumsUITests-artifacts-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TruckYums-TruckYumsUITests/Pods-TruckYums-TruckYumsUITests-artifacts.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		3C193B2D7787A20F3904207D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -678,23 +659,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TruckYums-TruckYumsUITests/Pods-TruckYums-TruckYumsUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		748289C45E713A7F41224E55 /* [CP] Prepare Artifacts */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TruckYums/Pods-TruckYums-artifacts-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Prepare Artifacts";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TruckYums/Pods-TruckYums-artifacts-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TruckYums/Pods-TruckYums-artifacts.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		963F9E9D25AA250000746D1E /* Run Script - Crashlytics */ = {

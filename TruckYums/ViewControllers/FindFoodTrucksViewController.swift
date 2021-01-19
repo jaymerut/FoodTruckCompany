@@ -197,7 +197,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
               latitudinalMeters: 50000,
               longitudinalMeters: 60000)
 
-        self.googlePlacesAPI.getSearchNearby(keyword: "food+truck", latitude: locValue.latitude, longitude: locValue.longitude, radius: 60000) { (response) in
+        self.googlePlacesAPI.getSearchNearby(keyword: "food truck", latitude: locValue.latitude, longitude: locValue.longitude, radius: 60000) { (response) in
             if response.value != nil {
                 let result: GooglePlaceNearby = response.value!
                 
