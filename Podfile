@@ -12,8 +12,8 @@ target 'TruckYums' do
   pod 'Firebase/Crashlytics'
   pod 'Firebase/Analytics'
   pod 'SnapKit'
-  pod 'Alamofire', '~> 5.2'
   pod 'Google-Mobile-Ads-SDK'
+  pod 'RestKit'
 
   # Pods for TruckYums
 
