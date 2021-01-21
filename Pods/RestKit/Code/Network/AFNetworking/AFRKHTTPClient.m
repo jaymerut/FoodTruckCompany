@@ -79,8 +79,8 @@ static NSString * AFRKBase64EncodedStringFromString(NSString *string) {
 
     return [[NSString alloc] initWithData:mutableData encoding:NSASCIIStringEncoding];
 }
-
-static NSString * const kAFRKCharactersToBeEscapedInQueryString = @":/?&=;+!@#$()',*";
+//:/?&=;+!@#$()',*
+static NSString * const kAFRKCharactersToBeEscapedInQueryString = @"";
 
 static NSString * AFRKPercentEscapedQueryStringKeyFromStringWithEncoding(NSString *string, NSStringEncoding encoding) {
     static NSString * const kAFRKCharactersToLeaveUnescapedInQueryStringPairKey = @"[].";

@@ -61,11 +61,11 @@ class GooglePlaceHelper: NSObject {
     
     
     // MARK: - Public API
-    public func convertGooglePlaceDetailsToCompany(details: GooglePlaceDetails) -> Company {
+    public func convertGooglePlaceDetailsToCompany(details: GooglePlacesDetails) -> Company {
         let company = Company.init()
         company.name = details.result.name ?? ""
-        company.latitude = details.result.geometry?.location.lat ?? 0
-        company.longitude = details.result.geometry?.location.lng ?? 0
+        company.latitude = details.result.geometry.location.latitude as! Double
+        company.longitude = details.result.geometry.location.longitude as! Double
         company.venderverified = false
         company.phonenumber = details.result.formattedPhoneNumber ?? ""
         company.siteurl = details.result.website ?? ""

@@ -67,8 +67,8 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         
         return helper
     }()
-    private lazy var googlePlacesAPI: GooglePlacesAPI = {
-        let api = GooglePlacesAPI()
+    private lazy var googlePlacesAPI: GooglePlaceAPI = {
+        let api = GooglePlaceAPI()
         
         return api
     }()
@@ -197,42 +197,39 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
               latitudinalMeters: 50000,
               longitudinalMeters: 60000)
 
-        self.googlePlacesAPI.getSearchNearby(keyword: "food truck", latitude: locValue.latitude, longitude: locValue.longitude, radius: 60000) { (response) in
-            if response.value != nil {
-                let result: GooglePlaceNearby = response.value!
-                
-                var index: Int = 0
-                for place in result.results {
-                    self.googlePlacesAPI.getPlaceDetails(placeID: place.placeID, fields: ["name","formatted_phone_number","geometry","opening_hours","types","website"]) { (details) in
-                        print(place.placeID)
-                        //if (details.value != nil) {
-                            let detailsResult: GooglePlaceDetails = details.value!
-                            
-                            let convertedCompany = self.googlePlaceHelper.convertGooglePlaceDetailsToCompany(details: detailsResult)
-                            
-                            let keyExists = self.companies[convertedCompany.name]
-                        if (keyExists == nil && convertedCompany.name.count > 0) {
-                                self.companies[convertedCompany.name] = convertedCompany
-                            }
-                        //}
+        self.googlePlacesAPI.searchNearby("food trucks", latitude: locValue.latitude as NSNumber, longitude: locValue.longitude as NSNumber, radius: 60000) { (result) in
+            var index: Int = 0
+            for place in result!.results {
+                self.googlePlacesAPI.getPlaceDetails(place.reference, fields: ["name","formatted_phone_number","geometry","opening_hours","types","website"]) { (detailsResult) in
+                    if (detailsResult?.status == "OK") {
                         
-                        if result.results.count <= index + 1 {
-                            for (key, value) in self.companies {
-                                let annotation = MKPointAnnotation()
-                                annotation.title = key
-                                annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
-                                self.mapView.addAnnotation(annotation)
-                            }
-                            
-                            let mapCamera = MKMapCamera(lookingAtCenter: locValue, fromEyeCoordinate: locValue, eyeAltitude: 15000)
-                            self.mapView.setCamera(mapCamera, animated: true)
-                            
-                            manager.stopUpdatingLocation()
+                        let convertedCompany = self.googlePlaceHelper.convertGooglePlaceDetailsToCompany(details: detailsResult!)
+                        
+                        let keyExists = self.companies[convertedCompany.name]
+                        if (keyExists == nil && convertedCompany.name.count > 0) {
+                            self.companies[convertedCompany.name] = convertedCompany
                         }
-                        index+=1
                     }
+                    
+                    if result!.results.count <= index + 1 {
+                        for (key, value) in self.companies {
+                            let annotation = MKPointAnnotation()
+                            annotation.title = key
+                            annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
+                            self.mapView.addAnnotation(annotation)
+                        }
+                        
+                        let mapCamera = MKMapCamera(lookingAtCenter: locValue, fromEyeCoordinate: locValue, eyeAltitude: 15000)
+                        self.mapView.setCamera(mapCamera, animated: true)
+                        
+                        manager.stopUpdatingLocation()
+                    }
+                    index+=1
+                } failure: { (error) in
+                    
                 }
             }
+        } failure: { (error) in
             
         }
         

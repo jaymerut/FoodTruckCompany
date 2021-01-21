@@ -21,6 +21,22 @@
 		965CEA66256FD57800ACE673 /* Teko-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 965CEA61256FD57800ACE673 /* Teko-Light.ttf */; };
 		965CEA67256FD57800ACE673 /* Teko-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 965CEA62256FD57800ACE673 /* Teko-Bold.ttf */; };
 		965CEAA22570105600ACE673 /* FindFoodTrucksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965CEAA12570105600ACE673 /* FindFoodTrucksViewController.swift */; };
+		96685E8A25B68C7C0047AD53 /* GooglePlacesResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685E8925B68C7C0047AD53 /* GooglePlacesResult.m */; };
+		96685E8F25B68F8A0047AD53 /* GooglePlacesNearby.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685E8E25B68F8A0047AD53 /* GooglePlacesNearby.m */; };
+		96685E9425B691290047AD53 /* GooglePlacesDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685E9325B691290047AD53 /* GooglePlacesDetails.m */; };
+		96685E9725B691F80047AD53 /* GooglePlacesResultDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685E9625B691F80047AD53 /* GooglePlacesResultDetails.m */; };
+		96685E9A25B695030047AD53 /* GooglePlacesGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685E9925B695030047AD53 /* GooglePlacesGeometry.m */; };
+		96685E9D25B695100047AD53 /* GooglePlacesOpeningHours.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685E9C25B695100047AD53 /* GooglePlacesOpeningHours.m */; };
+		96685EA025B6954B0047AD53 /* GooglePlacesLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685E9F25B6954B0047AD53 /* GooglePlacesLocation.m */; };
+		96685EA325B695790047AD53 /* GooglePlacesPeriod.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685EA225B695790047AD53 /* GooglePlacesPeriod.m */; };
+		96685EA625B6962B0047AD53 /* GooglePlacesClose.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685EA525B6962A0047AD53 /* GooglePlacesClose.m */; };
+		96685EA925B69CD60047AD53 /* GooglePlaceAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685EA825B69CD60047AD53 /* GooglePlaceAPI.m */; };
+		96685EAD25B69E310047AD53 /* GooglePlacesRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685EAC25B69E310047AD53 /* GooglePlacesRouter.m */; };
+		96685EB125B69EC30047AD53 /* NetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685EB025B69EC30047AD53 /* NetworkClient.m */; };
+		96685EB425B6A0590047AD53 /* NetworkRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685EB325B6A0590047AD53 /* NetworkRouter.m */; };
+		96685EB725B7733C0047AD53 /* NetworkController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685EB625B7733C0047AD53 /* NetworkController.m */; };
+		96685EBA25B773AB0047AD53 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685EB925B773AB0047AD53 /* NetworkManager.m */; };
+		96685EC025B773F50047AD53 /* NetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685EBF25B773F50047AD53 /* NetworkOperation.m */; };
 		9672811E2581088600F482BC /* FirebaseCloudRead.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9672811D2581088600F482BC /* FirebaseCloudRead.swift */; };
 		967281AA2581115900F482BC /* FirebaseCloudUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967281A92581115900F482BC /* FirebaseCloudUpdate.swift */; };
 		96835F9B2586CF1700C87844 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96835F9A2586CF1700C87844 /* GoogleService-Info.plist */; };
@@ -84,6 +100,40 @@
 		965CEA61256FD57800ACE673 /* Teko-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Teko-Light.ttf"; path = "../../../../../../Downloads/Teko/Teko-Light.ttf"; sourceTree = "<group>"; };
 		965CEA62256FD57800ACE673 /* Teko-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Teko-Bold.ttf"; path = "../../../../../../Downloads/Teko/Teko-Bold.ttf"; sourceTree = "<group>"; };
 		965CEAA12570105600ACE673 /* FindFoodTrucksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindFoodTrucksViewController.swift; sourceTree = "<group>"; };
+		96685E8625B68A9B0047AD53 /* TruckYums-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TruckYums-Bridging-Header.h"; sourceTree = "<group>"; };
+		96685E8825B68C7C0047AD53 /* GooglePlacesResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GooglePlacesResult.h; sourceTree = "<group>"; };
+		96685E8925B68C7C0047AD53 /* GooglePlacesResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GooglePlacesResult.m; sourceTree = "<group>"; };
+		96685E8C25B68E520047AD53 /* RKObjectMappingProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RKObjectMappingProtocol.h; sourceTree = "<group>"; };
+		96685E8D25B68F8A0047AD53 /* GooglePlacesNearby.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GooglePlacesNearby.h; sourceTree = "<group>"; };
+		96685E8E25B68F8A0047AD53 /* GooglePlacesNearby.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GooglePlacesNearby.m; sourceTree = "<group>"; };
+		96685E9225B691290047AD53 /* GooglePlacesDetails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GooglePlacesDetails.h; sourceTree = "<group>"; };
+		96685E9325B691290047AD53 /* GooglePlacesDetails.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GooglePlacesDetails.m; sourceTree = "<group>"; };
+		96685E9525B691F80047AD53 /* GooglePlacesResultDetails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GooglePlacesResultDetails.h; sourceTree = "<group>"; };
+		96685E9625B691F80047AD53 /* GooglePlacesResultDetails.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GooglePlacesResultDetails.m; sourceTree = "<group>"; };
+		96685E9825B695030047AD53 /* GooglePlacesGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GooglePlacesGeometry.h; sourceTree = "<group>"; };
+		96685E9925B695030047AD53 /* GooglePlacesGeometry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GooglePlacesGeometry.m; sourceTree = "<group>"; };
+		96685E9B25B695100047AD53 /* GooglePlacesOpeningHours.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GooglePlacesOpeningHours.h; sourceTree = "<group>"; };
+		96685E9C25B695100047AD53 /* GooglePlacesOpeningHours.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GooglePlacesOpeningHours.m; sourceTree = "<group>"; };
+		96685E9E25B6954B0047AD53 /* GooglePlacesLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GooglePlacesLocation.h; sourceTree = "<group>"; };
+		96685E9F25B6954B0047AD53 /* GooglePlacesLocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GooglePlacesLocation.m; sourceTree = "<group>"; };
+		96685EA125B695790047AD53 /* GooglePlacesPeriod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GooglePlacesPeriod.h; sourceTree = "<group>"; };
+		96685EA225B695790047AD53 /* GooglePlacesPeriod.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GooglePlacesPeriod.m; sourceTree = "<group>"; };
+		96685EA425B6962A0047AD53 /* GooglePlacesClose.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GooglePlacesClose.h; sourceTree = "<group>"; };
+		96685EA525B6962A0047AD53 /* GooglePlacesClose.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GooglePlacesClose.m; sourceTree = "<group>"; };
+		96685EA725B69CD60047AD53 /* GooglePlaceAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GooglePlaceAPI.h; sourceTree = "<group>"; };
+		96685EA825B69CD60047AD53 /* GooglePlaceAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GooglePlaceAPI.m; sourceTree = "<group>"; };
+		96685EAB25B69E310047AD53 /* GooglePlacesRouter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GooglePlacesRouter.h; sourceTree = "<group>"; };
+		96685EAC25B69E310047AD53 /* GooglePlacesRouter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GooglePlacesRouter.m; sourceTree = "<group>"; };
+		96685EAF25B69EC30047AD53 /* NetworkClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkClient.h; sourceTree = "<group>"; };
+		96685EB025B69EC30047AD53 /* NetworkClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkClient.m; sourceTree = "<group>"; };
+		96685EB225B6A0590047AD53 /* NetworkRouter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkRouter.h; sourceTree = "<group>"; };
+		96685EB325B6A0590047AD53 /* NetworkRouter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkRouter.m; sourceTree = "<group>"; };
+		96685EB525B7733C0047AD53 /* NetworkController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkController.h; sourceTree = "<group>"; };
+		96685EB625B7733C0047AD53 /* NetworkController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkController.m; sourceTree = "<group>"; };
+		96685EB825B773AB0047AD53 /* NetworkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
+		96685EB925B773AB0047AD53 /* NetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
+		96685EBE25B773F50047AD53 /* NetworkOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkOperation.h; sourceTree = "<group>"; };
+		96685EBF25B773F50047AD53 /* NetworkOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkOperation.m; sourceTree = "<group>"; };
 		9672811D2581088600F482BC /* FirebaseCloudRead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCloudRead.swift; sourceTree = "<group>"; };
 		967281A92581115900F482BC /* FirebaseCloudUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCloudUpdate.swift; sourceTree = "<group>"; };
 		96835F9A2586CF1700C87844 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -163,7 +213,10 @@
 		961ED148259CC06E0012E55F /* GooglePlacesAPI */ = {
 			isa = PBXGroup;
 			children = (
+				96685EAA25B69DA40047AD53 /* Router */,
 				961ED149259CC0840012E55F /* GooglePlacesAPI.swift */,
+				96685EA725B69CD60047AD53 /* GooglePlaceAPI.h */,
+				96685EA825B69CD60047AD53 /* GooglePlaceAPI.m */,
 			);
 			path = GooglePlacesAPI;
 			sourceTree = "<group>";
@@ -179,6 +232,7 @@
 		961ED1AB259CCE9E0012E55F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				96685E8725B68B3E0047AD53 /* GooglePlacesAPI */,
 				961ED1AC259CCEB50012E55F /* GooglePlaceNearby.swift */,
 				961ED1B4259CCF7E0012E55F /* GooglePlaceDetails.swift */,
 			);
@@ -196,6 +250,81 @@
 				965CEA60256FD57700ACE673 /* Teko-SemiBold.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		96685E8725B68B3E0047AD53 /* GooglePlacesAPI */ = {
+			isa = PBXGroup;
+			children = (
+				96685E9125B691160047AD53 /* Details */,
+				96685E9025B691090047AD53 /* Nearby */,
+			);
+			path = GooglePlacesAPI;
+			sourceTree = "<group>";
+		};
+		96685E8B25B68E280047AD53 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				96685E8C25B68E520047AD53 /* RKObjectMappingProtocol.h */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		96685E9025B691090047AD53 /* Nearby */ = {
+			isa = PBXGroup;
+			children = (
+				96685E8825B68C7C0047AD53 /* GooglePlacesResult.h */,
+				96685E8925B68C7C0047AD53 /* GooglePlacesResult.m */,
+				96685E8D25B68F8A0047AD53 /* GooglePlacesNearby.h */,
+				96685E8E25B68F8A0047AD53 /* GooglePlacesNearby.m */,
+			);
+			path = Nearby;
+			sourceTree = "<group>";
+		};
+		96685E9125B691160047AD53 /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				96685E9225B691290047AD53 /* GooglePlacesDetails.h */,
+				96685E9325B691290047AD53 /* GooglePlacesDetails.m */,
+				96685E9525B691F80047AD53 /* GooglePlacesResultDetails.h */,
+				96685E9625B691F80047AD53 /* GooglePlacesResultDetails.m */,
+				96685E9825B695030047AD53 /* GooglePlacesGeometry.h */,
+				96685E9925B695030047AD53 /* GooglePlacesGeometry.m */,
+				96685E9B25B695100047AD53 /* GooglePlacesOpeningHours.h */,
+				96685E9C25B695100047AD53 /* GooglePlacesOpeningHours.m */,
+				96685E9E25B6954B0047AD53 /* GooglePlacesLocation.h */,
+				96685E9F25B6954B0047AD53 /* GooglePlacesLocation.m */,
+				96685EA125B695790047AD53 /* GooglePlacesPeriod.h */,
+				96685EA225B695790047AD53 /* GooglePlacesPeriod.m */,
+				96685EA425B6962A0047AD53 /* GooglePlacesClose.h */,
+				96685EA525B6962A0047AD53 /* GooglePlacesClose.m */,
+			);
+			path = Details;
+			sourceTree = "<group>";
+		};
+		96685EAA25B69DA40047AD53 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				96685EAB25B69E310047AD53 /* GooglePlacesRouter.h */,
+				96685EAC25B69E310047AD53 /* GooglePlacesRouter.m */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		96685EAE25B69EAF0047AD53 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				96685EAF25B69EC30047AD53 /* NetworkClient.h */,
+				96685EB025B69EC30047AD53 /* NetworkClient.m */,
+				96685EB225B6A0590047AD53 /* NetworkRouter.h */,
+				96685EB325B6A0590047AD53 /* NetworkRouter.m */,
+				96685EB525B7733C0047AD53 /* NetworkController.h */,
+				96685EB625B7733C0047AD53 /* NetworkController.m */,
+				96685EB825B773AB0047AD53 /* NetworkManager.h */,
+				96685EB925B773AB0047AD53 /* NetworkManager.m */,
+				96685EBE25B773F50047AD53 /* NetworkOperation.h */,
+				96685EBF25B773F50047AD53 /* NetworkOperation.m */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		967281192581080F00F482BC /* FirebaseCloudRead */ = {
@@ -325,6 +454,7 @@
 				96EB9369250EBDC700ED0AB1 /* Network */,
 				96EB9368250EBDBF00ED0AB1 /* Resources */,
 				96EB9367250EBDBA00ED0AB1 /* AppDelegate */,
+				96685E8625B68A9B0047AD53 /* TruckYums-Bridging-Header.h */,
 			);
 			path = TruckYums;
 			sourceTree = "<group>";
@@ -385,6 +515,8 @@
 		96EB9369250EBDC700ED0AB1 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				96685EAE25B69EAF0047AD53 /* Core */,
+				96685E8B25B68E280047AD53 /* Support */,
 				961ED1AB259CCE9E0012E55F /* Models */,
 				961ED16E259CC2830012E55F /* API */,
 				967281192581080F00F482BC /* FirebaseCloudRead */,
@@ -727,29 +859,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96685E9725B691F80047AD53 /* GooglePlacesResultDetails.m in Sources */,
 				96B78EB8258832D50067C147 /* String+Substring.swift in Sources */,
 				961ED13E259C124E0012E55F /* MKPointOfInterestCategoryHelper.swift in Sources */,
+				96685EB125B69EC30047AD53 /* NetworkClient.m in Sources */,
 				9684FEB225719E4D00830C46 /* DealerPortalViewController.swift in Sources */,
+				96685E8A25B68C7C0047AD53 /* GooglePlacesResult.m in Sources */,
 				9684FE75257097B500830C46 /* LoginViewController.swift in Sources */,
 				968CFE1C259A38FB00AA282B /* DateTimeHelper.swift in Sources */,
+				96685EA325B695790047AD53 /* GooglePlacesPeriod.m in Sources */,
 				961ED139259BDD570012E55F /* QueryHelper.swift in Sources */,
 				96EB9336250EB95C00ED0AB1 /* AppDelegate.swift in Sources */,
+				96685E9A25B695030047AD53 /* GooglePlacesGeometry.m in Sources */,
+				96685EA625B6962B0047AD53 /* GooglePlacesClose.m in Sources */,
+				96685EB425B6A0590047AD53 /* NetworkRouter.m in Sources */,
 				968CFDBF2598DBFF00AA282B /* HoursSelectViewController.swift in Sources */,
 				961EDCBA259EADD90012E55F /* ForgotPasswordViewController.swift in Sources */,
+				96685EC025B773F50047AD53 /* NetworkOperation.m in Sources */,
 				96B2C3E52582EA3000F15941 /* CompanyDetailViewController.swift in Sources */,
 				9684FE9E25713ADB00830C46 /* SwiftAppDefaults.swift in Sources */,
 				961ED1B5259CCF7E0012E55F /* GooglePlaceDetails.swift in Sources */,
+				96685E9D25B695100047AD53 /* GooglePlacesOpeningHours.m in Sources */,
 				9684FE832570AE8A00830C46 /* RegisterViewController.swift in Sources */,
 				965CEAA22570105600ACE673 /* FindFoodTrucksViewController.swift in Sources */,
+				96685EA025B6954B0047AD53 /* GooglePlacesLocation.m in Sources */,
+				96685EA925B69CD60047AD53 /* GooglePlaceAPI.m in Sources */,
 				9672811E2581088600F482BC /* FirebaseCloudRead.swift in Sources */,
+				96685EAD25B69E310047AD53 /* GooglePlacesRouter.m in Sources */,
 				968CFDC42599876600AA282B /* SelectCuisineValueViewController.swift in Sources */,
 				967281AA2581115900F482BC /* FirebaseCloudUpdate.swift in Sources */,
+				96685EBA25B773AB0047AD53 /* NetworkManager.m in Sources */,
 				9684FE982570BED300830C46 /* User.swift in Sources */,
 				96BB89BD256F2C4000B5AD7B /* UIColor+Hex.swift in Sources */,
 				9684FE2C2570570400830C46 /* Company.swift in Sources */,
+				96685E9425B691290047AD53 /* GooglePlacesDetails.m in Sources */,
 				961ED1BA259CD3CE0012E55F /* GooglePlaceHelper.swift in Sources */,
 				961ED1AD259CCEB60012E55F /* GooglePlaceNearby.swift in Sources */,
+				96685E8F25B68F8A0047AD53 /* GooglePlacesNearby.m in Sources */,
 				96EB9371250EBFB500ED0AB1 /* HomeViewController.swift in Sources */,
+				96685EB725B7733C0047AD53 /* NetworkController.m in Sources */,
 				961ED14A259CC0850012E55F /* GooglePlacesAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -930,6 +1078,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jayme.rutkoski.TruckYums;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jaymerutkoski/Desktop/Personal Projects/TruckYums/TruckYums/TruckYums-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -953,6 +1102,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jayme.rutkoski.TruckYums;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = TruckYums;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jaymerutkoski/Desktop/Personal Projects/TruckYums/TruckYums/TruckYums-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
