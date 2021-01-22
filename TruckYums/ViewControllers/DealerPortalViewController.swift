@@ -239,6 +239,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         textField.delegate = self
         textField.font = UIFont(name: "Teko-Regular", size: 18.0)
         textField.placeholder = "Enter Site Url"
+        textField.text = SwiftAppDefaults.shared.company?.siteurl
         textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
         textField.layer.borderWidth = 2
         textField.layer.cornerRadius = 6.0
