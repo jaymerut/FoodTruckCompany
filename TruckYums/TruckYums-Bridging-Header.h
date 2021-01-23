@@ -10,5 +10,6 @@
 #define TruckYums_Bridging_Header_h
 
 #import "GooglePlaceAPI.h"
+#import <IGListKit/IGListKit.h>
 
 #endif /* TruckYums_Bridging_Header_h */

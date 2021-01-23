@@ -34,6 +34,8 @@
 		96685EB725B7733C0047AD53 /* NetworkController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685EB625B7733C0047AD53 /* NetworkController.m */; };
 		96685EBA25B773AB0047AD53 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685EB925B773AB0047AD53 /* NetworkManager.m */; };
 		96685EC025B773F50047AD53 /* NetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685EBF25B773F50047AD53 /* NetworkOperation.m */; };
+		96686BDE25BA91430047AD53 /* MoreHoursSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96686BDD25BA91420047AD53 /* MoreHoursSectionController.swift */; };
+		96686BE425BA92BE0047AD53 /* MoreHoursCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96686BE325BA92BE0047AD53 /* MoreHoursCollectionViewCell.swift */; };
 		9672811E2581088600F482BC /* FirebaseCloudRead.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9672811D2581088600F482BC /* FirebaseCloudRead.swift */; };
 		967281AA2581115900F482BC /* FirebaseCloudUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967281A92581115900F482BC /* FirebaseCloudUpdate.swift */; };
 		96835F9B2586CF1700C87844 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96835F9A2586CF1700C87844 /* GoogleService-Info.plist */; };
@@ -51,6 +53,7 @@
 		96B78EB8258832D50067C147 /* String+Substring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B78EB7258832D50067C147 /* String+Substring.swift */; };
 		96BB89B5256F2B3D00B5AD7B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96BB89B4256F2B3D00B5AD7B /* Images.xcassets */; };
 		96BB89BD256F2C4000B5AD7B /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BB89BC256F2C4000B5AD7B /* UIColor+Hex.swift */; };
+		96D79B5C25BBC11C00DE5FC9 /* MoreHoursViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D79B5B25BBC11C00DE5FC9 /* MoreHoursViewController.swift */; };
 		96EB9336250EB95C00ED0AB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EB9335250EB95C00ED0AB1 /* AppDelegate.swift */; };
 		96EB933F250EB95F00ED0AB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96EB933E250EB95F00ED0AB1 /* Assets.xcassets */; };
 		96EB9342250EB95F00ED0AB1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96EB9340250EB95F00ED0AB1 /* LaunchScreen.storyboard */; };
@@ -128,6 +131,8 @@
 		96685EB925B773AB0047AD53 /* NetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
 		96685EBE25B773F50047AD53 /* NetworkOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkOperation.h; sourceTree = "<group>"; };
 		96685EBF25B773F50047AD53 /* NetworkOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkOperation.m; sourceTree = "<group>"; };
+		96686BDD25BA91420047AD53 /* MoreHoursSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MoreHoursSectionController.swift; path = TruckYums/Components/MoreHoursSectionController.swift; sourceTree = SOURCE_ROOT; };
+		96686BE325BA92BE0047AD53 /* MoreHoursCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreHoursCollectionViewCell.swift; sourceTree = "<group>"; };
 		9672811D2581088600F482BC /* FirebaseCloudRead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCloudRead.swift; sourceTree = "<group>"; };
 		967281A92581115900F482BC /* FirebaseCloudUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCloudUpdate.swift; sourceTree = "<group>"; };
 		96835F9A2586CF1700C87844 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -145,6 +150,7 @@
 		96B78EB7258832D50067C147 /* String+Substring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Substring.swift"; sourceTree = "<group>"; };
 		96BB89B4256F2B3D00B5AD7B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		96BB89BC256F2C4000B5AD7B /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
+		96D79B5B25BBC11C00DE5FC9 /* MoreHoursViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreHoursViewController.swift; sourceTree = "<group>"; };
 		96EB9332250EB95C00ED0AB1 /* TruckYums.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TruckYums.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96EB9335250EB95C00ED0AB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		96EB933E250EB95F00ED0AB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -318,6 +324,46 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		96686BDA25BA90F20047AD53 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				96686BDB25BA90F20047AD53 /* SectionControllers */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		96686BDB25BA90F20047AD53 /* SectionControllers */ = {
+			isa = PBXGroup;
+			children = (
+				96686BDC25BA90F20047AD53 /* MoreHours */,
+			);
+			path = SectionControllers;
+			sourceTree = "<group>";
+		};
+		96686BDC25BA90F20047AD53 /* MoreHours */ = {
+			isa = PBXGroup;
+			children = (
+				96686BDD25BA91420047AD53 /* MoreHoursSectionController.swift */,
+			);
+			path = MoreHours;
+			sourceTree = "<group>";
+		};
+		96686BE025BA92850047AD53 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				96686BE225BA92A20047AD53 /* UICollectionViewCell */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		96686BE225BA92A20047AD53 /* UICollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				96686BE325BA92BE0047AD53 /* MoreHoursCollectionViewCell.swift */,
+			);
+			path = UICollectionViewCell;
+			sourceTree = "<group>";
+		};
 		967281192581080F00F482BC /* FirebaseCloudRead */ = {
 			isa = PBXGroup;
 			children = (
@@ -375,21 +421,14 @@
 			path = String;
 			sourceTree = "<group>";
 		};
-		96BB8989256F184F00B5AD7B /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		96BB89B9256F2C1B00B5AD7B /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				968CFE1A259A38EB00AA282B /* Helpers */,
 				968CFDC82599890500AA282B /* Constants */,
+				96686BDA25BA90F20047AD53 /* Controllers */,
 				9684FE9C25713AB700830C46 /* AppDefaults */,
 				96BB89BA256F2C2400B5AD7B /* Extensions */,
-				96BB8989256F184F00B5AD7B /* Controllers */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -440,7 +479,7 @@
 				96EB9365250EBDA200ED0AB1 /* Models */,
 				96EB9366250EBDAB00ED0AB1 /* Categories */,
 				96EB936C250EBDD900ED0AB1 /* Classes */,
-				96EB936B250EBDD400ED0AB1 /* Views */,
+				96686BE025BA92850047AD53 /* Views */,
 				96EB936A250EBDCC00ED0AB1 /* ViewControllers */,
 				96EB9369250EBDC700ED0AB1 /* Network */,
 				96EB9368250EBDBF00ED0AB1 /* Resources */,
@@ -529,15 +568,9 @@
 				968CFDBE2598DBFF00AA282B /* HoursSelectViewController.swift */,
 				968CFDC32599876600AA282B /* SelectCuisineValueViewController.swift */,
 				961EDCB9259EADD90012E55F /* ForgotPasswordViewController.swift */,
+				96D79B5B25BBC11C00DE5FC9 /* MoreHoursViewController.swift */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		96EB936B250EBDD400ED0AB1 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		96EB936C250EBDD900ED0AB1 /* Classes */ = {
@@ -858,6 +891,7 @@
 				96685E8A25B68C7C0047AD53 /* GooglePlacesResult.m in Sources */,
 				9684FE75257097B500830C46 /* LoginViewController.swift in Sources */,
 				968CFE1C259A38FB00AA282B /* DateTimeHelper.swift in Sources */,
+				96686BDE25BA91430047AD53 /* MoreHoursSectionController.swift in Sources */,
 				96685EA325B695790047AD53 /* GooglePlacesPeriod.m in Sources */,
 				961ED139259BDD570012E55F /* QueryHelper.swift in Sources */,
 				96EB9336250EB95C00ED0AB1 /* AppDelegate.swift in Sources */,
@@ -866,7 +900,9 @@
 				96685EB425B6A0590047AD53 /* NetworkRouter.m in Sources */,
 				968CFDBF2598DBFF00AA282B /* HoursSelectViewController.swift in Sources */,
 				961EDCBA259EADD90012E55F /* ForgotPasswordViewController.swift in Sources */,
+				96686BE425BA92BE0047AD53 /* MoreHoursCollectionViewCell.swift in Sources */,
 				96685EC025B773F50047AD53 /* NetworkOperation.m in Sources */,
+				96D79B5C25BBC11C00DE5FC9 /* MoreHoursViewController.swift in Sources */,
 				96B2C3E52582EA3000F15941 /* CompanyDetailViewController.swift in Sources */,
 				9684FE9E25713ADB00830C46 /* SwiftAppDefaults.swift in Sources */,
 				96685E9D25B695100047AD53 /* GooglePlacesOpeningHours.m in Sources */,

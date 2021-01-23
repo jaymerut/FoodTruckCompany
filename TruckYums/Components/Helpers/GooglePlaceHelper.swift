@@ -72,6 +72,7 @@ class GooglePlaceHelper: NSObject {
         if (details.result.openingHours?.weekdayText.count ?? 0 > 0) {
             company.hours = self.correctHoursString(hours: details.result.openingHours?.weekdayText[self.indexOfCurrentWeekDay()] ?? "Closed")
         }
+        company.weeklyhours = details.result.openingHours?.weekdayText ?? [String]()
         company.lastupdated = self.dateTimeHelper.retrieveCurrentDateTime()
         company.cuisine = "Call Vendor"
         

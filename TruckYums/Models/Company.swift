@@ -20,6 +20,7 @@ class Company: NSObject, NSCoding {
         siteurl = coder.decodeObject(forKey: "siteurl") as? String ?? ""
         lastupdated = coder.decodeObject(forKey: "lastupdated") as? String ?? ""
         hours = coder.decodeObject(forKey: "hours") as? String ?? ""
+        weeklyhours = coder.decodeObject(forKey: "weeklyhours") as? [String] ?? [String]()
     }
     
     func encode(with coder: NSCoder) {
@@ -33,6 +34,7 @@ class Company: NSObject, NSCoding {
         coder.encode(siteurl, forKey: "siteurl")
         coder.encode(lastupdated, forKey: "lastupdated")
         coder.encode(hours, forKey: "hours")
+        coder.encode(weeklyhours, forKey: "weeklyhours")
     }
     
     var name: String = ""
@@ -45,6 +47,7 @@ class Company: NSObject, NSCoding {
     var siteurl: String = ""
     var lastupdated: String = ""
     var hours: String = ""
+    var weeklyhours: [String] = [String]()
     
      
     var dictionary: [String: Any] {
