@@ -15,7 +15,6 @@ class MoreHoursSectionController: ListSectionController {
     // MARK: - Variables
     private var hours: String = ""
     
-    
     // MARK: - Initialization
     private func customInitMoreHoursSectionController() {
         

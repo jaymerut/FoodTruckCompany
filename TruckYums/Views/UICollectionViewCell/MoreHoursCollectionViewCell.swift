@@ -15,9 +15,15 @@ class MoreHoursCollectionViewCell: UICollectionViewCell {
     // MARK: - Variables
     public var hours: String = ""
     
+    private lazy var dateTimeHelper: DateTimeHelper = {
+        let helper = DateTimeHelper()
+        
+        return helper
+    }()
+    
     private lazy var containerView: UIView = {
         let view = UIView(frame: .zero)
-        view.layer.borderColor = UIColor.black.cgColor
+        view.layer.borderColor = UIColor.init(hex: 0x444444).cgColor
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 10
         
@@ -75,6 +81,11 @@ class MoreHoursCollectionViewCell: UICollectionViewCell {
     // MARK: - Public API
     public func update() {
         self.labelHours.text = self.hours
+        
+        if self.hours.range(of: self.dateTimeHelper.retrieveCurrentWeekDay()) != nil {
+            self.containerView.backgroundColor = UIColor.init(hex: 0x455409)
+            self.labelHours.textColor = .white
+        }
     }
     
     
