@@ -54,6 +54,27 @@ class DateTimeHelper: NSObject {
         
         return dateString
     }
+    public func retrieveCurrentWeekDayIndex() -> Int {
+        let currentWeekDay = self.retrieveCurrentWeekDay()
+        
+        if currentWeekDay == "Monday" {
+            return 0
+        } else if currentWeekDay == "Tuesday" {
+            return 1
+        } else if currentWeekDay == "Wednesday" {
+            return 2
+        } else if currentWeekDay == "Thursday" {
+            return 3
+        } else if currentWeekDay == "Friday" {
+            return 4
+        } else if currentWeekDay == "Saturday" {
+            return 5
+        } else if currentWeekDay == "Sunday" {
+            return 6
+        }
+        
+        return 0
+    }
     
     public func extractFromHours(hours: String) -> Date {
         var stringComponents = hours.components(separatedBy: " - ")

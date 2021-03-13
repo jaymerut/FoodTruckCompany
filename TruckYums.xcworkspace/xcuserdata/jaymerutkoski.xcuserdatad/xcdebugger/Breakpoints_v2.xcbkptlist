@@ -318,10 +318,10 @@
             filePath = "TruckYums/ViewControllers/LoginViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "318"
-            endingLineNumber = "318"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "323"
+            endingLineNumber = "323"
+            landmarkName = "doesUserExist()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -334,10 +334,10 @@
             filePath = "TruckYums/ViewControllers/LoginViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "319"
-            endingLineNumber = "319"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "324"
+            endingLineNumber = "324"
+            landmarkName = "doesUserExist()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -670,10 +670,10 @@
             filePath = "TruckYums/ViewControllers/LoginViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "356"
-            endingLineNumber = "356"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "353"
+            endingLineNumber = "353"
+            landmarkName = "buttonLogin_TouchUpInside(sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -686,10 +686,10 @@
             filePath = "TruckYums/ViewControllers/LoginViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "346"
-            endingLineNumber = "346"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "343"
+            endingLineNumber = "343"
+            landmarkName = "showActivityIndicator()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1422,8 +1422,8 @@
             filePath = "TruckYums/Components/Helpers/DateTimeHelper.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "isHoursOpen(hours:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1479,22 +1479,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6C0CC8B6-58C8-4F26-9B12-D9AF73A7886C"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TruckYums/ViewControllers/RegisterViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "376"
-            endingLineNumber = "376"
-            landmarkName = "verifyForm()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "D35B2CFE-7193-4A3D-A8D0-C9D8A8350DD7"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -1518,10 +1502,10 @@
             filePath = "TruckYums/ViewControllers/LoginViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "240"
-            endingLineNumber = "240"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "setupLoginViewController()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1600,22 +1584,6 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "475"
             endingLineNumber = "475"
-            landmarkName = "registerUser()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B5E82025-C5B1-459C-8B21-F5A785053C5F"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TruckYums/ViewControllers/RegisterViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "480"
-            endingLineNumber = "480"
             landmarkName = "registerUser()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1742,8 +1710,8 @@
             filePath = "TruckYums/ViewControllers/ForgotPasswordViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "325"
-            endingLineNumber = "325"
+            startingLineNumber = "326"
+            endingLineNumber = "326"
             landmarkName = "setupForgotPasswordViewController()"
             landmarkType = "7">
          </BreakpointContent>

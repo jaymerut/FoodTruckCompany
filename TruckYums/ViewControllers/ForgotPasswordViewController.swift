@@ -194,6 +194,7 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
         
         return firebaseCloudUpdate
     }()
+    private var messageHelper: MessageHelper = MessageHelper()
     
     // MARK: - Initialization
     private func customInitForgotPasswordViewController() {
@@ -394,7 +395,7 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
                         }
                     }
                 } else {
-                    self.displayMessage(title: "Error", message: "Incorrect email or name. Please try again. Remember that email is case-sensitive.")
+                    self.present(self.messageHelper.displayMessage(title: "Error", message: "Incorrect email or name. Please try again. Remember that email is case-sensitive."), animated: true)
                     self.hideActivityIndicator()
                 }
             }
@@ -416,7 +417,7 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
             self.textFieldName.text?.count == 0 ||
             self.textFieldPassword.text?.count == 0 ||
             self.textFieldPasswordRepeat.text?.count == 0 {
-            self.displayMessage(title: "Error", message: "Please enter values in the required fields")
+            self.present(self.messageHelper.displayMessage(title: "Error", message: "Please enter values in the required fields"), animated: true)
             self.hideActivityIndicator()
             return false
         } else if self.verifyPasswords() {
@@ -429,20 +430,13 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
     
     private func verifyPasswords() -> Bool {
         if self.textFieldPassword.text != self.textFieldPasswordRepeat.text {
-            self.displayMessage(title: "Error", message: "Passwords don't match.")
+            self.present(self.messageHelper.displayMessage(title: "Error", message: "Passwords don't match."), animated: true)
             return false
         }
         
         return true
     }
     
-    private func displayMessage(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
-
-        self.present(alert, animated: true)
-    }
     private func displaySuccess(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 

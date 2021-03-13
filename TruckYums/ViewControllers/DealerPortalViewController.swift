@@ -10,8 +10,8 @@ import UIKit
 import SnapKit
 import CoreLocation
 
-protocol HoursSelectDelegate {
-    func updateHours(hours: String)
+protocol WeeklyHoursDelegate {
+    func updateHours(hoursArray: [String])
     func closedHours()
 }
 
@@ -636,8 +636,8 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         }
     }
     
-    func updateHours(hours: String) {
-        self.textFieldHours.text = hours
+    func updateHours(hoursArray: [String]) {
+        self.textFieldHours.text = hoursArray[self.dateTimeHelper.retrieveCurrentWeekDayIndex()]
         self.textFieldHours.resignFirstResponder()
         self.buttonUpdate.isHidden = false
     }
