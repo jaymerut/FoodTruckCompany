@@ -118,7 +118,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         let text = NSMutableAttributedString(string: "New Food Vendor? Register Here")
         text.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.thick.rawValue, range: NSRange(location: "New Food Vendor? ".count, length: "Register Here".count))
-        text.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hex: 0x09a0e5), range: NSRange(location: "New Food Vendor? ".count, length: "Register Here".count))
+        text.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hex: 0xACC649), range: NSRange(location: "New Food Vendor? ".count, length: "Register Here".count))
         label.attributedText = text
         
         return label
@@ -128,7 +128,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let label = UILabel(frame: .zero)
         label.font = UIFont.init(name: "Teko-Regular", size: 20.0)
         label.textAlignment = .center
-        label.textColor = .init(hex: 0x09a0e5)
+        label.textColor = .init(hex: 0xACC649)
         label.isUserInteractionEnabled = true
         
         let attributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue]
@@ -143,6 +143,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         return firebaseCloudRead
     }()
+    
+    private var messageHelper: MessageHelper = MessageHelper()
     
     // MARK: - Initialization
     private func customInitLoginViewController() {
@@ -273,14 +275,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func verifyForm() -> Bool {
+        var errorMessage = "";
         if self.textFieldEmail.text?.count == 0 && self.textFieldPassword.text?.count == 0 {
-            self.displayMessage(title: "Error", message: "Please enter in an email and password.")
-            return false
+            errorMessage = "Please enter in an email and password."
         } else if self.textFieldEmail.text?.count == 0 {
-            self.displayMessage(title: "Error", message: "Please enter in an email")
-            return false
+            errorMessage = "Please enter in an email"
         } else if self.textFieldPassword.text?.count == 0 {
-            self.displayMessage(title: "Error", message: "Please enter in a password")
+            errorMessage = "Please enter in a password"
+        }
+        
+        if errorMessage.count > 0 {
+            self.present(self.messageHelper.displayMessage(title: "Error", message: errorMessage), animated: true)
             return false
         } else {
             return true
@@ -295,7 +300,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if emailTest.evaluate(with: self.textFieldEmail.text) {
             return true
         } else {
-            self.displayMessage(title: "Error", message: "Email is in an invalid format.")
+            self.present(self.messageHelper.displayMessage(title: "Error", message: "Email is in an invalid format."), animated: true)
             return false
         }
     }
@@ -307,7 +312,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 self.navigateToHome()
                 
             } else {
-                self.displayMessage(title: "Error", message: "Invalid credentials. Please try again. Remember that email is case-sensitive.")
+                self.present(self.messageHelper.displayMessage(title: "Error", message: "Invalid credentials. Please try again. Remember that email is case-sensitive."), animated: true)
             }
             
             self.hideActivityIndicator()
@@ -331,14 +336,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
         return false
-    }
-    
-    private func displayMessage(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
-
-        self.present(alert, animated: true)
     }
     
     private func showActivityIndicator() {

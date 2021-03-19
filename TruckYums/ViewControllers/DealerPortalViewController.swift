@@ -10,8 +10,8 @@ import UIKit
 import SnapKit
 import CoreLocation
 
-protocol HoursSelectDelegate {
-    func updateHours(hours: String)
+protocol WeeklyHoursDelegate {
+    func updateHours(hoursArray: [String])
     func closedHours()
 }
 
@@ -20,7 +20,7 @@ protocol SelectCuisineValueDelegate {
     func closedCuisine()
 }
 
-class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocationManagerDelegate, HoursSelectDelegate, SelectCuisineValueDelegate {
+class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocationManagerDelegate, HoursSelectDelegate, SelectCuisineValueDelegate, WeeklyHoursDelegate {
     
     
     // MARK: - Variables
@@ -213,7 +213,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         textField.delegate = self
         textField.font = UIFont(name: "Teko-Regular", size: 18.0)
         textField.placeholder = "Enter Hours"
-        textField.text = SwiftAppDefaults.shared.company?.hours
+        textField.text = "Update Weekly Hours"
         textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
         textField.layer.borderWidth = 2
         textField.layer.cornerRadius = 6.0
@@ -239,6 +239,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         textField.delegate = self
         textField.font = UIFont(name: "Teko-Regular", size: 18.0)
         textField.placeholder = "Enter Site Url"
+        textField.text = SwiftAppDefaults.shared.company?.siteurl
         textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
         textField.layer.borderWidth = 2
         textField.layer.cornerRadius = 6.0
@@ -257,6 +258,12 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         manager.distanceFilter = 5
         
         return manager
+    }()
+    
+    private lazy var hoursArray: [String] = {
+        let array = ["Closed", "Closed", "Closed", "Closed", "Closed", "Closed", "Closed"];
+
+        return array
     }()
     
     private lazy var firebaseCloudUpdate: FirebaseCloudUpdate = {
@@ -298,7 +305,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.navigationItem.titleView = self.labelTitle
-        
+        self.hoursArray = SwiftAppDefaults.shared.company?.weeklyhours ?? self.hoursArray
         // Setup
         self.getUserCoordinates()
     }
@@ -497,7 +504,8 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
             modifiedCompany.name = self.textFieldCompanyName.text ?? ""
             modifiedCompany.phonenumber = self.textFieldPhoneNumber.text ?? ""
             modifiedCompany.lastupdated = self.dateTimeHelper.retrieveCurrentDateTime()
-            modifiedCompany.hours = self.textFieldHours.text ?? ""
+            modifiedCompany.hours = "Update App"
+            modifiedCompany.weeklyhours = self.hoursArray
             modifiedCompany.cuisine = self.textFieldCuisine.text ?? ""
             modifiedCompany.siteurl = self.textFieldSiteURL.text ?? ""
             
@@ -527,7 +535,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         if sender == self.textFieldCuisine {
             self.navigateToSelectCuisine(cuisine: self.textFieldCuisine.text ?? "")
         } else if sender == self.textFieldHours {
-            self.navigateToHoursSelect(hours: self.textFieldHours.text ?? "6:00 AM - 8:00 PM")
+            self.navigateToWeeklyHours(hoursArray: self.hoursArray)
         }
     }
     @objc private func gestureTap_Tap(gesture: UITapGestureRecognizer) {
@@ -545,11 +553,11 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = destinationNC
     }
-    private func navigateToHoursSelect(hours: String) {
-        let destinationVC = HoursSelectViewController.init()
+    private func navigateToWeeklyHours(hoursArray: [String]) {
+        let destinationVC = WeeklyHoursViewController.init()
         destinationVC.modalPresentationStyle = .overFullScreen
         destinationVC.modalTransitionStyle = .crossDissolve
-        destinationVC.hours = hours
+        destinationVC.hoursArray = hoursArray
         destinationVC.delegate = self
         
         self.present(destinationVC, animated: true, completion: nil)
@@ -635,8 +643,9 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         }
     }
     
-    func updateHours(hours: String) {
-        self.textFieldHours.text = hours
+    func updateHours(hoursArray: [String]) {
+        self.hoursArray = hoursArray
+        self.textFieldHours.text = "Weekly Hours Updated"
         self.textFieldHours.resignFirstResponder()
         self.buttonUpdate.isHidden = false
     }

@@ -203,7 +203,7 @@ class HoursSelectViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     @objc private func buttonApply_TouchUpInside(sender: UIButton) {
-        self.delegate?.updateHours(hours: self.getHoursString())
+        //self.delegate?.updateHours(hours: self.getHoursString())
         self.dismiss(animated: true, completion: nil)
     }
     
