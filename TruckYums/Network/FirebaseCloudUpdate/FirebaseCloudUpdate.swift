@@ -50,7 +50,7 @@ class FirebaseCloudUpdate: NSObject {
     public func firebaseAddCompany(newCompany: Company, completion: @escaping (_ company: Company?) -> Void) {
         let collection = Firestore.firestore().collection("Companies")
         
-        collection.document(newCompany.name).setData(["name": newCompany.name, "latitude": newCompany.latitude, "longitude": newCompany.longitude, "linkedwith": newCompany.linkedwith, "venderverified": newCompany.venderverified, "cuisine": newCompany.cuisine, "phonenumber": newCompany.phonenumber, "siteurl": newCompany.siteurl, "lastupdated": newCompany.lastupdated, "hours": newCompany.hours]) { err in
+        collection.document(newCompany.name).setData(["name": newCompany.name, "latitude": newCompany.latitude, "longitude": newCompany.longitude, "linkedwith": newCompany.linkedwith, "venderverified": newCompany.venderverified, "cuisine": newCompany.cuisine, "phonenumber": newCompany.phonenumber, "siteurl": newCompany.siteurl, "lastupdated": newCompany.lastupdated, "weeklyhours": newCompany.weeklyhours]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
                 completion(nil)
@@ -92,7 +92,7 @@ class FirebaseCloudUpdate: NSObject {
     public func firebaseUpdateCompany(modifiedCompany: Company, completion: @escaping (_ user: Company?) -> Void) {
         let collection = Firestore.firestore().collection("Companies")
  
-        collection.document(modifiedCompany.name).updateData(["lastupdated": modifiedCompany.lastupdated, "phonenumber": modifiedCompany.phonenumber, "hours": modifiedCompany.hours, "cuisine": modifiedCompany.cuisine, "siteurl": modifiedCompany.siteurl]) {
+        collection.document(modifiedCompany.name).updateData(["lastupdated": modifiedCompany.lastupdated, "phonenumber": modifiedCompany.phonenumber, "weeklyhours": modifiedCompany.weeklyhours, "cuisine": modifiedCompany.cuisine, "siteurl": modifiedCompany.siteurl]) {
             err in
             if let err = err {
                 print("Error updating document: \(err)")

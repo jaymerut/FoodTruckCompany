@@ -13,6 +13,7 @@ class MoreHoursViewController: UIViewController, ListAdapterDataSource, UIScroll
     
     
     // MARK: - Variables
+    public var isVerifiedVendor: Bool = false
     public lazy var hoursArray: [String] = {
         let array = [String].init()
         
@@ -108,6 +109,10 @@ class MoreHoursViewController: UIViewController, ListAdapterDataSource, UIScroll
         
         self.view.backgroundColor = .init(white: 0.0, alpha: 0.6)
         
+        if self.isVerifiedVendor {
+            self.correctHoursStrings()
+        }
+        
         // Setup
         setupMoreHoursViewController()
         
@@ -178,6 +183,15 @@ class MoreHoursViewController: UIViewController, ListAdapterDataSource, UIScroll
             make.height.equalTo(350)
         }
         
+    }
+    
+    private func correctHoursStrings() {
+        var count = 0
+        for hours in self.hoursArray {
+            let day = self.dateTimeHelper.retrieveWeekDayFromIndex(index: count)
+            self.hoursArray[count] = "\(day): \(hours)"
+            count+=1
+        }
     }
     
     // MARK: UIResponders

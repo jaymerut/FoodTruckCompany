@@ -75,6 +75,25 @@ class DateTimeHelper: NSObject {
         
         return 0
     }
+    public func retrieveWeekDayFromIndex(index: Int) -> String {
+        if index == 0 {
+            return "Monday"
+        } else if index == 1 {
+            return "Tuesday"
+        } else if index == 2 {
+            return "Wednesday"
+        } else if index == 3 {
+            return "Thursday"
+        } else if index == 4 {
+            return "Friday"
+        } else if index == 5 {
+            return "Saturday"
+        } else if index == 6 {
+            return "Sunday"
+        }
+        
+        return "Monday"
+    }
     
     public func extractFromHours(hours: String) -> Date {
         var stringComponents = hours.components(separatedBy: " - ")

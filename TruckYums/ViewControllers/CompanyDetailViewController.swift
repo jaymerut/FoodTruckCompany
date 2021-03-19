@@ -15,7 +15,7 @@ class CompanyDetailViewController: UIViewController {
     
     
     // MARK: - Variables
-    public var company: Company = Company.init(name: "", latitude: 0, longitude: 0, linkedwith: "", venderverified: false, cuisine: "", phonenumber: "", siteurl: "", lastupdated: "", hours: "")
+    public var company: Company = Company.init(name: "", latitude: 0, longitude: 0, linkedwith: "", venderverified: false, cuisine: "", phonenumber: "", siteurl: "", lastupdated: "", hours: "", weeklyhours: [String]())
     
     private lazy var contentView: UIView = {
         let view = UIView(frame: .zero)
@@ -476,6 +476,7 @@ class CompanyDetailViewController: UIViewController {
         destinationVC.modalPresentationStyle = .overFullScreen
         destinationVC.modalTransitionStyle = .crossDissolve
         destinationVC.hoursArray = self.company.weeklyhours
+        destinationVC.isVerifiedVendor = self.company.venderverified
         
         self.present(destinationVC, animated: true, completion: nil)
     }

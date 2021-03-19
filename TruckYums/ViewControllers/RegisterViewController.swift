@@ -467,7 +467,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
                         let newUser: User = User.init(email: self.textFieldEmail.text!, name: self.textFieldName.text!, password: self.textFieldPassword.text!, phonenumber: self.textFieldPhoneNumber.text!, company: self.textFieldCompanyName.text!)
                         self.firebaseCloudUpdate.firebaseAddUser(newUser: newUser) { (user) in
                             
-                            let newCompany: Company = Company.init(name: self.textFieldCompanyName.text!, latitude: 0.0, longitude: 0.0, linkedwith: self.textFieldName.text!, venderverified: true, cuisine: self.textFieldCuisine.text!, phonenumber: self.textFieldPhoneNumber.text!, siteurl: self.textFieldSiteURL.text ?? "", lastupdated: self.dateTimeHelper.retrieveCurrentDateTime(), hours: self.textFieldHours.text!)
+                            let newCompany: Company = Company.init(name: self.textFieldCompanyName.text!, latitude: 0.0, longitude: 0.0, linkedwith: self.textFieldName.text!, venderverified: true, cuisine: self.textFieldCuisine.text!, phonenumber: self.textFieldPhoneNumber.text!, siteurl: self.textFieldSiteURL.text ?? "", lastupdated: self.dateTimeHelper.retrieveCurrentDateTime(), hours: "Update App", weeklyhours: self.hoursArray)
                             self.firebaseCloudUpdate.firebaseAddCompany(newCompany: newCompany) { (company) in
                                 SwiftAppDefaults.shared.user = user
                                 SwiftAppDefaults.shared.company = company
