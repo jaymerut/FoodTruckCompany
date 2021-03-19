@@ -99,6 +99,13 @@ class DateTimeHelper: NSObject {
         return date
     }
     
+    public func convertDateToString(date: Date) -> String {
+        self.dateFormatter.dateFormat = "h:mm a"
+        let dateString = self.dateFormatter.string(from: date)
+        
+        return dateString
+    }
+    
     public func isHoursOpen(hours: String) -> Bool {
         if (hours == "") {
             return true

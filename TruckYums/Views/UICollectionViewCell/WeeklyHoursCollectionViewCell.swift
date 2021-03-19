@@ -15,6 +15,7 @@ class WeeklyHoursCollectionViewCell: UICollectionViewCell {
     // MARK: - Variables
     public var hours: String = "12:00 AM - 11:59 PM"
     public var day: String = ""
+    public var sectionController: WeeklyHoursSectionController? = nil
     
     private lazy var containerView: UIView = {
         let view = UIView(frame: .zero)
@@ -45,6 +46,7 @@ class WeeklyHoursCollectionViewCell: UICollectionViewCell {
         if #available(iOS 13.4, *) {
             picker.preferredDatePickerStyle = .compact
         }
+        picker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
         
         return picker
     }()
@@ -55,6 +57,7 @@ class WeeklyHoursCollectionViewCell: UICollectionViewCell {
         if #available(iOS 13.4, *) {
             picker.preferredDatePickerStyle = .compact
         }
+        picker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
         
         return picker
     }()
@@ -152,25 +155,49 @@ class WeeklyHoursCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    // UIResponders
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        
         if sender.selectedSegmentIndex == 0 {
+            // Open
             self.segmentedControlOpenClose.selectedSegmentTintColor = UIColor.init(hex: "0xACC649")
+            
+            if (self.hours.lowercased() == "closed" || self.hours.count == 0) {
+                self.sectionController?.weeklyHoursDidUpdate(hours: "12:00 AM - 11:59 PM", day: self.day)
+            } else {
+                self.sectionController?.weeklyHoursDidUpdate(hours: self.hours, day: self.day)
+            }
         } else {
+            // Closed
             self.segmentedControlOpenClose.selectedSegmentTintColor = UIColor.init(hex: "0xB30000")
+            
+            self.sectionController?.weeklyHoursDidUpdate(hours: "Closed", day: self.day)
         }
         self.datePickerTo.isEnabled = sender.selectedSegmentIndex == 0
         self.datePickerFrom.isEnabled = sender.selectedSegmentIndex == 0
+    }
+    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
+        let hoursFrom = self.dateTimeHelper.convertDateToString(date: self.datePickerFrom.date)
+        let hoursTo = self.dateTimeHelper.convertDateToString(date: self.datePickerTo.date)
+        self.hours = "\(hoursFrom) - \(hoursTo)"
+        
+        self.sectionController?.weeklyHoursDidUpdate(hours: self.hours, day: self.day)
     }
     
     // MARK: - Public API
     public func update() {
         self.labelDayOfWeek.text = self.day
         
-        if (self.hours.count == 0) {
-            self.hours = "12:00 AM - 11:59 PM"
+        var hoursToExtract = self.hours
+        if (self.hours.lowercased() == "closed" || self.hours.count == 0) {
+            hoursToExtract = "12:00 AM - 11:59 PM"
+            self.segmentedControlOpenClose.selectedSegmentTintColor = UIColor.init(hex: "0xB30000")
+            self.segmentedControlOpenClose.selectedSegmentIndex = 1
+            self.datePickerTo.isEnabled = false
+            self.datePickerFrom.isEnabled = false
         }
-        self.datePickerFrom.date = self.dateTimeHelper.extractFromHours(hours: self.hours)
-        self.datePickerTo.date = self.dateTimeHelper.extractToHours(hours: self.hours)
+        self.datePickerFrom.date = self.dateTimeHelper.extractFromHours(hours: hoursToExtract)
+        self.datePickerTo.date = self.dateTimeHelper.extractToHours(hours: hoursToExtract)
     }
     
     

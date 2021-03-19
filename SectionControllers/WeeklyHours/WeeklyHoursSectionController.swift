@@ -8,6 +8,9 @@
 
 import UIKit
 
+protocol WeeklyHoursSelectedDelegate {
+    func weeklyHoursDidUpdate(hoursArray: [String])
+}
 
 class WeeklyHoursSectionController: ListSectionController {
     
@@ -15,7 +18,7 @@ class WeeklyHoursSectionController: ListSectionController {
     // MARK: - Variables
     private var weeklyHours: WeeklyHours = WeeklyHours.init()
     let daysOfWeek: [String] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    
+    public var delegate: WeeklyHoursSelectedDelegate? = nil
     
     // MARK: - Initialization
     private func customInitWeeklyHoursSectionController() {
@@ -25,6 +28,12 @@ class WeeklyHoursSectionController: ListSectionController {
         super.init()
         
         customInitWeeklyHoursSectionController()
+    }
+    init(delegate: WeeklyHoursSelectedDelegate) {
+        super.init()
+        
+        customInitWeeklyHoursSectionController()
+        self.delegate = delegate
     }
     
     
@@ -42,6 +51,7 @@ class WeeklyHoursSectionController: ListSectionController {
         
         cell.hours = self.weeklyHours.hours[index]
         cell.day = self.daysOfWeek[index]
+        cell.sectionController = self
         
         cell.update()
         
@@ -56,7 +66,13 @@ class WeeklyHoursSectionController: ListSectionController {
     
     
     // MARK: - Public API
-    
+    public func weeklyHoursDidUpdate(hours: String, day: String) {
+        if (self.delegate != nil) {
+            let index: Int = self.daysOfWeek.firstIndex(of: day)!
+            self.weeklyHours.hours[index] = hours
+            self.delegate?.weeklyHoursDidUpdate(hoursArray: self.weeklyHours.hours)
+        }
+    }
     
     
 }

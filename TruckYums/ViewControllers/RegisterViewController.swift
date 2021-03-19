@@ -213,8 +213,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
     }()
     
     private lazy var hoursArray: [String] = {
-        let array = [String]()
-        
+        let array = ["Closed", "Closed", "Closed", "Closed", "Closed", "Closed", "Closed"];
+
         return array
     }()
     

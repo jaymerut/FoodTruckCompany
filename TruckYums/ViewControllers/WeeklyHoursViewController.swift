@@ -13,7 +13,7 @@ protocol HoursSelectDelegate {
     func closedHours()
 }
 
-class WeeklyHoursViewController: UIViewController, ListAdapterDataSource, UIScrollViewDelegate {
+class WeeklyHoursViewController: UIViewController, ListAdapterDataSource, UIScrollViewDelegate, WeeklyHoursSelectedDelegate {
     
     
     // MARK: - Variables
@@ -109,8 +109,6 @@ class WeeklyHoursViewController: UIViewController, ListAdapterDataSource, UIScro
         
         self.view.backgroundColor = .init(white: 0.0, alpha: 0.6)
         
-        self.hoursArray = ["", "", "", "", "", "", ""];
-        
         self.objects.append(WeeklyHours.init(withHours: self.hoursArray))
         
         // Setup
@@ -199,7 +197,7 @@ class WeeklyHoursViewController: UIViewController, ListAdapterDataSource, UIScro
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return WeeklyHoursSectionController.init()
+        return WeeklyHoursSectionController.init(delegate: self)
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
@@ -208,6 +206,11 @@ class WeeklyHoursViewController: UIViewController, ListAdapterDataSource, UIScro
         label.textAlignment = .center
         
         return label
+    }
+    
+    // WeeklyHoursSelected
+    func weeklyHoursDidUpdate(hoursArray: [String]) {
+        self.hoursArray = hoursArray
     }
     
 }
