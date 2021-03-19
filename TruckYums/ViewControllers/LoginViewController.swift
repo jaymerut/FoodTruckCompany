@@ -118,7 +118,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         let text = NSMutableAttributedString(string: "New Food Vendor? Register Here")
         text.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.thick.rawValue, range: NSRange(location: "New Food Vendor? ".count, length: "Register Here".count))
-        text.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hex: 0x09a0e5), range: NSRange(location: "New Food Vendor? ".count, length: "Register Here".count))
+        text.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hex: 0xACC649), range: NSRange(location: "New Food Vendor? ".count, length: "Register Here".count))
         label.attributedText = text
         
         return label
@@ -128,7 +128,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let label = UILabel(frame: .zero)
         label.font = UIFont.init(name: "Teko-Regular", size: 20.0)
         label.textAlignment = .center
-        label.textColor = .init(hex: 0x09a0e5)
+        label.textColor = .init(hex: 0xACC649)
         label.isUserInteractionEnabled = true
         
         let attributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue]

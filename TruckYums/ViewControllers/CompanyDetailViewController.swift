@@ -113,7 +113,7 @@ class CompanyDetailViewController: UIViewController {
         
         let text = NSMutableAttributedString(string: "View Hours")
         text.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.thick.rawValue, range: NSRange(location: 0, length: "View Hours".count))
-        text.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: "View Hours".count))
+        text.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hex: 0x055e86), range: NSRange(location: 0, length: "View Hours".count))
         
         button.setAttributedTitle(text, for: .normal)
         button.addTarget(self, action: #selector(buttonMoreHours_TouchUpInside), for: .touchUpInside)
