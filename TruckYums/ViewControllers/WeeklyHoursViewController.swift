@@ -13,16 +13,31 @@ protocol HoursSelectDelegate {
     func closedHours()
 }
 
-class WeeklyHoursViewController: UIViewController {
+class WeeklyHoursViewController: UIViewController, ListAdapterDataSource, UIScrollViewDelegate {
     
     
     // MARK: - Variables
+    private let screenSize = UIScreen.main.bounds.size;
+    
     public var delegate: WeeklyHoursDelegate?
     
     public lazy var hoursArray: [String] = {
-        let array = [String].init()
+        let array = [String]()
         
         return array
+    }()
+    
+    private lazy var objects: [Any] = {
+        let array = [Any]()
+        
+        return array
+    }()
+    
+    private lazy var adapter: ListAdapter = {
+        let adapter = ListAdapter(updater: ListAdapterUpdater.init(), viewController: self, workingRangeSize: 0)
+        adapter.scrollViewDelegate = self
+        
+        return adapter
     }()
     
     private lazy var contentView: UIView = {
@@ -32,11 +47,11 @@ class WeeklyHoursViewController: UIViewController {
         
         return view
     }()
-    private lazy var viewContainer: UIView = {
-        let view = UIView(frame: .zero)
-        view.backgroundColor = UIColor.white
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+        collectionView.backgroundColor = .white
         
-        return view
+        return collectionView
     }()
     
     private lazy var buttonApply: UIButton = {
@@ -94,8 +109,14 @@ class WeeklyHoursViewController: UIViewController {
         
         self.view.backgroundColor = .init(white: 0.0, alpha: 0.6)
         
+        self.hoursArray = ["", "", "", "", "", "", ""];
+        
+        self.objects.append(WeeklyHours.init(withHours: self.hoursArray))
+        
         // Setup
         setupWeeklyHoursViewController()
+        
+        self.adapter.performUpdates(animated: true, completion: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -111,13 +132,17 @@ class WeeklyHoursViewController: UIViewController {
     // MARK: - Private API
     private func setupWeeklyHoursViewController() {
         
+        // Adapter
+        self.adapter.collectionView = self.collectionView
+        self.adapter.dataSource = self
+        
         // Content View
         self.view.addSubview(self.contentView)
         self.contentView.snp.makeConstraints { (make) in
-            make.centerX.equalTo(self.view.snp.centerX);
-            make.centerY.equalTo(self.view.snp.centerY);
+            make.top.equalTo(self.view.snp.top).offset(50);
             make.left.equalTo(self.view.snp.left).offset(10);
             make.right.equalTo(self.view.snp.right).inset(10);
+            make.bottom.equalTo(self.view.snp.bottom).offset(-20);
             make.height.equalTo(0).priority(250);
         }
         
@@ -140,14 +165,14 @@ class WeeklyHoursViewController: UIViewController {
         }
         
         
-        // View Container
-        self.contentView.addSubview(self.viewContainer)
-        self.viewContainer.snp.makeConstraints { (make) in
+        // Collection View
+        self.contentView.addSubview(self.collectionView)
+        self.collectionView.snp.makeConstraints { (make) in
             make.top.equalTo(self.contentView.snp.top).offset(10)
-            make.left.equalTo(self.contentView.snp.left).offset(40)
-            make.right.equalTo(self.contentView.snp.right).offset(-40)
+            make.left.equalTo(self.contentView.snp.left).offset(20)
+            make.right.equalTo(self.contentView.snp.right).offset(-20)
             make.bottom.equalTo(self.buttonClose.snp.top)
-            make.height.equalTo(280)
+            make.height.equalTo(self.view.frame.size.height - 50 - 120)
         }
         
     }
@@ -167,6 +192,22 @@ class WeeklyHoursViewController: UIViewController {
     
     // MARK: - Public API
     
+    // MARK: - Delegate methods
+    // ListAdapterDataSource
+    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
+        self.objects as [ListDiffable]
+    }
     
+    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        return WeeklyHoursSectionController.init()
+    }
+    
+    func emptyView(for listAdapter: ListAdapter) -> UIView? {
+        let label = UILabel(frame: .zero)
+        label.text = "Issue with View"
+        label.textAlignment = .center
+        
+        return label
+    }
     
 }

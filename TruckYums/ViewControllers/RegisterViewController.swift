@@ -630,7 +630,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
     }
     
     func updateHours(hoursArray: [String]) {
-        self.textFieldHours.text = hoursArray[self.dateTimeHelper.retrieveCurrentWeekDayIndex()]
+        self.hoursArray = hoursArray;
+        self.textFieldHours.text = "Weekly Hours Set"
         self.textFieldHours.resignFirstResponder()
     }
     func closedHours() {

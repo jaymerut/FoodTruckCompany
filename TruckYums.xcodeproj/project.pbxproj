@@ -51,6 +51,8 @@
 		968CFE1C259A38FB00AA282B /* DateTimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968CFE1B259A38FB00AA282B /* DateTimeHelper.swift */; };
 		96B2C3E52582EA3000F15941 /* CompanyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B2C3E42582EA3000F15941 /* CompanyDetailViewController.swift */; };
 		96B637A725FCF66F00C17801 /* MessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B637A625FCF66F00C17801 /* MessageHelper.swift */; };
+		96B637AA25FCFF8300C17801 /* WeeklyHoursSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B637A925FCFF8300C17801 /* WeeklyHoursSectionController.swift */; };
+		96B637AC25FD579D00C17801 /* WeeklyHoursCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B637AB25FD579D00C17801 /* WeeklyHoursCollectionViewCell.swift */; };
 		96B78EB8258832D50067C147 /* String+Substring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B78EB7258832D50067C147 /* String+Substring.swift */; };
 		96BB89B5256F2B3D00B5AD7B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96BB89B4256F2B3D00B5AD7B /* Images.xcassets */; };
 		96BB89BD256F2C4000B5AD7B /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BB89BC256F2C4000B5AD7B /* UIColor+Hex.swift */; };
@@ -150,6 +152,8 @@
 		968CFE1B259A38FB00AA282B /* DateTimeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeHelper.swift; sourceTree = "<group>"; };
 		96B2C3E42582EA3000F15941 /* CompanyDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDetailViewController.swift; sourceTree = "<group>"; };
 		96B637A625FCF66F00C17801 /* MessageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHelper.swift; sourceTree = "<group>"; };
+		96B637A925FCFF8300C17801 /* WeeklyHoursSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WeeklyHoursSectionController.swift; path = SectionControllers/WeeklyHours/WeeklyHoursSectionController.swift; sourceTree = SOURCE_ROOT; };
+		96B637AB25FD579D00C17801 /* WeeklyHoursCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyHoursCollectionViewCell.swift; sourceTree = "<group>"; };
 		96B78EB7258832D50067C147 /* String+Substring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Substring.swift"; sourceTree = "<group>"; };
 		96BB89B4256F2B3D00B5AD7B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		96BB89BC256F2C4000B5AD7B /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
@@ -339,6 +343,7 @@
 		96686BDB25BA90F20047AD53 /* SectionControllers */ = {
 			isa = PBXGroup;
 			children = (
+				96B637A825FCFF0F00C17801 /* WeeklyHours */,
 				96686BDC25BA90F20047AD53 /* MoreHours */,
 			);
 			path = SectionControllers;
@@ -364,6 +369,7 @@
 			isa = PBXGroup;
 			children = (
 				96686BE325BA92BE0047AD53 /* MoreHoursCollectionViewCell.swift */,
+				96B637AB25FD579D00C17801 /* WeeklyHoursCollectionViewCell.swift */,
 			);
 			path = UICollectionViewCell;
 			sourceTree = "<group>";
@@ -384,26 +390,12 @@
 			path = FirebaseCloudUpdate;
 			sourceTree = "<group>";
 		};
-		9672811C2581083D00F482BC /* FirebaseCloudDelete */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = FirebaseCloudDelete;
-			sourceTree = "<group>";
-		};
 		9684FE9C25713AB700830C46 /* AppDefaults */ = {
 			isa = PBXGroup;
 			children = (
 				9684FE9D25713ADB00830C46 /* SwiftAppDefaults.swift */,
 			);
 			path = AppDefaults;
-			sourceTree = "<group>";
-		};
-		968CFDC82599890500AA282B /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Constants;
 			sourceTree = "<group>";
 		};
 		968CFE1A259A38EB00AA282B /* Helpers */ = {
@@ -418,6 +410,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		96B637A825FCFF0F00C17801 /* WeeklyHours */ = {
+			isa = PBXGroup;
+			children = (
+				96B637A925FCFF8300C17801 /* WeeklyHoursSectionController.swift */,
+			);
+			path = WeeklyHours;
+			sourceTree = "<group>";
+		};
 		96B78EB6258832C20067C147 /* String */ = {
 			isa = PBXGroup;
 			children = (
@@ -430,7 +430,6 @@
 			isa = PBXGroup;
 			children = (
 				968CFE1A259A38EB00AA282B /* Helpers */,
-				968CFDC82599890500AA282B /* Constants */,
 				96686BDA25BA90F20047AD53 /* Controllers */,
 				9684FE9C25713AB700830C46 /* AppDefaults */,
 				96BB89BA256F2C2400B5AD7B /* Extensions */,
@@ -482,8 +481,6 @@
 			children = (
 				96BB89B9256F2C1B00B5AD7B /* Components */,
 				96EB9365250EBDA200ED0AB1 /* Models */,
-				96EB9366250EBDAB00ED0AB1 /* Categories */,
-				96EB936C250EBDD900ED0AB1 /* Classes */,
 				96686BE025BA92850047AD53 /* Views */,
 				96EB936A250EBDCC00ED0AB1 /* ViewControllers */,
 				96EB9369250EBDC700ED0AB1 /* Network */,
@@ -521,13 +518,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		96EB9366250EBDAB00ED0AB1 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Categories;
-			sourceTree = "<group>";
-		};
 		96EB9367250EBDBA00ED0AB1 /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -556,7 +546,6 @@
 				961ED16E259CC2830012E55F /* API */,
 				967281192581080F00F482BC /* FirebaseCloudRead */,
 				9672811B2581082E00F482BC /* FirebaseCloudUpdate */,
-				9672811C2581083D00F482BC /* FirebaseCloudDelete */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -577,13 +566,6 @@
 				96D79B5D25BC633500DE5FC9 /* WeeklyHoursViewController.swift */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		96EB936C250EBDD900ED0AB1 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Classes;
 			sourceTree = "<group>";
 		};
 		96EB936D250EBDF400ED0AB1 /* Assets */ = {
@@ -892,6 +874,8 @@
 				96685E9725B691F80047AD53 /* GooglePlacesResultDetails.m in Sources */,
 				96B78EB8258832D50067C147 /* String+Substring.swift in Sources */,
 				961ED13E259C124E0012E55F /* MKPointOfInterestCategoryHelper.swift in Sources */,
+				96B637AC25FD579D00C17801 /* WeeklyHoursCollectionViewCell.swift in Sources */,
+				96B637AA25FCFF8300C17801 /* WeeklyHoursSectionController.swift in Sources */,
 				96685EB125B69EC30047AD53 /* NetworkClient.m in Sources */,
 				9684FEB225719E4D00830C46 /* DealerPortalViewController.swift in Sources */,
 				96685E8A25B68C7C0047AD53 /* GooglePlacesResult.m in Sources */,
