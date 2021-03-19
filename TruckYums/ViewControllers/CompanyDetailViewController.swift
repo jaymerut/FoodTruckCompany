@@ -444,7 +444,9 @@ class CompanyDetailViewController: UIViewController {
         self.imageViewOpenClosed.image = self.retrieveOpenClosedImage()
     }
     private func retrieveOpenClosedImage() -> UIImage {
-        if (self.dateTimeHelper.isHoursOpen(hours: self.company.hours)) {
+        let index = self.dateTimeHelper.retrieveCurrentWeekDayIndex()
+        let hours = self.company.weeklyhours[index]
+        if (self.dateTimeHelper.isHoursOpen(hours: hours)) {
             return UIImage(named: "image_open_sign")!
         } else {
             return UIImage(named: "image_closed_sign")!

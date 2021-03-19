@@ -50,7 +50,7 @@ class FirebaseCloudUpdate: NSObject {
     public func firebaseAddCompany(newCompany: Company, completion: @escaping (_ company: Company?) -> Void) {
         let collection = Firestore.firestore().collection("Companies")
         
-        collection.document(newCompany.name).setData(["name": newCompany.name, "latitude": newCompany.latitude, "longitude": newCompany.longitude, "linkedwith": newCompany.linkedwith, "venderverified": newCompany.venderverified, "cuisine": newCompany.cuisine, "phonenumber": newCompany.phonenumber, "siteurl": newCompany.siteurl, "lastupdated": newCompany.lastupdated, "weeklyhours": newCompany.weeklyhours]) { err in
+        collection.document(newCompany.name).setData(["name": newCompany.name, "latitude": newCompany.latitude, "longitude": newCompany.longitude, "linkedwith": newCompany.linkedwith, "venderverified": newCompany.venderverified, "cuisine": newCompany.cuisine, "phonenumber": newCompany.phonenumber, "siteurl": newCompany.siteurl, "lastupdated": newCompany.lastupdated, "hours": newCompany.hours, "weeklyhours": newCompany.weeklyhours]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
                 completion(nil)
