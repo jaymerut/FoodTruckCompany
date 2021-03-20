@@ -21,6 +21,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     var bannerView: GADBannerView!
     
     let distanceSpan: Double = 50
+    var currentRadius: Double = 0
     
     private lazy var stackViewBannerAds: UIStackView = {
         let stackView = UIStackView(frame: .zero)
@@ -36,6 +37,37 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         
         return label
     }()
+    
+    private lazy var viewControlContainer: UIView = {
+        let view = UIView(frame: .zero)
+        view.backgroundColor = UIColor.black
+        
+        return view
+    }()
+    private lazy var segmentedControlMiles: UISegmentedControl = {
+        let control = UISegmentedControl(items: ["5 miles", "10 miles", "20 miles", "30 miles"])
+        control.backgroundColor = UIColor.black
+        control.selectedSegmentTintColor = UIColor.init(hex: "0xACC649")
+        
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        control.setTitleTextAttributes(titleTextAttributes, for:.normal)
+        control.setTitleTextAttributes(titleTextAttributes, for:.selected)
+        
+        control.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
+        
+        control.selectedSegmentIndex = 1;
+        
+        return control
+    }()
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView.init(style: .large)
+        activityIndicator.color = .black
+        
+        return activityIndicator
+    }()
+    
+    private let milesToMetersArray: [Double] = [8046.72, 16093.4, 32186.9, 48280.3]
     
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView.init(frame: .zero)
@@ -113,6 +145,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     // MARK: - UIViewController Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.currentRadius = self.milesToMetersArray[self.segmentedControlMiles.selectedSegmentIndex]
         self.view.backgroundColor = .white
         self.navigationItem.titleView = self.labelTitle
         
@@ -122,12 +155,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         self.bannerView.delegate = self
         self.bannerView.load(GADRequest())
         
-        self.firebaseCloudRead.firebaseReadCompanies { (companies) in
-            for company in companies ?? [Company]() {
-                self.companies[company.name] = company
-            }
-            self.getUserCoordinates()
-        }
+        self.getUserCoordinates()
         
         // Setup
         setupFindFoodTrucksViewController()
@@ -154,16 +182,35 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
             make.right.equalTo(self.view.snp.right)
             make.height.equalTo(0).priority(250);
         }
+        
+        self.view.addSubview(self.viewControlContainer)
+        self.viewControlContainer.snp.makeConstraints { (make) in
+            make.top.equalTo(self.stackViewBannerAds.snp.bottom)
+            make.left.equalTo(self.view.snp.left)
+            make.right.equalTo(self.view.snp.right)
+        }
+        self.viewControlContainer.addSubview(self.segmentedControlMiles)
+        self.segmentedControlMiles.snp.makeConstraints { (make) in
+            make.edges.equalTo(self.viewControlContainer)
+        }
+        
         self.view.addSubview(self.mapView)
         self.mapView.snp.makeConstraints { (make) in
-            make.top.equalTo(self.stackViewBannerAds.snp.bottom)
+            make.top.equalTo(self.viewControlContainer.snp.bottom)
             make.left.equalTo(self.view.snp.left)
             make.right.equalTo(self.view.snp.right)
             make.bottom.equalTo(self.view.snp.bottom)
         }
         
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.snp.makeConstraints { (make) in
+            make.centerX.equalTo(self.view.snp.centerX)
+            make.centerY.equalTo(self.view.snp.centerY)
+        }
+        
     }
     private func getUserCoordinates() {
+        self.activityIndicator.startAnimating()
         self.locationManager.requestWhenInUseAuthorization()
         
         self.locationManager.startUpdatingLocation()
@@ -177,6 +224,16 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         destinationVC.company = self.companies[company] ?? Company()
         
         self.present(destinationVC, animated: true, completion: nil)
+    }
+    
+    // MARK: UIResponders
+    @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        self.currentRadius = self.milesToMetersArray[sender.selectedSegmentIndex]
+        
+        self.companies = [:]
+        let allAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(allAnnotations)
+        self.getUserCoordinates()
     }
     
     // MARK: Delegate Methods
@@ -194,44 +251,51 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         let currentLocation:CLLocation = locations.last ?? CLLocation.init()
         let region = MKCoordinateRegion(
               center: currentLocation.coordinate,
-              latitudinalMeters: 50000,
-              longitudinalMeters: 60000)
+            latitudinalMeters: 50000,
+            longitudinalMeters: 60000)
 
-        self.googlePlacesAPI.searchNearby("food trucks", latitude: locValue.latitude as NSNumber, longitude: locValue.longitude as NSNumber, radius: 60000) { (result) in
-            var index: Int = 0
-            for place in result!.results {
-                self.googlePlacesAPI.getPlaceDetails(place.reference, fields: ["name","formatted_phone_number","geometry","opening_hours","types","website"]) { (detailsResult) in
-                    if (detailsResult?.status == "OK") {
-                        
-                        let convertedCompany = self.googlePlaceHelper.convertGooglePlaceDetailsToCompany(details: detailsResult!)
-                        
-                        let keyExists = self.companies[convertedCompany.name]
-                        if (keyExists == nil && convertedCompany.name.count > 0) {
-                            self.companies[convertedCompany.name] = convertedCompany
-                        }
-                    }
-                    
-                    if result!.results.count <= index + 1 {
-                        for (key, value) in self.companies {
-                            let annotation = MKPointAnnotation()
-                            annotation.title = key
-                            annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
-                            self.mapView.addAnnotation(annotation)
-                        }
-                        
-                        let mapCamera = MKMapCamera(lookingAtCenter: locValue, fromEyeCoordinate: locValue, eyeAltitude: 15000)
-                        self.mapView.setCamera(mapCamera, animated: true)
-                        
-                        manager.stopUpdatingLocation()
-                    }
-                    index+=1
-                } failure: { (error) in
-                    
-                }
+        self.firebaseCloudRead.firebaseReadCompanies { (companies) in
+            for company in companies ?? [Company]() {
+                self.companies[company.name] = company
             }
-        } failure: { (error) in
-            
+            self.googlePlacesAPI.searchNearby("food trucks", latitude: locValue.latitude as NSNumber, longitude: locValue.longitude as NSNumber, radius: self.currentRadius as NSNumber) { (result) in
+                var index: Int = 0
+                for place in result!.results {
+                    self.googlePlacesAPI.getPlaceDetails(place.reference, fields: ["name","formatted_phone_number","geometry","opening_hours","types","website"]) { (detailsResult) in
+                        if (detailsResult?.status == "OK" && detailsResult?.result.openingHours?.weekdayText.count ?? 0 > 0) {
+                            
+                            let convertedCompany = self.googlePlaceHelper.convertGooglePlaceDetailsToCompany(details: detailsResult!)
+                            
+                            let keyExists = self.companies[convertedCompany.name]
+                            if (keyExists == nil && convertedCompany.name.count > 0) {
+                                self.companies[convertedCompany.name] = convertedCompany
+                            }
+                        }
+                        
+                        if result!.results.count <= index + 1 {
+                            for (key, value) in self.companies {
+                                let annotation = MKPointAnnotation()
+                                annotation.title = key
+                                annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
+                                self.mapView.addAnnotation(annotation)
+                            }
+                            
+                            let mapCamera = MKMapCamera(lookingAtCenter: locValue, fromEyeCoordinate: locValue, eyeAltitude: self.currentRadius)
+                            self.mapView.setCamera(mapCamera, animated: true)
+                            
+                            manager.stopUpdatingLocation()
+                            self.activityIndicator.stopAnimating()
+                        }
+                        index+=1
+                    } failure: { (error) in
+                        self.activityIndicator.stopAnimating()
+                    }
+                }
+            } failure: { (error) in
+                self.activityIndicator.stopAnimating()
+            }
         }
+        
         
         // Apple Maps Search (Not as good as GooglePlacesAPI for now)
         /*
