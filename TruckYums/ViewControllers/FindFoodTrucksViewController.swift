@@ -47,7 +47,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     private lazy var segmentedControlMiles: UISegmentedControl = {
         let control = UISegmentedControl(items: ["5 miles", "10 miles", "20 miles", "30 miles"])
         control.backgroundColor = UIColor.black
-        control.selectedSegmentTintColor = Constants.mainColor
+        control.selectedSegmentTintColor = Constants.secondaryColor
         
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         control.setTitleTextAttributes(titleTextAttributes, for:.normal)

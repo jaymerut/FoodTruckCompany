@@ -52,7 +52,7 @@ class HomeViewController: UIViewController {
     private lazy var viewFoodTruckBackground: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = .white
-        view.layer.borderColor = Constants.mainColor.cgColor
+        view.layer.borderColor = Constants.secondaryColor.cgColor
         view.layer.borderWidth = 15
         
         return view
