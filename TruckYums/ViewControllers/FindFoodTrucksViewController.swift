@@ -55,7 +55,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         
         control.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
         
-        control.selectedSegmentIndex = 0;
+        control.selectedSegmentIndex = 1;
         
         return control
     }()
@@ -145,7 +145,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     // MARK: - UIViewController Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.currentRadius = self.milesToMetersArray[0]
+        self.currentRadius = self.milesToMetersArray[self.segmentedControlMiles.selectedSegmentIndex]
         self.view.backgroundColor = .white
         self.navigationItem.titleView = self.labelTitle
         
