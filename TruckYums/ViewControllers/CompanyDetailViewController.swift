@@ -15,7 +15,7 @@ class CompanyDetailViewController: UIViewController {
     
     
     // MARK: - Variables
-    public var company: Company = Company.init(name: "", latitude: 0, longitude: 0, linkedwith: "", venderverified: false, cuisine: "", phonenumber: "", siteurl: "", lastupdated: "", hours: "", weeklyhours: [String]())
+    public var company: Company = Company.init(name: "", latitude: 0.0, longitude: 0.0, linkedwith: "", venderverified: false, cuisine: "", phonenumber: "", siteurl: "", lastupdated: "", hours: "", weeklyhours: [String]())
     
     private lazy var contentView: UIView = {
         let view = UIView(frame: .zero)
