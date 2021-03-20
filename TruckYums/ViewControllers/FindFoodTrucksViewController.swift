@@ -38,9 +38,15 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         return label
     }()
     
+    private lazy var viewControlContainer: UIView = {
+        let view = UIView(frame: .zero)
+        view.backgroundColor = UIColor.black
+        
+        return view
+    }()
     private lazy var segmentedControlMiles: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["10 miles", "25 miles", "50 miles", "100 miles"])
-        control.backgroundColor = UIColor.gray
+        let control = UISegmentedControl(items: ["5 miles", "10 miles", "20 miles", "30 miles"])
+        control.backgroundColor = UIColor.black
         control.selectedSegmentTintColor = UIColor.init(hex: "0xACC649")
         
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -54,7 +60,14 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         return control
     }()
     
-    private let milesToMetersArray: [Double] = [24141, 40234, 80468, 160934]
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView.init(style: .large)
+        activityIndicator.color = .black
+        
+        return activityIndicator
+    }()
+    
+    private let milesToMetersArray: [Double] = [8046.72, 16093.4, 32186.9, 48280.3]
     
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView.init(frame: .zero)
@@ -170,23 +183,34 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
             make.height.equalTo(0).priority(250);
         }
         
-        self.view.addSubview(self.segmentedControlMiles)
-        self.segmentedControlMiles.snp.makeConstraints { (make) in
+        self.view.addSubview(self.viewControlContainer)
+        self.viewControlContainer.snp.makeConstraints { (make) in
             make.top.equalTo(self.stackViewBannerAds.snp.bottom)
             make.left.equalTo(self.view.snp.left)
             make.right.equalTo(self.view.snp.right)
         }
+        self.viewControlContainer.addSubview(self.segmentedControlMiles)
+        self.segmentedControlMiles.snp.makeConstraints { (make) in
+            make.edges.equalTo(self.viewControlContainer)
+        }
         
         self.view.addSubview(self.mapView)
         self.mapView.snp.makeConstraints { (make) in
-            make.top.equalTo(self.segmentedControlMiles.snp.bottom)
+            make.top.equalTo(self.viewControlContainer.snp.bottom)
             make.left.equalTo(self.view.snp.left)
             make.right.equalTo(self.view.snp.right)
             make.bottom.equalTo(self.view.snp.bottom)
         }
         
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.snp.makeConstraints { (make) in
+            make.centerX.equalTo(self.view.snp.centerX)
+            make.centerY.equalTo(self.view.snp.centerY)
+        }
+        
     }
     private func getUserCoordinates() {
+        self.activityIndicator.startAnimating()
         self.locationManager.requestWhenInUseAuthorization()
         
         self.locationManager.startUpdatingLocation()
@@ -260,14 +284,15 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
                             self.mapView.setCamera(mapCamera, animated: true)
                             
                             manager.stopUpdatingLocation()
+                            self.activityIndicator.stopAnimating()
                         }
                         index+=1
                     } failure: { (error) in
-                        
+                        self.activityIndicator.stopAnimating()
                     }
                 }
             } failure: { (error) in
-                
+                self.activityIndicator.stopAnimating()
             }
         }
         
