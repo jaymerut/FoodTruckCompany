@@ -127,9 +127,9 @@ class DateTimeHelper: NSObject {
     
     public func isHoursOpen(hours: String) -> Bool {
         var hoursVal = hours
-        if (hoursVal == "") {
+        if (hoursVal == "" || hoursVal.contains("Open 24 hours")) {
             return true
-        } else if (hoursVal == "Closed") {
+        } else if (hoursVal.contains("Closed")) {
             return false
         }
         
