@@ -12,7 +12,7 @@ target 'TruckYums' do
   pod 'Firebase/Crashlytics'
   pod 'Firebase/Analytics'
   pod 'SnapKit'
-  pod 'Google-Mobile-Ads-SDK'
+  pod 'Google-Mobile-Ads-SDK', '~> 7.67.0'
   pod 'RestKit'
 
   # Pods for TruckYums
