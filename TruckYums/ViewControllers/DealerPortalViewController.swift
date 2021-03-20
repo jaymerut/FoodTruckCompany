@@ -68,12 +68,24 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     private lazy var buttonChangeLocation: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("Update With Current Location", for: .normal)
-        button.setTitleColor(Constants.darkGreenTextColor, for: .normal)
-        button.setTitleColor(.white, for: .highlighted)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.black, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        button.backgroundColor = Constants.greenButtonColor
+        button.backgroundColor = Constants.mainColor
         button.layer.cornerRadius = 32.5
         button.addTarget(self, action: #selector(buttonChangeLocation_TouchUpInside), for: .touchUpInside)
+        
+        return button
+    }()
+    private lazy var buttonRemoveLocation: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("Remove Current Location", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.black, for: .highlighted)
+        button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
+        button.backgroundColor = UIColor.init(hex: 0xB30000)
+        button.layer.cornerRadius = 32.5
+        button.addTarget(self, action: #selector(buttonRemoveLocation_TouchUpInside), for: .touchUpInside)
         
         return button
     }()
@@ -82,6 +94,13 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         let view = UIView(frame: .zero)
         
         return view
+    }()
+    
+    private lazy var stackViewRemoveLocation: UIStackView = {
+        let stackView = UIStackView(frame: .zero)
+        stackView.axis = .vertical
+        
+        return stackView
     }()
     
     private lazy var labelName: UILabel = {
@@ -306,6 +325,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         self.view.backgroundColor = .white
         self.navigationItem.titleView = self.labelTitle
         self.hoursArray = SwiftAppDefaults.shared.company?.weeklyhours ?? self.hoursArray
+
         // Setup
         self.getUserCoordinates()
     }
@@ -330,12 +350,25 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         
         self.view.addGestureRecognizer(gestureTap)
         
+        self.view.addSubview(self.stackViewRemoveLocation)
+        self.stackViewRemoveLocation.snp.makeConstraints { (make) in
+            make.left.equalTo(self.view.snp.left).offset(15)
+            make.right.equalTo(self.view.snp.right).offset(-15)
+            make.bottom.equalTo(self.view.snp.bottom).offset(-15)
+            make.height.equalTo(0).priority(250);
+        }
+        
+        self.stackViewRemoveLocation.addArrangedSubview(self.buttonRemoveLocation)
+        self.buttonRemoveLocation.snp.makeConstraints { (make) in
+            make.height.equalTo(65)
+        }
+        
         // Update Current Location
         self.view.addSubview(self.buttonChangeLocation)
         self.buttonChangeLocation.snp.makeConstraints { (make) in
             make.left.equalTo(self.view.snp.left).offset(15)
             make.right.equalTo(self.view.snp.right).offset(-15)
-            make.bottom.equalTo(self.view.snp.bottom).offset(-15)
+            make.bottom.equalTo(self.stackViewRemoveLocation.snp.top).offset(-5)
             make.height.equalTo(65)
         }
         
@@ -523,8 +556,25 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     @objc private func buttonChangeLocation_TouchUpInside(sender: UIButton) {
         self.showActivityIndicator()
         
+        self.buttonRemoveLocation.isHidden = false
+        
         self.firebaseCloudUpdate.firebaseUpdateLocation(company: SwiftAppDefaults.shared.user?.company ?? "", latitude: self.latitude, longitude: self.longitude) {
-            
+            var company = SwiftAppDefaults.shared.company
+            company?.latitude = self.latitude
+            company?.longitude = self.longitude
+            SwiftAppDefaults.shared.company = company
+            self.hideActivityIndicator()
+        }
+    }
+    @objc private func buttonRemoveLocation_TouchUpInside(sender: UIButton) {
+        self.showActivityIndicator()
+        
+        self.buttonRemoveLocation.isHidden = true
+        self.firebaseCloudUpdate.firebaseUpdateLocation(company: SwiftAppDefaults.shared.user?.company ?? "", latitude: 0, longitude: 0) {
+            var company = SwiftAppDefaults.shared.company
+            company?.latitude = 0
+            company?.longitude = 0
+            SwiftAppDefaults.shared.company = company
             self.hideActivityIndicator()
         }
     }

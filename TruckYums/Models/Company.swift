@@ -11,8 +11,8 @@ import Foundation
 class Company: NSObject, NSCoding {
     required init?(coder: NSCoder) {
         name = coder.decodeObject(forKey: "name") as? String ?? ""
-        latitude = coder.decodeObject(forKey: "latitude") as? Double ?? 0
-        longitude = coder.decodeObject(forKey: "longitude") as? Double ?? 0
+        latitude = coder.decodeObject(forKey: "latitude") as? Double ?? 0.0
+        longitude = coder.decodeObject(forKey: "longitude") as? Double ?? 0.0
         linkedwith = coder.decodeObject(forKey: "linkedwith") as? String ?? ""
         venderverified = coder.decodeObject(forKey: "venderverified") as? Bool ?? false
         cuisine = coder.decodeObject(forKey: "cuisine") as? String ?? ""
@@ -38,8 +38,8 @@ class Company: NSObject, NSCoding {
     }
     
     var name: String = ""
-    var latitude: Double = 0
-    var longitude: Double = 0
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
     var linkedwith: String = ""
     var venderverified: Bool = false
     var cuisine: String = ""
