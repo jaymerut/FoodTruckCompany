@@ -28,14 +28,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mainVC = HomeViewController()
         //mainVC.tabBarItem = tabBarHome
         let destinationNC = UINavigationController(rootViewController: mainVC)
-        destinationNC.navigationBar.barTintColor = UIColor.init(hex: "0x055e86")
+        destinationNC.navigationBar.barTintColor = Constants.mainColor
         destinationNC.navigationBar.tintColor = .white
         destinationNC.navigationBar.isTranslucent = false
 /*
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = [mainVC]
         tabBarController.tabBar.tintColor = UIColor.init(hex: "0x78d2fa")
-        tabBarController.tabBar.barTintColor = UIColor.init(hex: "0x055e86")
+        tabBarController.tabBar.barTintColor = Constants.mainColor
         tabBarController.tabBar.isTranslucent = false
         tabBarController.selectedIndex = 0
         

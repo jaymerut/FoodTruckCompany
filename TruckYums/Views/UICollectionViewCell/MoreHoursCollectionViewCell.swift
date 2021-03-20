@@ -83,10 +83,10 @@ class MoreHoursCollectionViewCell: UICollectionViewCell {
         self.labelHours.text = self.hours
         
         if self.hours.range(of: self.dateTimeHelper.retrieveCurrentWeekDay()) != nil {
-            self.containerView.backgroundColor = UIColor.init(hex: 0x055e86)
+            self.containerView.backgroundColor = Constants.mainColor
             self.labelHours.textColor = .white
             self.labelHours.font = UIFont.init(name: "Teko-Regular", size: 20.0)
-            self.containerView.layer.borderColor = UIColor.init(hex: 0x055e86).cgColor
+            self.containerView.layer.borderColor = Constants.mainColor.cgColor
         }
     }
     

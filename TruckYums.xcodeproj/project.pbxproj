@@ -18,6 +18,7 @@
 		96575C8625E7579C001DF2E9 /* Teko-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 96575C8125E7579C001DF2E9 /* Teko-Regular.ttf */; };
 		96575C8725E7579C001DF2E9 /* Teko-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 96575C8225E7579C001DF2E9 /* Teko-Light.ttf */; };
 		96575C8925E757D5001DF2E9 /* KaushanScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 96575C8825E757D5001DF2E9 /* KaushanScript-Regular.ttf */; };
+		965C7BBE2605A4FD005FD743 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965C7BBD2605A4FD005FD743 /* Constants.swift */; };
 		965CEAA22570105600ACE673 /* FindFoodTrucksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965CEAA12570105600ACE673 /* FindFoodTrucksViewController.swift */; };
 		96685E8A25B68C7C0047AD53 /* GooglePlacesResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685E8925B68C7C0047AD53 /* GooglePlacesResult.m */; };
 		96685E8F25B68F8A0047AD53 /* GooglePlacesNearby.m in Sources */ = {isa = PBXBuildFile; fileRef = 96685E8E25B68F8A0047AD53 /* GooglePlacesNearby.m */; };
@@ -101,6 +102,7 @@
 		96575C8125E7579C001DF2E9 /* Teko-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Teko-Regular.ttf"; sourceTree = "<group>"; };
 		96575C8225E7579C001DF2E9 /* Teko-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Teko-Light.ttf"; sourceTree = "<group>"; };
 		96575C8825E757D5001DF2E9 /* KaushanScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KaushanScript-Regular.ttf"; sourceTree = "<group>"; };
+		965C7BBD2605A4FD005FD743 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		965CEAA12570105600ACE673 /* FindFoodTrucksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindFoodTrucksViewController.swift; sourceTree = "<group>"; };
 		96685E8625B68A9B0047AD53 /* TruckYums-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TruckYums-Bridging-Header.h"; sourceTree = "<group>"; };
 		96685E8825B68C7C0047AD53 /* GooglePlacesResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GooglePlacesResult.h; sourceTree = "<group>"; };
@@ -255,6 +257,14 @@
 				96575C8225E7579C001DF2E9 /* Teko-Light.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		965C7BBA2605A4CE005FD743 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				965C7BBD2605A4FD005FD743 /* Constants.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		96685E8725B68B3E0047AD53 /* GooglePlacesAPI */ = {
@@ -429,6 +439,7 @@
 		96BB89B9256F2C1B00B5AD7B /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				965C7BBA2605A4CE005FD743 /* Constants */,
 				968CFE1A259A38EB00AA282B /* Helpers */,
 				96686BDA25BA90F20047AD53 /* Controllers */,
 				9684FE9C25713AB700830C46 /* AppDefaults */,
@@ -906,6 +917,7 @@
 				96685EAD25B69E310047AD53 /* GooglePlacesRouter.m in Sources */,
 				968CFDC42599876600AA282B /* SelectCuisineValueViewController.swift in Sources */,
 				967281AA2581115900F482BC /* FirebaseCloudUpdate.swift in Sources */,
+				965C7BBE2605A4FD005FD743 /* Constants.swift in Sources */,
 				96685EBA25B773AB0047AD53 /* NetworkManager.m in Sources */,
 				9684FE982570BED300830C46 /* User.swift in Sources */,
 				96BB89BD256F2C4000B5AD7B /* UIColor+Hex.swift in Sources */,

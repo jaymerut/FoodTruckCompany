@@ -26,7 +26,7 @@ class CompanyDetailViewController: UIViewController {
     }()
     private lazy var viewHeader: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = UIColor.init(hex: "0x055e86")
+        view.backgroundColor = Constants.mainColor
         view.clipsToBounds = true
         view.layer.cornerRadius = 20.0
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
@@ -113,7 +113,7 @@ class CompanyDetailViewController: UIViewController {
         
         let text = NSMutableAttributedString(string: "View Hours")
         text.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.thick.rawValue, range: NSRange(location: 0, length: "View Hours".count))
-        text.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hex: 0x055e86), range: NSRange(location: 0, length: "View Hours".count))
+        text.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hex: 0x444444), range: NSRange(location: 0, length: "View Hours".count))
         
         button.setAttributedTitle(text, for: .normal)
         button.addTarget(self, action: #selector(buttonMoreHours_TouchUpInside), for: .touchUpInside)
@@ -297,6 +297,7 @@ class CompanyDetailViewController: UIViewController {
         self.viewInfoContainer.snp.makeConstraints { (make) in
             make.top.equalTo(self.collectionView.snp.top)
             make.left.equalTo(self.collectionView.snp.left)
+            make.right.equalTo(self.collectionView.snp.centerX).offset(-2.5)
             make.height.equalTo(100)
             make.width.equalTo(175)
         }
@@ -345,7 +346,7 @@ class CompanyDetailViewController: UIViewController {
         self.imageViewVerified.snp.makeConstraints { (make) in
             make.top.equalTo(self.labelCuisine.snp.bottom).offset(11)
             make.left.equalTo(self.labelVerified.snp.right)
-            make.centerY.equalTo(self.labelVerified.snp.centerY)
+            make.centerY.equalTo(self.labelVerified.snp.centerY).offset(-2)
             make.height.equalTo(20)
             make.width.equalTo(20)
         }
@@ -354,7 +355,8 @@ class CompanyDetailViewController: UIViewController {
         self.collectionView.addSubview(self.viewLinkContainer)
         self.viewLinkContainer.snp.makeConstraints { (make) in
             make.top.equalTo(self.collectionView.snp.top)
-            make.left.equalTo(self.viewInfoContainer.snp.right).offset(5)
+            make.left.equalTo(self.collectionView.snp.centerX).offset(2.5)
+            make.right.equalTo(self.collectionView.snp.right)
             make.height.equalTo(100)
             make.width.equalTo(100)
         }
@@ -462,7 +464,7 @@ class CompanyDetailViewController: UIViewController {
             url = URL(string: "https://\(urlString)")!
         }
         let webView: SFSafariViewController = SFSafariViewController.init(url: url)
-        webView.preferredBarTintColor = UIColor.init(hex: "0x055e86")
+        webView.preferredBarTintColor = Constants.mainColor
         webView.preferredControlTintColor = .white
         self.present(webView, animated: true, completion: nil)
     }

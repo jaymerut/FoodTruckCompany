@@ -65,7 +65,7 @@ class WeeklyHoursCollectionViewCell: UICollectionViewCell {
     private lazy var segmentedControlOpenClose: UISegmentedControl = {
         let control = UISegmentedControl(items: ["Open", "Closed"])
         control.backgroundColor = UIColor.gray
-        control.selectedSegmentTintColor = UIColor.init(hex: "0xACC649")
+        control.selectedSegmentTintColor = Constants.mainColor
         
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         control.setTitleTextAttributes(titleTextAttributes, for:.normal)
@@ -160,7 +160,7 @@ class WeeklyHoursCollectionViewCell: UICollectionViewCell {
         
         if sender.selectedSegmentIndex == 0 {
             // Open
-            self.segmentedControlOpenClose.selectedSegmentTintColor = UIColor.init(hex: "0xACC649")
+            self.segmentedControlOpenClose.selectedSegmentTintColor = Constants.mainColor
             
             if (self.hours.lowercased() == "closed" || self.hours.count == 0) {
                 self.sectionController?.weeklyHoursDidUpdate(hours: "12:00 AM - 11:59 PM", day: self.day)
