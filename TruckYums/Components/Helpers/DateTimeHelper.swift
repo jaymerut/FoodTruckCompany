@@ -54,6 +54,46 @@ class DateTimeHelper: NSObject {
         
         return dateString
     }
+    public func retrieveCurrentWeekDayIndex() -> Int {
+        let currentWeekDay = self.retrieveCurrentWeekDay()
+        
+        if currentWeekDay == "Monday" {
+            return 0
+        } else if currentWeekDay == "Tuesday" {
+            return 1
+        } else if currentWeekDay == "Wednesday" {
+            return 2
+        } else if currentWeekDay == "Thursday" {
+            return 3
+        } else if currentWeekDay == "Friday" {
+            return 4
+        } else if currentWeekDay == "Saturday" {
+            return 5
+        } else if currentWeekDay == "Sunday" {
+            return 6
+        }
+        
+        return 0
+    }
+    public func retrieveWeekDayFromIndex(index: Int) -> String {
+        if index == 0 {
+            return "Monday"
+        } else if index == 1 {
+            return "Tuesday"
+        } else if index == 2 {
+            return "Wednesday"
+        } else if index == 3 {
+            return "Thursday"
+        } else if index == 4 {
+            return "Friday"
+        } else if index == 5 {
+            return "Saturday"
+        } else if index == 6 {
+            return "Sunday"
+        }
+        
+        return "Monday"
+    }
     
     public func extractFromHours(hours: String) -> Date {
         var stringComponents = hours.components(separatedBy: " - ")
@@ -78,22 +118,50 @@ class DateTimeHelper: NSObject {
         return date
     }
     
+    public func convertDateToString(date: Date) -> String {
+        self.dateFormatter.dateFormat = "h:mm a"
+        let dateString = self.dateFormatter.string(from: date)
+        
+        return dateString
+    }
+    
     public func isHoursOpen(hours: String) -> Bool {
-        if (hours == "" || hours.lowercased() == "open 24 hours") {
+        var hoursVal = hours
+        if (hoursVal == "") {
             return true
-        } else if (hours == "Closed") {
+        } else if (hoursVal == "Closed") {
             return false
         }
-        let hoursFromDate = self.extractFromHours(hours: hours)
-        let hoursToDate = self.extractToHours(hours: hours)
+        
+        let stringComponents = hoursVal.components(separatedBy: ": ")
+        
+        hoursVal = stringComponents[0]
+        if stringComponents.count > 1 {
+            hoursVal = stringComponents[1]
+        }
+        let hoursFromDate = self.extractFromHours(hours: hoursVal)
+        let hoursToDate = self.extractToHours(hours: hoursVal)
         let currentTime = self.retrieveCurrentTime()
         
-        if currentTime > hoursFromDate && currentTime < hoursToDate {
+        if (currentTime > hoursFromDate && currentTime < hoursToDate) {
             return true
         }
         
         return false
     }
     
+    public func getAMPMFromDate(date: Date) -> String {
+        self.dateFormatter.dateFormat = "a"
+        let currentAMPMFormat = dateFormatter.string(from: date).uppercased()
+        
+        return currentAMPMFormat
+    }
+    
+    public func getHoursFromDate(date: Date) -> Int {
+        self.dateFormatter.dateFormat = "h"
+        let currentHoursFormat = dateFormatter.string(from: date).uppercased()
+        
+        return Int(currentHoursFormat) ?? 0
+    }
     
 }

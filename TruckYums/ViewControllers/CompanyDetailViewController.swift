@@ -15,7 +15,7 @@ class CompanyDetailViewController: UIViewController {
     
     
     // MARK: - Variables
-    public var company: Company = Company.init(name: "", latitude: 0, longitude: 0, linkedwith: "", venderverified: false, cuisine: "", phonenumber: "", siteurl: "", lastupdated: "", hours: "")
+    public var company: Company = Company.init(name: "", latitude: 0.0, longitude: 0.0, linkedwith: "", venderverified: false, cuisine: "", phonenumber: "", siteurl: "", lastupdated: "", hours: "", weeklyhours: [String]())
     
     private lazy var contentView: UIView = {
         let view = UIView(frame: .zero)
@@ -26,7 +26,7 @@ class CompanyDetailViewController: UIViewController {
     }()
     private lazy var viewHeader: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = UIColor.init(hex: "0x055e86")
+        view.backgroundColor = Constants.mainColor
         view.clipsToBounds = true
         view.layer.cornerRadius = 20.0
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
@@ -104,6 +104,22 @@ class CompanyDetailViewController: UIViewController {
         return label
     }()
     
+    
+    private lazy var buttonMoreHours: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
+        button.titleLabel?.font = UIFont.init(name: "Teko-Light", size: 20.0)
+        
+        let text = NSMutableAttributedString(string: "View Hours")
+        text.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.thick.rawValue, range: NSRange(location: 0, length: "View Hours".count))
+        text.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hex: 0x444444), range: NSRange(location: 0, length: "View Hours".count))
+        
+        button.setAttributedTitle(text, for: .normal)
+        button.addTarget(self, action: #selector(buttonMoreHours_TouchUpInside), for: .touchUpInside)
+        
+        return button
+    }()
     private lazy var buttonPhoneNumber: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "image_call"), for: .normal)
@@ -281,6 +297,7 @@ class CompanyDetailViewController: UIViewController {
         self.viewInfoContainer.snp.makeConstraints { (make) in
             make.top.equalTo(self.collectionView.snp.top)
             make.left.equalTo(self.collectionView.snp.left)
+            make.right.equalTo(self.collectionView.snp.centerX).offset(-2.5)
             make.height.equalTo(100)
             make.width.equalTo(175)
         }
@@ -293,9 +310,9 @@ class CompanyDetailViewController: UIViewController {
             make.height.equalTo(20)
         }
         
-        // Label Hours Value
-        self.viewInfoContainer.addSubview(self.labelHoursValue)
-        self.labelHoursValue.snp.makeConstraints { (make) in
+        // Button More Hours
+        self.viewInfoContainer.addSubview(self.buttonMoreHours)
+        self.buttonMoreHours.snp.makeConstraints { (make) in
             make.top.equalTo(self.viewInfoContainer.snp.top).offset(4)
             make.left.equalTo(self.labelHours.snp.right)
             make.centerY.equalTo(self.labelHours.snp.centerY)
@@ -304,7 +321,7 @@ class CompanyDetailViewController: UIViewController {
         // Label Cuisine
         self.viewInfoContainer.addSubview(self.labelCuisine)
         self.labelCuisine.snp.makeConstraints { (make) in
-            make.top.equalTo(self.labelHours.snp.bottom).offset(11)
+            make.top.equalTo(self.buttonMoreHours.snp.bottom).offset(11)
             make.left.equalTo(self.viewInfoContainer.snp.left)
             make.height.equalTo(20)
         }
@@ -312,7 +329,7 @@ class CompanyDetailViewController: UIViewController {
         // Label Cuisine Value
         self.viewInfoContainer.addSubview(self.labelCuisineValue)
         self.labelCuisineValue.snp.makeConstraints { (make) in
-            make.top.equalTo(self.labelHours.snp.bottom).offset(11)
+            make.top.equalTo(self.buttonMoreHours.snp.bottom).offset(11)
             make.left.equalTo(self.labelCuisine.snp.right)
             make.centerY.equalTo(self.labelCuisine.snp.centerY)
         }
@@ -329,7 +346,7 @@ class CompanyDetailViewController: UIViewController {
         self.imageViewVerified.snp.makeConstraints { (make) in
             make.top.equalTo(self.labelCuisine.snp.bottom).offset(11)
             make.left.equalTo(self.labelVerified.snp.right)
-            make.centerY.equalTo(self.labelVerified.snp.centerY)
+            make.centerY.equalTo(self.labelVerified.snp.centerY).offset(-2)
             make.height.equalTo(20)
             make.width.equalTo(20)
         }
@@ -338,7 +355,8 @@ class CompanyDetailViewController: UIViewController {
         self.collectionView.addSubview(self.viewLinkContainer)
         self.viewLinkContainer.snp.makeConstraints { (make) in
             make.top.equalTo(self.collectionView.snp.top)
-            make.left.equalTo(self.viewInfoContainer.snp.right).offset(5)
+            make.left.equalTo(self.collectionView.snp.centerX).offset(2.5)
+            make.right.equalTo(self.collectionView.snp.right)
             make.height.equalTo(100)
             make.width.equalTo(100)
         }
@@ -428,7 +446,9 @@ class CompanyDetailViewController: UIViewController {
         self.imageViewOpenClosed.image = self.retrieveOpenClosedImage()
     }
     private func retrieveOpenClosedImage() -> UIImage {
-        if (self.dateTimeHelper.isHoursOpen(hours: self.company.hours)) {
+        let index = self.dateTimeHelper.retrieveCurrentWeekDayIndex()
+        let hours = self.company.weeklyhours[index]
+        if (self.dateTimeHelper.isHoursOpen(hours: hours)) {
             return UIImage(named: "image_open_sign")!
         } else {
             return UIImage(named: "image_closed_sign")!
@@ -444,19 +464,31 @@ class CompanyDetailViewController: UIViewController {
             url = URL(string: "https://\(urlString)")!
         }
         let webView: SFSafariViewController = SFSafariViewController.init(url: url)
-        webView.preferredBarTintColor = UIColor.init(hex: "0x055e86")
+        webView.preferredBarTintColor = Constants.mainColor
         webView.preferredControlTintColor = .white
         self.present(webView, animated: true, completion: nil)
     }
-    func navigateToMapsAppWithDirections(to coordinate: CLLocationCoordinate2D, destinationName name: String) {
+    private func navigateToMapsAppWithDirections(to coordinate: CLLocationCoordinate2D, destinationName name: String) {
       let options = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
       let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
       let mapItem = MKMapItem(placemark: placemark)
       mapItem.name = name
       mapItem.openInMaps(launchOptions: options)
     }
+    private func navigateToCompanyDetail() {
+        let destinationVC = MoreHoursViewController.init()
+        destinationVC.modalPresentationStyle = .overFullScreen
+        destinationVC.modalTransitionStyle = .crossDissolve
+        destinationVC.hoursArray = self.company.weeklyhours
+        destinationVC.isVerifiedVendor = self.company.venderverified
+        
+        self.present(destinationVC, animated: true, completion: nil)
+    }
     
     // MARK: UIResponders
+    @objc private func buttonMoreHours_TouchUpInside(sender: UIButton) {
+        self.navigateToCompanyDetail()
+    }
     @objc private func buttonPhoneNumber_TouchUpInside(sender: UIButton) {
         if let url = URL(string: "tel://\(self.company.phonenumber.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)"), UIApplication.shared.canOpenURL(url) {
             if #available(iOS 10, *) {

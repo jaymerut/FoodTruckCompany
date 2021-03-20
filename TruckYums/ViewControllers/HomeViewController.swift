@@ -52,7 +52,7 @@ class HomeViewController: UIViewController {
     private lazy var viewFoodTruckBackground: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = .white
-        view.layer.borderColor = UIColor.init(hex: "0xACC649")?.cgColor
+        view.layer.borderColor = Constants.secondaryColor.cgColor
         view.layer.borderWidth = 15
         
         return view
@@ -64,7 +64,7 @@ class HomeViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.black, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        button.backgroundColor = UIColor.init(hex: "0x055e86")
+        button.backgroundColor = Constants.mainColor
         button.layer.cornerRadius = 32.5
         button.addTarget(self, action: #selector(buttonLogin_TouchUpInside), for: .touchUpInside)
         
@@ -76,7 +76,7 @@ class HomeViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.black, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        button.backgroundColor = UIColor.init(hex: "0x055e86")
+        button.backgroundColor = Constants.mainColor
         button.layer.cornerRadius = 32.5
         button.addTarget(self, action: #selector(buttonViewPortal_TouchUpInside), for: .touchUpInside)
         
@@ -88,7 +88,7 @@ class HomeViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.black, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        button.backgroundColor = UIColor.init(hex: "0x055e86")
+        button.backgroundColor = Constants.mainColor
         button.layer.cornerRadius = 32.5
         button.addTarget(self, action: #selector(buttonFind_TouchUpInside), for: .touchUpInside)
         

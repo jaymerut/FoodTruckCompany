@@ -10,8 +10,8 @@ import UIKit
 import SnapKit
 import CoreLocation
 
-protocol HoursSelectDelegate {
-    func updateHours(hours: String)
+protocol WeeklyHoursDelegate {
+    func updateHours(hoursArray: [String])
     func closedHours()
 }
 
@@ -20,7 +20,7 @@ protocol SelectCuisineValueDelegate {
     func closedCuisine()
 }
 
-class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocationManagerDelegate, HoursSelectDelegate, SelectCuisineValueDelegate {
+class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocationManagerDelegate, HoursSelectDelegate, SelectCuisineValueDelegate, WeeklyHoursDelegate {
     
     
     // MARK: - Variables
@@ -58,7 +58,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.black, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        button.backgroundColor = UIColor.init(hex: "0x055e86")
+        button.backgroundColor = Constants.mainColor
         button.layer.cornerRadius = 32.5
         button.addTarget(self, action: #selector(buttonUpdate_TouchUpInside), for: .touchUpInside)
         button.isHidden = true
@@ -68,12 +68,24 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     private lazy var buttonChangeLocation: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("Update With Current Location", for: .normal)
-        button.setTitleColor(.init(hex: 0x455409), for: .normal)
-        button.setTitleColor(.white, for: .highlighted)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.black, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        button.backgroundColor = UIColor.init(hex: "0xCDDC91")
+        button.backgroundColor = Constants.mainColor
         button.layer.cornerRadius = 32.5
         button.addTarget(self, action: #selector(buttonChangeLocation_TouchUpInside), for: .touchUpInside)
+        
+        return button
+    }()
+    private lazy var buttonRemoveLocation: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("Remove Current Location", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.black, for: .highlighted)
+        button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
+        button.backgroundColor = UIColor.init(hex: 0xB30000)
+        button.layer.cornerRadius = 32.5
+        button.addTarget(self, action: #selector(buttonRemoveLocation_TouchUpInside), for: .touchUpInside)
         
         return button
     }()
@@ -82,6 +94,13 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         let view = UIView(frame: .zero)
         
         return view
+    }()
+    
+    private lazy var stackViewRemoveLocation: UIStackView = {
+        let stackView = UIStackView(frame: .zero)
+        stackView.axis = .vertical
+        
+        return stackView
     }()
     
     private lazy var labelName: UILabel = {
@@ -213,7 +232,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         textField.delegate = self
         textField.font = UIFont(name: "Teko-Regular", size: 18.0)
         textField.placeholder = "Enter Hours"
-        textField.text = SwiftAppDefaults.shared.company?.hours
+        textField.text = "Update Weekly Hours"
         textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
         textField.layer.borderWidth = 2
         textField.layer.cornerRadius = 6.0
@@ -239,6 +258,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         textField.delegate = self
         textField.font = UIFont(name: "Teko-Regular", size: 18.0)
         textField.placeholder = "Enter Site Url"
+        textField.text = SwiftAppDefaults.shared.company?.siteurl
         textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
         textField.layer.borderWidth = 2
         textField.layer.cornerRadius = 6.0
@@ -257,6 +277,12 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         manager.distanceFilter = 5
         
         return manager
+    }()
+    
+    private lazy var hoursArray: [String] = {
+        let array = ["Closed", "Closed", "Closed", "Closed", "Closed", "Closed", "Closed"];
+
+        return array
     }()
     
     private lazy var firebaseCloudUpdate: FirebaseCloudUpdate = {
@@ -298,7 +324,8 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.navigationItem.titleView = self.labelTitle
-        
+        self.hoursArray = SwiftAppDefaults.shared.company?.weeklyhours ?? self.hoursArray
+
         // Setup
         self.getUserCoordinates()
     }
@@ -323,12 +350,25 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         
         self.view.addGestureRecognizer(gestureTap)
         
+        self.view.addSubview(self.stackViewRemoveLocation)
+        self.stackViewRemoveLocation.snp.makeConstraints { (make) in
+            make.left.equalTo(self.view.snp.left).offset(15)
+            make.right.equalTo(self.view.snp.right).offset(-15)
+            make.bottom.equalTo(self.view.snp.bottom).offset(-15)
+            make.height.equalTo(0).priority(250);
+        }
+        
+        self.stackViewRemoveLocation.addArrangedSubview(self.buttonRemoveLocation)
+        self.buttonRemoveLocation.snp.makeConstraints { (make) in
+            make.height.equalTo(65)
+        }
+        
         // Update Current Location
         self.view.addSubview(self.buttonChangeLocation)
         self.buttonChangeLocation.snp.makeConstraints { (make) in
             make.left.equalTo(self.view.snp.left).offset(15)
             make.right.equalTo(self.view.snp.right).offset(-15)
-            make.bottom.equalTo(self.view.snp.bottom).offset(-15)
+            make.bottom.equalTo(self.stackViewRemoveLocation.snp.top).offset(-5)
             make.height.equalTo(65)
         }
         
@@ -497,7 +537,8 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
             modifiedCompany.name = self.textFieldCompanyName.text ?? ""
             modifiedCompany.phonenumber = self.textFieldPhoneNumber.text ?? ""
             modifiedCompany.lastupdated = self.dateTimeHelper.retrieveCurrentDateTime()
-            modifiedCompany.hours = self.textFieldHours.text ?? ""
+            modifiedCompany.hours = "Update App"
+            modifiedCompany.weeklyhours = self.hoursArray
             modifiedCompany.cuisine = self.textFieldCuisine.text ?? ""
             modifiedCompany.siteurl = self.textFieldSiteURL.text ?? ""
             
@@ -515,8 +556,25 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     @objc private func buttonChangeLocation_TouchUpInside(sender: UIButton) {
         self.showActivityIndicator()
         
+        self.buttonRemoveLocation.isHidden = false
+        
         self.firebaseCloudUpdate.firebaseUpdateLocation(company: SwiftAppDefaults.shared.user?.company ?? "", latitude: self.latitude, longitude: self.longitude) {
-            
+            var company = SwiftAppDefaults.shared.company
+            company?.latitude = self.latitude
+            company?.longitude = self.longitude
+            SwiftAppDefaults.shared.company = company
+            self.hideActivityIndicator()
+        }
+    }
+    @objc private func buttonRemoveLocation_TouchUpInside(sender: UIButton) {
+        self.showActivityIndicator()
+        
+        self.buttonRemoveLocation.isHidden = true
+        self.firebaseCloudUpdate.firebaseUpdateLocation(company: SwiftAppDefaults.shared.user?.company ?? "", latitude: 0, longitude: 0) {
+            var company = SwiftAppDefaults.shared.company
+            company?.latitude = 0
+            company?.longitude = 0
+            SwiftAppDefaults.shared.company = company
             self.hideActivityIndicator()
         }
     }
@@ -527,7 +585,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         if sender == self.textFieldCuisine {
             self.navigateToSelectCuisine(cuisine: self.textFieldCuisine.text ?? "")
         } else if sender == self.textFieldHours {
-            self.navigateToHoursSelect(hours: self.textFieldHours.text ?? "6:00 AM - 8:00 PM")
+            self.navigateToWeeklyHours(hoursArray: self.hoursArray)
         }
     }
     @objc private func gestureTap_Tap(gesture: UITapGestureRecognizer) {
@@ -538,18 +596,18 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     private func navigateToHome() {
         let mainVC = HomeViewController()
         let destinationNC = UINavigationController(rootViewController: mainVC)
-        destinationNC.navigationBar.barTintColor = UIColor.init(hex: "0x055e86")
+        destinationNC.navigationBar.barTintColor = Constants.mainColor
         destinationNC.navigationBar.tintColor = .white
         destinationNC.navigationBar.isTranslucent = false
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = destinationNC
     }
-    private func navigateToHoursSelect(hours: String) {
-        let destinationVC = HoursSelectViewController.init()
+    private func navigateToWeeklyHours(hoursArray: [String]) {
+        let destinationVC = WeeklyHoursViewController.init()
         destinationVC.modalPresentationStyle = .overFullScreen
         destinationVC.modalTransitionStyle = .crossDissolve
-        destinationVC.hours = hours
+        destinationVC.hoursArray = hoursArray
         destinationVC.delegate = self
         
         self.present(destinationVC, animated: true, completion: nil)
@@ -635,8 +693,9 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         }
     }
     
-    func updateHours(hours: String) {
-        self.textFieldHours.text = hours
+    func updateHours(hoursArray: [String]) {
+        self.hoursArray = hoursArray
+        self.textFieldHours.text = "Weekly Hours Updated"
         self.textFieldHours.resignFirstResponder()
         self.buttonUpdate.isHidden = false
     }

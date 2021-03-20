@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelectDelegate, SelectCuisineValueDelegate  {
+class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelectDelegate, SelectCuisineValueDelegate, WeeklyHoursDelegate  {
     
     
     // MARK: - Variables
@@ -130,7 +130,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         textField.autocapitalizationType = .none
         textField.delegate = self
         textField.font = UIFont(name: "Teko-Regular", size: 18.0)
-        textField.placeholder = "Enter Hours"
+        textField.placeholder = "Enter Weekly Hours"
         textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
         textField.layer.borderWidth = 2
         textField.layer.cornerRadius = 6.0
@@ -212,6 +212,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         return button
     }()
     
+    private lazy var hoursArray: [String] = {
+        let array = ["Closed", "Closed", "Closed", "Closed", "Closed", "Closed", "Closed"];
+
+        return array
+    }()
+    
     private lazy var firebaseCloudRead: FirebaseCloudRead = {
         let firebaseCloudRead = FirebaseCloudRead.init()
         
@@ -229,6 +235,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         
         return helper
     }()
+    
+    private var messageHelper: MessageHelper = MessageHelper()
     
     // MARK: - Initialization
     private func customInitRegisterViewController() {
@@ -373,7 +381,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
             self.textFieldEmail.text?.count == 0 ||
             self.textFieldPassword.text?.count == 0 ||
             self.textFieldPasswordRepeat.text?.count == 0 {
-            self.displayMessage(title: "Error", message: "Please enter values in the required fields")
+            self.present(self.messageHelper.displayMessage(title: "Error", message: "Please enter values in the required fields"), animated: true)
             return false
         } else if self.verifyEmail() && self.verifyPhone() && self.verifyPasswords() && self.verifySiteURL() {
             return true
@@ -390,7 +398,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         if emailTest.evaluate(with: self.textFieldEmail.text) {
             return true
         } else {
-            self.displayMessage(title: "Error", message: "Email is in an invalid format.")
+            self.present(self.messageHelper.displayMessage(title: "Error", message: "Email is in an invalid format."), animated: true)
             return false
         }
     }
@@ -399,13 +407,13 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         if ((numString?.count ?? 0) == 10) {
             return true
         } else {
-            self.displayMessage(title: "Error", message: "Not enough digits in phone number.")
+            self.present(self.messageHelper.displayMessage(title: "Error", message: "Not enough digits in phone number."), animated: true)
             return false
         }
     }
     private func verifyPasswords() -> Bool {
         if self.textFieldPassword.text != self.textFieldPasswordRepeat.text {
-            self.displayMessage(title: "Error", message: "Passwords don't match.")
+            self.present(self.messageHelper.displayMessage(title: "Error", message: "Passwords don't match."), animated: true)
             return false
         }
         
@@ -416,20 +424,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
             if self.textFieldSiteURL.text?.hasSuffix(".com") ?? false || self.textFieldSiteURL.text?.hasSuffix(".org") ?? false || self.textFieldSiteURL.text?.hasSuffix(".edu") ?? false {
                 return true
             } else {
-                self.displayMessage(title: "Error", message: "The site url is in an incorrect format.")
+                self.present(self.messageHelper.displayMessage(title: "Error", message: "The site url is in an incorrect format."), animated: true)
                 return false
             }
         } else {
             return true
         }
-    }
-    
-    private func displayMessage(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
-
-        self.present(alert, animated: true)
     }
     
     private func displaySuccessMessages() {
@@ -467,7 +467,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
                         let newUser: User = User.init(email: self.textFieldEmail.text!, name: self.textFieldName.text!, password: self.textFieldPassword.text!, phonenumber: self.textFieldPhoneNumber.text!, company: self.textFieldCompanyName.text!)
                         self.firebaseCloudUpdate.firebaseAddUser(newUser: newUser) { (user) in
                             
-                            let newCompany: Company = Company.init(name: self.textFieldCompanyName.text!, latitude: 0.0, longitude: 0.0, linkedwith: self.textFieldName.text!, venderverified: true, cuisine: self.textFieldCuisine.text!, phonenumber: self.textFieldPhoneNumber.text!, siteurl: self.textFieldSiteURL.text ?? "", lastupdated: self.dateTimeHelper.retrieveCurrentDateTime(), hours: self.textFieldHours.text!)
+                            let newCompany: Company = Company.init(name: self.textFieldCompanyName.text!, latitude: 0.0, longitude: 0.0, linkedwith: self.textFieldName.text!, venderverified: true, cuisine: self.textFieldCuisine.text!, phonenumber: self.textFieldPhoneNumber.text!, siteurl: self.textFieldSiteURL.text ?? "", lastupdated: self.dateTimeHelper.retrieveCurrentDateTime(), hours: "Update App", weeklyhours: self.hoursArray)
                             self.firebaseCloudUpdate.firebaseAddCompany(newCompany: newCompany) { (company) in
                                 SwiftAppDefaults.shared.user = user
                                 SwiftAppDefaults.shared.company = company
@@ -477,12 +477,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
                             
                         }
                     } else {
-                        self.displayMessage(title: "Error", message: "Company name already exists. Please choose another company name.")
+                        self.present(self.messageHelper.displayMessage(title: "Error", message: "Company name already exists. Please choose another company name."), animated: true)
                         self.hideActivityIndicator()
                     }
                 }
             } else {
-                self.displayMessage(title: "Error", message: "Email already exists. Please choose another email.")
+                self.present(self.messageHelper.displayMessage(title: "Error", message: "Email already exists. Please choose another email."), animated: true)
                 self.hideActivityIndicator()
             }
         }
@@ -526,7 +526,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         if sender == self.textFieldCuisine {
             self.navigateToSelectCuisine(cuisine: self.textFieldCuisine.text ?? "")
         } else if sender == self.textFieldHours {
-            self.navigateToHoursSelect(hours: self.textFieldHours.text ?? "6:00 AM - 8:00 PM")
+            self.navigateToWeeklyHours(hoursArray: self.hoursArray)
         }
     }
     
@@ -534,18 +534,18 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
     private func navigateToHome() {
         let mainVC = HomeViewController()
         let destinationNC = UINavigationController(rootViewController: mainVC)
-        destinationNC.navigationBar.barTintColor = UIColor.init(hex: "0x055e86")
+        destinationNC.navigationBar.barTintColor = Constants.mainColor
         destinationNC.navigationBar.tintColor = .white
         destinationNC.navigationBar.isTranslucent = false
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = destinationNC
     }
-    private func navigateToHoursSelect(hours: String) {
-        let destinationVC = HoursSelectViewController.init()
+    private func navigateToWeeklyHours(hoursArray: [String]) {
+        let destinationVC = WeeklyHoursViewController.init()
         destinationVC.modalPresentationStyle = .overFullScreen
         destinationVC.modalTransitionStyle = .crossDissolve
-        destinationVC.hours = hours
+        destinationVC.hoursArray = hoursArray
         destinationVC.delegate = self
         
         self.present(destinationVC, animated: true, completion: nil)
@@ -629,8 +629,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         return true
     }
     
-    func updateHours(hours: String) {
-        self.textFieldHours.text = hours
+    func updateHours(hoursArray: [String]) {
+        self.hoursArray = hoursArray;
+        self.textFieldHours.text = "Weekly Hours Set"
         self.textFieldHours.resignFirstResponder()
     }
     func closedHours() {
