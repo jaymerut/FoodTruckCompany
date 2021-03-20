@@ -346,7 +346,7 @@ class CompanyDetailViewController: UIViewController {
         self.imageViewVerified.snp.makeConstraints { (make) in
             make.top.equalTo(self.labelCuisine.snp.bottom).offset(11)
             make.left.equalTo(self.labelVerified.snp.right)
-            make.centerY.equalTo(self.labelVerified.snp.centerY)
+            make.centerY.equalTo(self.labelVerified.snp.centerY).offset(-2)
             make.height.equalTo(20)
             make.width.equalTo(20)
         }
