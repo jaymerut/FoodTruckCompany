@@ -1358,8 +1358,8 @@
             filePath = "TruckYums/Components/Helpers/DateTimeHelper.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "isHoursOpen(hours:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2769,6 +2769,22 @@
             startingLineNumber = "257"
             endingLineNumber = "257"
             landmarkName = "locationManager(_:didUpdateLocations:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D9DD3E91-B594-45BE-AF77-6894F4B7498A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/Components/Helpers/DateTimeHelper.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "isHoursOpen(hours:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

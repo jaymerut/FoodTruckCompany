@@ -126,21 +126,42 @@ class DateTimeHelper: NSObject {
     }
     
     public func isHoursOpen(hours: String) -> Bool {
-        if (hours == "") {
+        var hoursVal = hours
+        if (hoursVal == "") {
             return true
-        } else if (hours == "Closed") {
+        } else if (hoursVal == "Closed") {
             return false
         }
-        let hoursFromDate = self.extractFromHours(hours: hours)
-        let hoursToDate = self.extractToHours(hours: hours)
+        
+        let stringComponents = hoursVal.components(separatedBy: ": ")
+        
+        hoursVal = stringComponents[0]
+        if stringComponents.count > 1 {
+            hoursVal = stringComponents[1]
+        }
+        let hoursFromDate = self.extractFromHours(hours: hoursVal)
+        let hoursToDate = self.extractToHours(hours: hoursVal)
         let currentTime = self.retrieveCurrentTime()
         
-        if currentTime > hoursFromDate && currentTime < hoursToDate {
+        if (currentTime > hoursFromDate && currentTime < hoursToDate) {
             return true
         }
         
         return false
     }
     
+    public func getAMPMFromDate(date: Date) -> String {
+        self.dateFormatter.dateFormat = "a"
+        let currentAMPMFormat = dateFormatter.string(from: date).uppercased()
+        
+        return currentAMPMFormat
+    }
+    
+    public func getHoursFromDate(date: Date) -> Int {
+        self.dateFormatter.dateFormat = "h"
+        let currentHoursFormat = dateFormatter.string(from: date).uppercased()
+        
+        return Int(currentHoursFormat) ?? 0
+    }
     
 }
