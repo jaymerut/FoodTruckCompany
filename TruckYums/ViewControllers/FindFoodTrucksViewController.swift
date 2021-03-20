@@ -31,7 +31,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     }()
     private lazy var labelTitle: UILabel = {
         let label = UILabel(frame: .zero)
-        label.text = "Nearby Food Venders"
+        label.text = "Nearby Food Vendors"
         label.font = UIFont(name: "Teko-Medium", size: 24)
         label.textColor = .white
         
