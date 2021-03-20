@@ -41,7 +41,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         label.font = UIFont.init(name: "KaushanScript-Regular", size: 40.0)
         label.text = "Food Truck Locator"
         label.textAlignment = .center
-        label.textColor = UIColor.init(hex: "0x055e86")
+        label.textColor = Constants.mainColor
         
         return label
     }()
@@ -95,7 +95,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.black, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        button.backgroundColor = UIColor.init(hex: "0x055e86")
+        button.backgroundColor = Constants.mainColor
         button.layer.cornerRadius = 6.0
         button.addTarget(self, action: #selector(buttonLogin_TouchUpInside), for: .touchUpInside)
         
@@ -118,7 +118,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         let text = NSMutableAttributedString(string: "New Food Vendor? Register Here")
         text.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.thick.rawValue, range: NSRange(location: "New Food Vendor? ".count, length: "Register Here".count))
-        text.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hex: 0xACC649), range: NSRange(location: "New Food Vendor? ".count, length: "Register Here".count))
+        text.addAttribute(NSAttributedString.Key.foregroundColor, value: Constants.mainColor, range: NSRange(location: "New Food Vendor? ".count, length: "Register Here".count))
         label.attributedText = text
         
         return label
@@ -375,7 +375,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private func navigateToHome() {
         let mainVC = HomeViewController()
         let destinationNC = UINavigationController(rootViewController: mainVC)
-        destinationNC.navigationBar.barTintColor = UIColor.init(hex: "0x055e86")
+        destinationNC.navigationBar.barTintColor = Constants.mainColor
         destinationNC.navigationBar.tintColor = .white
         destinationNC.navigationBar.isTranslucent = false
         

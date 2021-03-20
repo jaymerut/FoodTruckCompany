@@ -58,7 +58,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.black, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        button.backgroundColor = UIColor.init(hex: "0x055e86")
+        button.backgroundColor = Constants.mainColor
         button.layer.cornerRadius = 32.5
         button.addTarget(self, action: #selector(buttonUpdate_TouchUpInside), for: .touchUpInside)
         button.isHidden = true
@@ -68,10 +68,10 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     private lazy var buttonChangeLocation: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("Update With Current Location", for: .normal)
-        button.setTitleColor(.init(hex: 0x455409), for: .normal)
+        button.setTitleColor(Constants.darkGreenTextColor, for: .normal)
         button.setTitleColor(.white, for: .highlighted)
         button.titleLabel?.font = UIFont.init(name: "Teko-Medium", size: 24.0)
-        button.backgroundColor = UIColor.init(hex: "0xCDDC91")
+        button.backgroundColor = Constants.greenButtonColor
         button.layer.cornerRadius = 32.5
         button.addTarget(self, action: #selector(buttonChangeLocation_TouchUpInside), for: .touchUpInside)
         
@@ -546,7 +546,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
     private func navigateToHome() {
         let mainVC = HomeViewController()
         let destinationNC = UINavigationController(rootViewController: mainVC)
-        destinationNC.navigationBar.barTintColor = UIColor.init(hex: "0x055e86")
+        destinationNC.navigationBar.barTintColor = Constants.mainColor
         destinationNC.navigationBar.tintColor = .white
         destinationNC.navigationBar.isTranslucent = false
         

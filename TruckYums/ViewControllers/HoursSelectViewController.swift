@@ -44,10 +44,10 @@ class HoursSelectViewController: UIViewController {
     private lazy var buttonApply: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("Apply", for: .normal)
-        button.setTitleColor(.init(hex: 0x455409), for: .normal)
+        button.setTitleColor(Constants.darkGreenTextColor, for: .normal)
         button.titleLabel?.font = UIFont.init(name: "Teko-Regular", size: 18.0)
         button.addTarget(self, action: #selector(buttonApply_TouchUpInside), for: .touchUpInside)
-        button.backgroundColor = UIColor.init(hex: 0xCDDC91)
+        button.backgroundColor = Constants.greenButtonColor
         button.clipsToBounds = true
         button.layer.cornerRadius = 20.0
         button.layer.maskedCorners = [.layerMinXMaxYCorner]

@@ -36,7 +36,7 @@ class MoreHoursViewController: UIViewController, ListAdapterDataSource, UIScroll
     }()
     private lazy var viewHeader: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = UIColor.init(hex: "0x055e86")
+        view.backgroundColor = Constants.mainColor
         view.clipsToBounds = true
         view.layer.cornerRadius = 20.0
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]

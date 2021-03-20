@@ -534,7 +534,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
     private func navigateToHome() {
         let mainVC = HomeViewController()
         let destinationNC = UINavigationController(rootViewController: mainVC)
-        destinationNC.navigationBar.barTintColor = UIColor.init(hex: "0x055e86")
+        destinationNC.navigationBar.barTintColor = Constants.mainColor
         destinationNC.navigationBar.tintColor = .white
         destinationNC.navigationBar.isTranslucent = false
         
