@@ -1129,7 +1129,7 @@
 				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jayme.rutkoski.TruckYums;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = TruckYums;
+				PROVISIONING_PROFILE_SPECIFIER = AppStore_TruckYums;
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jaymerutkoski/Desktop/Personal Projects/TruckYums/TruckYums/TruckYums-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
