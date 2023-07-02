@@ -149,7 +149,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         self.view.backgroundColor = .white
         self.navigationItem.titleView = self.labelTitle
         
-        self.bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        self.bannerView = GADBannerView(adSize: GADAdSize.init(size: CGSize.init(width: self.view.frame.size.width ?? 0, height: 160), flags: 1))
         self.bannerView.adUnitID = "ca-app-pub-7088839014127907/5824681329"
         self.bannerView.rootViewController = self
         self.bannerView.delegate = self
@@ -388,9 +388,8 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     }
 
     /// Tells the delegate an ad request failed.
-    func adView(_ bannerView: GADBannerView,
-        didFailToReceiveAdWithError error: GADRequestError) {
-      print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+        print("bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
     }
     
     

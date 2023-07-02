@@ -96,9 +96,9 @@ class DateTimeHelper: NSObject {
     }
     
     public func extractFromHours(hours: String) -> Date {
-        var stringComponents = hours.components(separatedBy: " - ")
+        var stringComponents = hours.components(separatedBy: "-")
         if stringComponents.count < 2 {
-            stringComponents = hours.components(separatedBy: " – ")
+            stringComponents = hours.components(separatedBy: "–")
         }
         let hoursFrom = stringComponents[0]
         self.dateFormatter.dateFormat = "h:mm a"
@@ -107,11 +107,15 @@ class DateTimeHelper: NSObject {
         return date
     }
     public func extractToHours(hours: String) -> Date {
-        var stringComponents = hours.components(separatedBy: " - ")
+        var stringComponents = hours.components(separatedBy: "-")
         if stringComponents.count < 2 {
-            stringComponents = hours.components(separatedBy: " – ")
+            stringComponents = hours.components(separatedBy: "–")
         }
-        let hoursTo = stringComponents[1]
+        let hoursTo = stringComponents[0]
+        if stringComponents.count > 1 {
+            hoursTo = stringComponents[1]
+        }
+        
         self.dateFormatter.dateFormat = "h:mm a"
         let date = self.dateFormatter.date(from: hoursTo) ?? Date.init()
         
