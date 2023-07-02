@@ -10,12 +10,12 @@ import UIKit
 import SnapKit
 import CoreLocation
 
-protocol WeeklyHoursDelegate {
+protocol WeeklyHoursDelegate: AnyObject {
     func updateHours(hoursArray: [String])
     func closedHours()
 }
 
-protocol SelectCuisineValueDelegate {
+protocol SelectCuisineValueDelegate: AnyObject {
     func updateCuisine(cuisine: String)
     func closedCuisine()
 }
