@@ -1102,7 +1102,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jayme.rutkoski.TruckYums;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1121,15 +1121,17 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = BT4J67MR3F;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = BT4J67MR3F;
 				INFOPLIST_FILE = "$(SRCROOT)/TruckYums/Resources/Supporting/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jayme.rutkoski.TruckYums;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = AppStore_TruckYums;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = AppStore_TruckYumss;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/TruckYums/TruckYums-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

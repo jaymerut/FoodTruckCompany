@@ -111,7 +111,7 @@ class DateTimeHelper: NSObject {
         if stringComponents.count < 2 {
             stringComponents = hours.components(separatedBy: "–")
         }
-        let hoursTo = stringComponents[0]
+        var hoursTo = stringComponents[0]
         if stringComponents.count > 1 {
             hoursTo = stringComponents[1]
         }
