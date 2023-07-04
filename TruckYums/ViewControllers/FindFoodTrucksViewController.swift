@@ -72,7 +72,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     private lazy var searchTextField: UITextField = {
         let textField = UITextField(frame: .zero)
         textField.delegate = self
-        textField.placeholder = "Filter by Text"
+        textField.placeholder = "Filter by Name"
         textField.font = UIFont(name: "Teko-Regular", size: 18.0)
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
@@ -237,6 +237,15 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         self.locationManager.startUpdatingLocation()
     }
     
+    private func addCompaniesToMap(companies: [String: Company]) {
+        for (key, value) in companies {
+            let annotation = MKPointAnnotation()
+            annotation.title = key
+            annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
+            self.mapView.addAnnotation(annotation)
+        }
+    }
+    
     // MARK: Navigation Logic
     private func navigateToCompanyDetail(company: String) {
         let destinationVC = CompanyDetailViewController.init()
@@ -258,7 +267,22 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        print("Text Changed")
+        let allAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(allAnnotations)
+
+        var filteredArray = [String: Company]()
+        
+        for (key, value) in self.companies {
+            if key.lowercased().contains((textField.text ?? "").lowercased()) {
+                filteredArray[key] = value
+            }
+        }
+        
+        if (textField.text?.isEmpty == true) {
+            filteredArray = self.companies
+        }
+        
+        self.addCompaniesToMap(companies: filteredArray)
     }
     
     // MARK: Delegate Methods
@@ -298,12 +322,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
                         }
                         
                         if result!.results.count <= index + 1 {
-                            for (key, value) in self.companies {
-                                let annotation = MKPointAnnotation()
-                                annotation.title = key
-                                annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
-                                self.mapView.addAnnotation(annotation)
-                            }
+                            self.addCompaniesToMap(companies: self.companies)
                             
                             let mapCamera = MKMapCamera(lookingAtCenter: locValue, fromEyeCoordinate: locValue, eyeAltitude: self.currentRadius)
                             self.mapView.setCamera(mapCamera, animated: true)
