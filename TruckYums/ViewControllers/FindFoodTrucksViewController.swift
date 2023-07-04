@@ -296,7 +296,8 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
                         distance: calculateDistance(point: companyLocation),
                         latitude: value.latitude,
                         longitude: value.longitude,
-                        siteUrl: value.siteurl
+                        siteUrl: value.siteurl,
+                        isVerified: value.venderverified
                     ))
                 }
             }

@@ -28,9 +28,8 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
     private lazy var containerView: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = .white
-        view.layer.borderColor = UIColor.init(hex: 0x444444).cgColor
-        view.layer.borderWidth = 1
         view.layer.cornerRadius = 5
+        view.clipsToBounds = true
         
         return view
     }()
@@ -165,6 +164,12 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         self.stackViewButtons.subviews.forEach { view in
             view.removeFromSuperview()
         }
+        
+        self.containerView.layer.sublayers?.forEach({ layer in
+            if layer is CAGradientLayer {
+                layer.removeFromSuperlayer()
+            }
+        })
     }
     
     
@@ -268,6 +273,22 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         if (!model.siteUrl.isEmpty) {
             self.stackViewButtons.addArrangedSubview(self.buttonSite)
         }
+        
+        self.containerView.layer.borderColor = UIColor.init(hex: 0x444444).cgColor
+        self.containerView.layer.borderWidth = 1
+    }
+    
+    func setGradientBackground() {
+        gradientLayer.colors = [
+            yellow,
+            UIColor.init(hex: 0xFA8072).cgColor,
+            UIColor.init(hex: 0xb6dde8).cgColor,
+        ]
+        gradientLayer.startPoint = CGPoint(x:0.5, y:0)
+        gradientLayer.endPoint = CGPoint(x:1, y:1)
+        gradientLayer.frame = self.containerView.bounds
+                
+        self.containerView.layer.insertSublayer(gradientLayer, at:0)
     }
     
     private func retrieveOpenClosedImage(weeklyHours: [String]) -> UIImage {
@@ -279,5 +300,20 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
             return UIImage(named: "image_closed_sign")!
         }
     }
+    
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        setNeedsLayout()
+        layoutIfNeeded()
+        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+        var newFrame = layoutAttributes.frame
+        // note: don't change the width
+        newFrame.size.height = ceil(size.height)
+        layoutAttributes.frame = newFrame
+        
+        if (self.model.isVerified) {
+            self.setGradientBackground()
+        }
+        
+        return layoutAttributes
+    }
 }
-

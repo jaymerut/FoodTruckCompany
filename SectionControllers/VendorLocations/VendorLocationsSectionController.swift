@@ -80,6 +80,7 @@ class VendorLocation: NSObject, ListDiffable {
     public var latitude: Double = 0.0
     public var longitude: Double = 0.0
     public var siteUrl: String = ""
+    public var isVerified: Bool = false
     
     // MARK: - Initialization
     private func customInitWeeklyHours() {
@@ -91,7 +92,7 @@ class VendorLocation: NSObject, ListDiffable {
         customInitWeeklyHours()
     }
     
-    init(name: String, weeklyHours: [String], cuisine: String, hours: String, phoneNumber: String, distance: Double, latitude: Double, longitude: Double, siteUrl: String) {
+    init(name: String, weeklyHours: [String], cuisine: String, hours: String, phoneNumber: String, distance: Double, latitude: Double, longitude: Double, siteUrl: String, isVerified: Bool) {
         super.init()
         self.name = name
         self.weeklyHours = weeklyHours
@@ -102,6 +103,7 @@ class VendorLocation: NSObject, ListDiffable {
         self.latitude = latitude
         self.longitude = longitude
         self.siteUrl = siteUrl
+        self.isVerified = isVerified
     }
     
     func diffIdentifier() -> NSObjectProtocol {

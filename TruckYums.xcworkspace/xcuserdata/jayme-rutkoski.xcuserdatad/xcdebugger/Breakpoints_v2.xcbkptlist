@@ -430,8 +430,8 @@
             filePath = "TruckYums/ViewControllers/FindFoodTrucksViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "510"
-            endingLineNumber = "510"
+            startingLineNumber = "511"
+            endingLineNumber = "511"
             landmarkName = "objects(for:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -446,8 +446,8 @@
             filePath = "TruckYums/ViewControllers/FindFoodTrucksViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "514"
-            endingLineNumber = "514"
+            startingLineNumber = "515"
+            endingLineNumber = "515"
             landmarkName = "listAdapter(_:sectionControllerFor:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -462,8 +462,8 @@
             filePath = "TruckYums/ViewControllers/FindFoodTrucksViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "307"
-            endingLineNumber = "307"
+            startingLineNumber = "308"
+            endingLineNumber = "308"
             landmarkName = "addCompaniesToMap(companies:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -478,8 +478,8 @@
             filePath = "TruckYums/ViewControllers/FindFoodTrucksViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "305"
-            endingLineNumber = "305"
+            startingLineNumber = "306"
+            endingLineNumber = "306"
             landmarkName = "addCompaniesToMap(companies:)"
             landmarkType = "7">
             <Locations>
@@ -526,8 +526,8 @@
             filePath = "TruckYums/ViewControllers/FindFoodTrucksViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "306"
-            endingLineNumber = "306"
+            startingLineNumber = "307"
+            endingLineNumber = "307"
             landmarkName = "addCompaniesToMap(companies:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -546,6 +546,54 @@
             endingLineNumber = "282"
             landmarkName = "addCompaniesToMap(companies:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7AF6D716-4B75-459A-9A5A-D602BD255716"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/Views/UICollectionViewCell/VendorLocationCollectionViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "291"
+            endingLineNumber = "291"
+            landmarkName = "setGradientBackground()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7AF6D716-4B75-459A-9A5A-D602BD255716 - 1545bda379b9ba71"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TruckYums.VendorLocationCollectionViewCell.retrieveOpenClosedImage(weeklyHours: Swift.Array&lt;Swift.String&gt;) -&gt; __C.UIImage"
+                  moduleName = "TruckYums"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jayme-rutkoski/Development/Sandhills/GitHub/TruckYums/TruckYums/Views/UICollectionViewCell/VendorLocationCollectionViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "296"
+                  endingLineNumber = "296"
+                  offsetFromSymbolStart = "97">
+               </Location>
+               <Location
+                  uuid = "7AF6D716-4B75-459A-9A5A-D602BD255716 - a06b748ad79376a5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TruckYums.VendorLocationCollectionViewCell.setGradientBackground() -&gt; ()"
+                  moduleName = "TruckYums"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jayme-rutkoski/Development/Sandhills/GitHub/TruckYums/TruckYums/Views/UICollectionViewCell/VendorLocationCollectionViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "294"
+                  endingLineNumber = "294"
+                  offsetFromSymbolStart = "1651">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
