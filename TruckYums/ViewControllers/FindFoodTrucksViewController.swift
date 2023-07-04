@@ -13,7 +13,7 @@ import CoreLocation
 import GoogleMobileAds
 
 
-class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, GADBannerViewDelegate, UITextFieldDelegate {
+class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKMapViewDelegate, CLLocationManagerDelegate, GADBannerViewDelegate, UITextFieldDelegate, UIScrollViewDelegate {
     
     
     // MARK: - Variables
@@ -24,11 +24,26 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     var currentRadius: Double = 0
     var isShowingList: Bool = false
     
+    private var vendorLocations: [ListDiffable] = [ListDiffable]()
+    
     private lazy var stackViewBannerAds: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.axis = .vertical
         
         return stackView
+    }()
+    private lazy var adapter: ListAdapter = {
+        let adapter = ListAdapter(updater: ListAdapterUpdater.init(), viewController: self, workingRangeSize: 0)
+        adapter.scrollViewDelegate = self
+        
+        return adapter
+    }()
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+        collectionView.backgroundColor = .white
+        collectionView.isHidden = true
+        
+        return collectionView
     }()
     private lazy var labelTitle: UILabel = {
         let label = UILabel(frame: .zero)
@@ -175,6 +190,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         
         // Setup
         setupFindFoodTrucksViewController()
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -190,6 +206,10 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     
     // MARK: - Private API
     private func setupFindFoodTrucksViewController() {
+        
+        // Adapter
+        self.adapter.collectionView = self.collectionView
+        self.adapter.dataSource = self
         
         self.view.addSubview(self.stackViewBannerAds)
         self.stackViewBannerAds.snp.makeConstraints { (make) in
@@ -226,6 +246,14 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
             make.bottom.equalTo(self.view.snp.bottom)
         }
         
+        self.view.addSubview(self.collectionView)
+        self.collectionView.snp.makeConstraints { (make) in
+            make.top.equalTo(self.searchTextField.snp.bottom)
+            make.left.equalTo(self.view.snp.left)
+            make.right.equalTo(self.view.snp.right)
+            make.bottom.equalTo(self.view.snp.bottom)
+        }
+        
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.snp.makeConstraints { (make) in
             make.centerX.equalTo(self.view.snp.centerX)
@@ -249,7 +277,11 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
             annotation.title = key
             annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
             self.mapView.addAnnotation(annotation)
+            
+            self.vendorLocations.append(VendorLocation(name: value.name))
         }
+        
+        self.adapter.performUpdates(animated: true, completion: nil)
     }
     
     // MARK: Navigation Logic
@@ -275,6 +307,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     @objc func textFieldDidChange(_ textField: UITextField) {
         let allAnnotations = self.mapView.annotations
         self.mapView.removeAnnotations(allAnnotations)
+        self.vendorLocations = [ListDiffable]()
 
         var filteredArray = [String: Company]()
         
@@ -296,6 +329,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         self.updateRightBarButton()
         
         self.mapView.isHidden = self.isShowingList
+        self.collectionView.isHidden = !self.isShowingList
     }
     
     // MARK: Delegate Methods
@@ -431,6 +465,23 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         
 
         return anView
+    }
+    
+    // ListAdapterDataSource
+    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
+        self.vendorLocations
+    }
+    
+    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        return VendorLocationsSectionController.init()
+    }
+    
+    func emptyView(for listAdapter: ListAdapter) -> UIView? {
+        let label = UILabel(frame: .zero)
+        label.text = "No Vendors Found"
+        label.textAlignment = .center
+        
+        return label
     }
     
     // MARK: - Public API
