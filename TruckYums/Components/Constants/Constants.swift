@@ -15,4 +15,7 @@ struct Constants {
     static let blueMainColor: UIColor = UIColor.init(hex: 0x055e86)
     static let greenButtonColor: UIColor = UIColor.init(hex: 0xCDDC91)
     static let darkGreenTextColor: UIColor = UIColor.init(hex: 0x455409)
+    
+    static let encryptionKey = "MdEiuH1DSDLYUTMf"
+    static let encryptionIv = "Yx8slWI70RCt3AeM"
 }

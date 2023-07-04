@@ -386,7 +386,7 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
                     
                     let modifiedUser: User = User.init()
                     modifiedUser.email = self.textFieldEmail.text ?? ""
-                    modifiedUser.password = self.textFieldPassword.text ?? ""
+                    modifiedUser.password = (self.textFieldPassword.text ?? "").encrypt()
                     
                     self.firebaseCloudUpdate.firebaseUpdateUserPassword(modifiedUser: modifiedUser) { (user) in
                         if user != nil {
