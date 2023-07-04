@@ -19,12 +19,13 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
     // MARK: - Variables
     public var companies: [String: Company] = [:]
     var bannerView: GADBannerView!
+    var currentLocation: CLLocation?
     
     let distanceSpan: Double = 50
     var currentRadius: Double = 0
     var isShowingList: Bool = false
     
-    private var vendorLocations: [ListDiffable] = [ListDiffable]()
+    private var vendorLocations: [VendorLocation] = [VendorLocation]()
     
     private lazy var stackViewBannerAds: UIStackView = {
         let stackView = UIStackView(frame: .zero)
@@ -278,21 +279,41 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
     
     private func addCompaniesToMap(companies: [String: Company]) {
         for (key, value) in companies {
-            let annotation = MKPointAnnotation()
-            annotation.title = key
-            annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
-            self.mapView.addAnnotation(annotation)
-            
-            self.vendorLocations.append(VendorLocation(
-                name: value.name,
-                weeklyHours: value.weeklyhours,
-                cuisine: value.cuisine,
-                hours: value.hours,
-                phoneNumber: value.phonenumber
-            ))
+            if (value.longitude != 0 && value.latitude != 0) {
+                let companyLocation = CLLocation(latitude: value.latitude, longitude: value.longitude)
+                if (self.isWithinSpecifiedRadius(point: companyLocation)) {
+                    let annotation = MKPointAnnotation()
+                    annotation.title = key
+                    annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
+                    self.mapView.addAnnotation(annotation)
+                    
+                    self.vendorLocations.append(VendorLocation(
+                        name: value.name,
+                        weeklyHours: value.weeklyhours,
+                        cuisine: value.cuisine,
+                        hours: value.hours,
+                        phoneNumber: value.phonenumber,
+                        distance: calculateDistance(point: companyLocation)
+                    ))
+                }
+            }
         }
         
+        self.vendorLocations = self.vendorLocations.sorted(by: { $0.distance < $1.distance })
+        
         self.adapter.performUpdates(animated: true, completion: nil)
+    }
+    
+    private func calculateDistance(point: CLLocation) -> Double {
+        let currentLoc = self.currentLocation ?? CLLocation(latitude: 0, longitude: 0)
+        let distanceInMeters = point.distance(from: currentLoc).magnitude
+        return distanceInMeters.convert(from: .meters, to: .miles).rounded(toPlaces: 2)
+    }
+    
+    private func isWithinSpecifiedRadius(point: CLLocation) -> Bool {
+        let currentLoc = self.currentLocation ?? CLLocation(latitude: 0, longitude: 0)
+        let distanceInMeters = point.distance(from: currentLoc).magnitude
+        return distanceInMeters <= self.currentRadius
     }
     
     // MARK: Navigation Logic
@@ -312,14 +333,14 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
         self.companies = [:]
         let allAnnotations = self.mapView.annotations
         self.mapView.removeAnnotations(allAnnotations)
-        self.vendorLocations = [ListDiffable]()
+        self.vendorLocations = [VendorLocation]()
         self.getUserCoordinates()
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         let allAnnotations = self.mapView.annotations
         self.mapView.removeAnnotations(allAnnotations)
-        self.vendorLocations = [ListDiffable]()
+        self.vendorLocations = [VendorLocation]()
 
         var filteredArray = [String: Company]()
         
@@ -356,9 +377,11 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         
-        let currentLocation:CLLocation = locations.last ?? CLLocation.init()
+        let location = locations.last ?? CLLocation.init()
+        self.currentLocation = location
+        
         let region = MKCoordinateRegion(
-              center: currentLocation.coordinate,
+            center: location.coordinate,
             latitudinalMeters: 50000,
             longitudinalMeters: 60000)
 

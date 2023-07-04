@@ -92,6 +92,13 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
+    private lazy var labelDistance: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.font = UIFont.init(name: "Teko-Regular", size: 18.0)
+        
+        return label
+    }()
+    
     // MARK: - Initialization
     private func customInitVendorLocationCollectionViewCell() {
         
@@ -125,6 +132,12 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         self.containerView.addSubview(self.imageViewOpenClosed)
         self.imageViewOpenClosed.snp.makeConstraints { (make) in
             make.top.equalTo(self.containerView.snp.top).offset(5)
+            make.right.equalTo(self.containerView.snp.right).offset(-5)
+        }
+        
+        self.containerView.addSubview(self.labelDistance)
+        self.labelDistance.snp.makeConstraints { (make) in
+            make.top.equalTo(self.imageViewOpenClosed.snp.bottom).offset(5)
             make.right.equalTo(self.containerView.snp.right).offset(-5)
         }
         
@@ -179,6 +192,8 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         self.labelCuisineValue.text = model.cuisine
         self.labelHoursValue.text = model.hours.count > 0 ? model.hours : "Call For Hours"
         self.buttonPhoneNumber.setTitle(model.phoneNumber, for: .normal)
+        self.labelDistance.text = "\(model.distance.withCommas()) miles away"
+        self.buttonPhoneNumber.isHidden = model.phoneNumber.isEmpty
     }
     
     private func retrieveOpenClosedImage(weeklyHours: [String]) -> UIImage {
