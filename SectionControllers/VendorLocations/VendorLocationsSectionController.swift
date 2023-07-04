@@ -42,7 +42,7 @@ class VendorLocationsSectionController: ListSectionController {
         return 1
     }
     internal override func sizeForItem(at index: Int) -> CGSize {
-        return CGSize(width: self.collectionContext?.containerSize.width ?? 0, height: 150)
+        return CGSize(width: self.collectionContext?.containerSize.width ?? 0, height: 170)
     }
     internal override func cellForItem(at index: Int) -> UICollectionViewCell {
         let cell: VendorLocationCollectionViewCell = (self.collectionContext?.dequeueReusableCell(of: VendorLocationCollectionViewCell.self, for: self, at: index))! as! VendorLocationCollectionViewCell

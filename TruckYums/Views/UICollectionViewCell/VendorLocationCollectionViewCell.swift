@@ -36,7 +36,7 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
     
     private lazy var labelName: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = UIFont.init(name: "Teko-Light", size: 22.0)
+        label.font = UIFont.init(name: "Teko-Regular", size: 24.0)
         label.textAlignment = .left
         label.lineBreakMode = .byTruncatingTail
         label.showsExpansionTextWhenTruncated = true
@@ -46,28 +46,28 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
     
     private lazy var labelCuisine: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = UIFont.init(name: "Teko-Regular", size: 16.0)
+        label.font = UIFont.init(name: "Teko-Regular", size: 20.0)
         label.text = "Cuisine: "
         
         return label
     }()
     private lazy var labelCuisineValue: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = UIFont.init(name: "Teko-Light", size: 16.0)
+        label.font = UIFont.init(name: "Teko-Light", size: 20.0)
         
         return label
     }()
     
     private lazy var labelHours: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = UIFont.init(name: "Teko-Regular", size: 16.0)
+        label.font = UIFont.init(name: "Teko-Regular", size: 20.0)
         label.text = "Hours: "
         
         return label
     }()
     private lazy var labelHoursValue: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = UIFont.init(name: "Teko-Light", size: 16.0)
+        label.font = UIFont.init(name: "Teko-Light", size: 20.0)
         
         return label
     }()
