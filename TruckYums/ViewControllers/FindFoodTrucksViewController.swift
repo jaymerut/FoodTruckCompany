@@ -22,6 +22,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     
     let distanceSpan: Double = 50
     var currentRadius: Double = 0
+    var isShowingList: Bool = false
     
     private lazy var stackViewBannerAds: UIStackView = {
         let stackView = UIStackView(frame: .zero)
@@ -170,6 +171,8 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         
         self.getUserCoordinates()
         
+        self.updateRightBarButton()
+        
         // Setup
         setupFindFoodTrucksViewController()
     }
@@ -230,6 +233,9 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         }
         
     }
+    private func updateRightBarButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: self.isShowingList ? "Map" : "List", style: .plain, target: self, action: #selector(toggleList))
+    }
     private func getUserCoordinates() {
         self.activityIndicator.startAnimating()
         self.locationManager.requestWhenInUseAuthorization()
@@ -285,6 +291,13 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         self.addCompaniesToMap(companies: filteredArray)
     }
     
+    @objc func toggleList() {
+        self.isShowingList = !self.isShowingList
+        self.updateRightBarButton()
+        
+        self.mapView.isHidden = self.isShowingList
+    }
+    
     // MARK: Delegate Methods
     
     // CLLocation Delegate Methods
@@ -292,7 +305,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         let region = MKCoordinateRegion.init(center: newLocation.coordinate, latitudinalMeters: self.distanceSpan, longitudinalMeters: self.distanceSpan)
         self.mapView.setRegion(region, animated: false)
         self.mapView.showsUserLocation = true
-        }
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
