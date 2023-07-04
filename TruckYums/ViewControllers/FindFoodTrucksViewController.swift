@@ -283,7 +283,10 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
             annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
             self.mapView.addAnnotation(annotation)
             
-            self.vendorLocations.append(VendorLocation(name: value.name))
+            self.vendorLocations.append(VendorLocation(
+                name: value.name,
+                weeklyHours: value.weeklyhours
+            ))
         }
         
         self.adapter.performUpdates(animated: true, completion: nil)
