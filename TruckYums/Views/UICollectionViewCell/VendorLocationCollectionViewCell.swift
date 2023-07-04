@@ -17,6 +17,7 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
     
     private lazy var containerView: UIView = {
         let view = UIView(frame: .zero)
+        view.backgroundColor = .white
         view.layer.borderColor = UIColor.init(hex: 0x444444).cgColor
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 5

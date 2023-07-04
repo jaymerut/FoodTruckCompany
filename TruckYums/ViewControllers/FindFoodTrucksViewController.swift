@@ -42,6 +42,8 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         collectionView.backgroundColor = .white
         collectionView.isHidden = true
+        collectionView.backgroundColor = Constants.mainColor
+        collectionView.showsVerticalScrollIndicator = false
         
         return collectionView
     }()
@@ -87,6 +89,7 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
     
     private lazy var searchTextField: UITextField = {
         let textField = UITextField(frame: .zero)
+        textField.backgroundColor = .white
         textField.delegate = self
         textField.placeholder = "Filter by Name"
         textField.font = UIFont(name: "Teko-Regular", size: 18.0)
@@ -207,6 +210,8 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
     // MARK: - Private API
     private func setupFindFoodTrucksViewController() {
         
+        self.view.backgroundColor = Constants.mainColor
+        
         // Adapter
         self.adapter.collectionView = self.collectionView
         self.adapter.dataSource = self
@@ -248,7 +253,7 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
         
         self.view.addSubview(self.collectionView)
         self.collectionView.snp.makeConstraints { (make) in
-            make.top.equalTo(self.searchTextField.snp.bottom)
+            make.top.equalTo(self.searchTextField.snp.bottom).offset(5)
             make.left.equalTo(self.view.snp.left)
             make.right.equalTo(self.view.snp.right)
             make.bottom.equalTo(self.view.snp.bottom)
@@ -301,6 +306,7 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
         self.companies = [:]
         let allAnnotations = self.mapView.annotations
         self.mapView.removeAnnotations(allAnnotations)
+        self.vendorLocations = [ListDiffable]()
         self.getUserCoordinates()
     }
     
