@@ -33,10 +33,38 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
     
     private lazy var labelName: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = UIFont.init(name: "Teko-Light", size: 20.0)
+        label.font = UIFont.init(name: "Teko-Light", size: 22.0)
         label.textAlignment = .left
         label.lineBreakMode = .byTruncatingTail
         label.showsExpansionTextWhenTruncated = true
+        
+        return label
+    }()
+    
+    private lazy var labelCuisine: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.font = UIFont.init(name: "Teko-Regular", size: 16.0)
+        label.text = "Cuisine: "
+        
+        return label
+    }()
+    private lazy var labelCuisineValue: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.font = UIFont.init(name: "Teko-Light", size: 16.0)
+        
+        return label
+    }()
+    
+    private lazy var labelHours: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.font = UIFont.init(name: "Teko-Regular", size: 16.0)
+        label.text = "Hours: "
+        
+        return label
+    }()
+    private lazy var labelHoursValue: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.font = UIFont.init(name: "Teko-Light", size: 16.0)
         
         return label
     }()
@@ -92,14 +120,36 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
             make.right.equalTo(self.imageViewOpenClosed.snp.left).offset(-5)
         }
         
+        self.containerView.addSubview(self.labelCuisine)
+        self.labelCuisine.snp.makeConstraints { (make) in
+            make.top.equalTo(self.labelName.snp.bottom)
+            make.left.equalTo(self.containerView.snp.left).offset(5)
+        }
+        self.containerView.addSubview(self.labelCuisineValue)
+        self.labelCuisineValue.snp.makeConstraints { (make) in
+            make.left.equalTo(self.labelCuisine.snp.right)
+            make.centerY.equalTo(self.labelCuisine.snp.centerY)
+        }
+        
+        self.containerView.addSubview(self.labelHours)
+        self.labelHours.snp.makeConstraints { (make) in
+            make.top.equalTo(self.labelCuisine.snp.bottom)
+            make.left.equalTo(self.containerView.snp.left).offset(5)
+        }
+        self.containerView.addSubview(self.labelHoursValue)
+        self.labelHoursValue.snp.makeConstraints { (make) in
+            make.left.equalTo(self.labelHours.snp.right)
+            make.centerY.equalTo(self.labelHours.snp.centerY)
+        }
     }
     
     
     // MARK: - Public API
     public func update(_ model: VendorLocation) {
         self.labelName.text = model.name
-        
         self.imageViewOpenClosed.image = self.retrieveOpenClosedImage(weeklyHours: model.weeklyHours)
+        self.labelCuisineValue.text = model.cuisine
+        self.labelHoursValue.text = model.hours.count > 0 ? model.hours : "Call For Hours"
     }
     
     private func retrieveOpenClosedImage(weeklyHours: [String]) -> UIImage {

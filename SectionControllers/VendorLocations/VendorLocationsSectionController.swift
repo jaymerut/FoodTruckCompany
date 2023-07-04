@@ -61,6 +61,8 @@ class VendorLocation: NSObject, ListDiffable {
     
     public var name: String = ""
     public var weeklyHours: [String] = [String]()
+    public var cuisine: String = ""
+    public var hours: String = ""
     
     // MARK: - Initialization
     private func customInitWeeklyHours() {
@@ -72,10 +74,12 @@ class VendorLocation: NSObject, ListDiffable {
         customInitWeeklyHours()
     }
     
-    init(name: String, weeklyHours: [String]) {
+    init(name: String, weeklyHours: [String], cuisine: String, hours: String) {
         super.init()
         self.name = name
         self.weeklyHours = weeklyHours
+        self.cuisine = cuisine
+        self.hours = hours
     }
     
     func diffIdentifier() -> NSObjectProtocol {

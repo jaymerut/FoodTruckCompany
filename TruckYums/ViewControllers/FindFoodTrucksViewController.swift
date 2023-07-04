@@ -285,7 +285,9 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
             
             self.vendorLocations.append(VendorLocation(
                 name: value.name,
-                weeklyHours: value.weeklyhours
+                weeklyHours: value.weeklyhours,
+                cuisine: value.cuisine,
+                hours: value.hours
             ))
         }
         

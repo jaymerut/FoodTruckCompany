@@ -537,7 +537,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
             modifiedCompany.name = self.textFieldCompanyName.text ?? ""
             modifiedCompany.phonenumber = self.textFieldPhoneNumber.text ?? ""
             modifiedCompany.lastupdated = self.dateTimeHelper.retrieveCurrentDateTime()
-            modifiedCompany.hours = "Update App"
+            modifiedCompany.hours = "Hours Not Set"
             modifiedCompany.weeklyhours = self.hoursArray
             modifiedCompany.cuisine = self.textFieldCuisine.text ?? ""
             modifiedCompany.siteurl = self.textFieldSiteURL.text ?? ""
