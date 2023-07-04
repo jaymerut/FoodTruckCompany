@@ -13,7 +13,7 @@ import CoreLocation
 import GoogleMobileAds
 
 
-class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, GADBannerViewDelegate {
+class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, GADBannerViewDelegate, UITextFieldDelegate {
     
     
     // MARK: - Variables
@@ -69,6 +69,19 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     
     private let milesToMetersArray: [Double] = [8046.72, 16093.4, 32186.9, 48280.3]
     
+    private lazy var searchTextField: UITextField = {
+        let textField = UITextField(frame: .zero)
+        textField.delegate = self
+        textField.placeholder = "Filter by Name"
+        textField.font = UIFont(name: "Teko-Regular", size: 18.0)
+        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
+        textField.layer.borderWidth = 1.5
+        textField.leftView = UIView.init(frame: CGRect.init(x: 0.0, y: 0.0, width: 10.0, height: 1.0))
+        textField.leftViewMode = .always
+        
+        return textField
+    }()
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView.init(frame: .zero)
         mapView.mapType = .standard
@@ -194,9 +207,17 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
             make.edges.equalTo(self.viewControlContainer)
         }
         
+        self.view.addSubview(self.searchTextField)
+        self.searchTextField.snp.makeConstraints { (make) in
+            make.top.equalTo(self.viewControlContainer.snp.bottom)
+            make.left.equalTo(self.view.snp.left)
+            make.right.equalTo(self.view.snp.right)
+            make.height.equalTo(50)
+        }
+        
         self.view.addSubview(self.mapView)
         self.mapView.snp.makeConstraints { (make) in
-            make.top.equalTo(self.viewControlContainer.snp.bottom)
+            make.top.equalTo(self.searchTextField.snp.bottom)
             make.left.equalTo(self.view.snp.left)
             make.right.equalTo(self.view.snp.right)
             make.bottom.equalTo(self.view.snp.bottom)
@@ -214,6 +235,15 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         self.locationManager.requestWhenInUseAuthorization()
         
         self.locationManager.startUpdatingLocation()
+    }
+    
+    private func addCompaniesToMap(companies: [String: Company]) {
+        for (key, value) in companies {
+            let annotation = MKPointAnnotation()
+            annotation.title = key
+            annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
+            self.mapView.addAnnotation(annotation)
+        }
     }
     
     // MARK: Navigation Logic
@@ -234,6 +264,25 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         let allAnnotations = self.mapView.annotations
         self.mapView.removeAnnotations(allAnnotations)
         self.getUserCoordinates()
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        let allAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(allAnnotations)
+
+        var filteredArray = [String: Company]()
+        
+        for (key, value) in self.companies {
+            if key.lowercased().contains((textField.text ?? "").lowercased()) {
+                filteredArray[key] = value
+            }
+        }
+        
+        if (textField.text?.isEmpty == true) {
+            filteredArray = self.companies
+        }
+        
+        self.addCompaniesToMap(companies: filteredArray)
     }
     
     // MARK: Delegate Methods
@@ -273,12 +322,7 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
                         }
                         
                         if result!.results.count <= index + 1 {
-                            for (key, value) in self.companies {
-                                let annotation = MKPointAnnotation()
-                                annotation.title = key
-                                annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
-                                self.mapView.addAnnotation(annotation)
-                            }
+                            self.addCompaniesToMap(companies: self.companies)
                             
                             let mapCamera = MKMapCamera(lookingAtCenter: locValue, fromEyeCoordinate: locValue, eyeAltitude: self.currentRadius)
                             self.mapView.setCamera(mapCamera, animated: true)
@@ -392,5 +436,13 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         print("bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor.init(hex: "0x3C9ADC")?.cgColor
+        textField.becomeFirstResponder()
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
+        textField.resignFirstResponder()
+    }
     
 }
