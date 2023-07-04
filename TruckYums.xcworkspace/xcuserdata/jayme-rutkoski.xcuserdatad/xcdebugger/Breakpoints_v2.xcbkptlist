@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "5FEA8273-AAD3-459A-917E-63292B6C7FF0"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "42680989-DC4E-4248-90B2-D628FDBEBC6B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/ViewControllers/DealerPortalViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "563"
+            endingLineNumber = "563"
+            landmarkName = "buttonChangeLocation_TouchUpInside(sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8AD7F358-9965-4C88-BC62-E2623DD433A5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/Network/FirebaseCloudUpdate/FirebaseCloudUpdate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "firebaseUpdateLocation(company:latitude:longitude:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8AD7F358-9965-4C88-BC62-E2623DD433A5 - c9cfa04be6e29baf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TruckYums.FirebaseCloudUpdate.firebaseUpdateLocation(company: Swift.String, latitude: Swift.Double, longitude: Swift.Double, completion: () -&gt; ()) -&gt; ()"
+                  moduleName = "TruckYums"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jayme-rutkoski/Development/Sandhills/GitHub/TruckYums/TruckYums/Network/FirebaseCloudUpdate/FirebaseCloudUpdate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "109"
+                  endingLineNumber = "109"
+                  offsetFromSymbolStart = "349">
+               </Location>
+               <Location
+                  uuid = "8AD7F358-9965-4C88-BC62-E2623DD433A5 - 231405963aadd103"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Error&gt;) -&gt; () in TruckYums.FirebaseCloudUpdate.firebaseUpdateLocation(company: Swift.String, latitude: Swift.Double, longitude: Swift.Double, completion: () -&gt; ()) -&gt; ()"
+                  moduleName = "TruckYums"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jayme-rutkoski/Development/Sandhills/GitHub/TruckYums/TruckYums/Network/FirebaseCloudUpdate/FirebaseCloudUpdate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "111"
+                  endingLineNumber = "111"
+                  offsetFromSymbolStart = "113">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1B3D53D3-D621-446E-ADCA-54FACA608906"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/FirebaseFirestore/Firestore/Source/API/FIRDocumentReference.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "184"
+            endingLineNumber = "184"
+            landmarkName = "-updateData:completion:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2CC766DE-C827-43A7-B757-6E0AB7CD07DA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/ViewControllers/DealerPortalViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "543"
+            endingLineNumber = "543"
+            landmarkName = "buttonUpdate_TouchUpInside(sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D7FD1B1F-DA8D-4F3F-8591-C6CCC8637CCB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/ViewControllers/DealerPortalViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "545"
+            endingLineNumber = "545"
+            landmarkName = "buttonUpdate_TouchUpInside(sender:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D7FD1B1F-DA8D-4F3F-8591-C6CCC8637CCB - ca61bcca46b4b2c0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;TruckYums.User&gt;) -&gt; () in TruckYums.DealerPortalViewController.buttonUpdate_TouchUpInside(sender: __C.UIButton) -&gt; ()"
+                  moduleName = "TruckYums"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jayme-rutkoski/Development/Sandhills/GitHub/TruckYums/TruckYums/ViewControllers/DealerPortalViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "545"
+                  endingLineNumber = "545"
+                  offsetFromSymbolStart = "1906">
+               </Location>
+               <Location
+                  uuid = "D7FD1B1F-DA8D-4F3F-8591-C6CCC8637CCB - 2a0823b4598183e2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;TruckYums.Company&gt;) -&gt; () in closure #1 (Swift.Optional&lt;TruckYums.User&gt;) -&gt; () in TruckYums.DealerPortalViewController.buttonUpdate_TouchUpInside(sender: __C.UIButton) -&gt; ()"
+                  moduleName = "TruckYums"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jayme-rutkoski/Development/Sandhills/GitHub/TruckYums/TruckYums/ViewControllers/DealerPortalViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "546"
+                  endingLineNumber = "546"
+                  offsetFromSymbolStart = "66">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "68D17FC6-7CDF-4F0E-AD2A-DF0F9C6221C9"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/ViewControllers/DealerPortalViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "542"
+            endingLineNumber = "542"
+            landmarkName = "buttonUpdate_TouchUpInside(sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CB37ED65-8600-4198-8E3E-4D917A17C5C3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/ViewControllers/DealerPortalViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "541"
+            endingLineNumber = "541"
+            landmarkName = "buttonUpdate_TouchUpInside(sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EC51D9DE-DB88-476D-B064-72D45DA9EACE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/ViewControllers/DealerPortalViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "544"
+            endingLineNumber = "544"
+            landmarkName = "buttonUpdate_TouchUpInside(sender:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "EC51D9DE-DB88-476D-B064-72D45DA9EACE - ca61bcca46b4b2c0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;TruckYums.User&gt;) -&gt; () in TruckYums.DealerPortalViewController.buttonUpdate_TouchUpInside(sender: __C.UIButton) -&gt; ()"
+                  moduleName = "TruckYums"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jayme-rutkoski/Development/Sandhills/GitHub/TruckYums/TruckYums/ViewControllers/DealerPortalViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "545"
+                  endingLineNumber = "545"
+                  offsetFromSymbolStart = "1906">
+               </Location>
+               <Location
+                  uuid = "EC51D9DE-DB88-476D-B064-72D45DA9EACE - 2a0823b4598183e2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;TruckYums.Company&gt;) -&gt; () in closure #1 (Swift.Optional&lt;TruckYums.User&gt;) -&gt; () in TruckYums.DealerPortalViewController.buttonUpdate_TouchUpInside(sender: __C.UIButton) -&gt; ()"
+                  moduleName = "TruckYums"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jayme-rutkoski/Development/Sandhills/GitHub/TruckYums/TruckYums/ViewControllers/DealerPortalViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "546"
+                  endingLineNumber = "546"
+                  offsetFromSymbolStart = "66">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "48BA512E-3750-41EF-89A7-D05160A7A660"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/Network/FirebaseCloudUpdate/FirebaseCloudUpdate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "firebaseUpdateCompany(modifiedCompany:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "70E8CAAB-9533-4FBB-BB9B-7E5D4CF67F12"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/Network/FirebaseCloudUpdate/FirebaseCloudUpdate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "firebaseUpdateCompany(modifiedCompany:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6A49A8F5-36A3-4106-9831-AC64A17735E7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/ViewControllers/DealerPortalViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "529"
+            endingLineNumber = "529"
+            landmarkName = "buttonUpdate_TouchUpInside(sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B389C482-85E9-426E-BE9C-8828D81B3991"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/ViewControllers/RegisterViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "467"
+            endingLineNumber = "467"
+            landmarkName = "registerUser()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "68A8FA0C-834E-419A-8C5D-593D8F5E1CDD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/ViewControllers/RegisterViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "510"
+            endingLineNumber = "510"
+            landmarkName = "buttonSubmit_TouchUpInside(sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "70197F92-2C55-42FD-B7EE-095F4599DB6C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/ViewControllers/RegisterViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "459"
+            endingLineNumber = "459"
+            landmarkName = "registerUser()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "70197F92-2C55-42FD-B7EE-095F4599DB6C - 3dad3a60b9cb10d8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;TruckYums.User&gt;&gt;) -&gt; () in TruckYums.RegisterViewController.registerUser() -&gt; ()"
+                  moduleName = "TruckYums"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jayme-rutkoski/Development/Sandhills/GitHub/TruckYums/TruckYums/ViewControllers/RegisterViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "464"
+                  endingLineNumber = "464"
+                  offsetFromSymbolStart = "165">
+               </Location>
+               <Location
+                  uuid = "70197F92-2C55-42FD-B7EE-095F4599DB6C - 6a300f3e1ad5ba99"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;TruckYums.Company&gt;&gt;) -&gt; () in closure #1 (Swift.Optional&lt;Swift.Array&lt;TruckYums.User&gt;&gt;) -&gt; () in TruckYums.RegisterViewController.registerUser() -&gt; ()"
+                  moduleName = "TruckYums"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jayme-rutkoski/Development/Sandhills/GitHub/TruckYums/TruckYums/ViewControllers/RegisterViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "465"
+                  endingLineNumber = "465"
+                  offsetFromSymbolStart = "86">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "93BEA14D-CA2F-4E4E-8362-2CC6697A0BA5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/ViewControllers/RegisterViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "456"
+            endingLineNumber = "456"
+            landmarkName = "registerUser()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "93BEA14D-CA2F-4E4E-8362-2CC6697A0BA5 - 1c643208ac545853"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TruckYums.RegisterViewController.registerUser() -&gt; ()"
+                  moduleName = "TruckYums"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jayme-rutkoski/Development/Sandhills/GitHub/TruckYums/TruckYums/ViewControllers/RegisterViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "461"
+                  endingLineNumber = "461"
+                  offsetFromSymbolStart = "30">
+               </Location>
+               <Location
+                  uuid = "93BEA14D-CA2F-4E4E-8362-2CC6697A0BA5 - 3dad3a60b9cb1086"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;TruckYums.User&gt;&gt;) -&gt; () in TruckYums.RegisterViewController.registerUser() -&gt; ()"
+                  moduleName = "TruckYums"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jayme-rutkoski/Development/Sandhills/GitHub/TruckYums/TruckYums/ViewControllers/RegisterViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "462"
+                  endingLineNumber = "462"
+                  offsetFromSymbolStart = "69">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "993265B8-BF6D-44FF-BCDC-2128E17C8B84"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TruckYums/ViewControllers/RegisterViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "458"
+            endingLineNumber = "458"
+            landmarkName = "registerUser()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol WeeklyHoursSelectedDelegate {
+protocol WeeklyHoursSelectedDelegate: AnyObject {
     func weeklyHoursDidUpdate(hoursArray: [String])
 }
 
@@ -18,7 +18,7 @@ class WeeklyHoursSectionController: ListSectionController {
     // MARK: - Variables
     private var weeklyHours: WeeklyHours = WeeklyHours.init()
     let daysOfWeek: [String] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    public var delegate: WeeklyHoursSelectedDelegate? = nil
+    public weak var delegate: WeeklyHoursSelectedDelegate?
     
     // MARK: - Initialization
     private func customInitWeeklyHoursSectionController() {

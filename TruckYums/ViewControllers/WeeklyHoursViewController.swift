@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol HoursSelectDelegate {
+protocol HoursSelectDelegate: AnyObject {
     func updateHours(hoursArray: [String])
     func closedHours()
 }
@@ -19,7 +19,7 @@ class WeeklyHoursViewController: UIViewController, ListAdapterDataSource, UIScro
     // MARK: - Variables
     private let screenSize = UIScreen.main.bounds.size;
     
-    public var delegate: WeeklyHoursDelegate?
+    public weak var delegate: WeeklyHoursDelegate?
     
     public lazy var hoursArray: [String] = {
         let array = [String]()

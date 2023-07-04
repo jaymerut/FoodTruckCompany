@@ -224,12 +224,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         return firebaseCloudRead
     }()
     
-    private lazy var firebaseCloudUpdate: FirebaseCloudUpdate = {
-        let firebaseCloudUpdate = FirebaseCloudUpdate.init()
-        
-        return firebaseCloudUpdate
-    }()
-    
     private lazy var dateTimeHelper: DateTimeHelper = {
         let helper = DateTimeHelper.init()
         
@@ -437,7 +431,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
         firstAlert.addAction(UIAlertAction(title: "Close", style: .default, handler: { (action) in
             let secondAlert = UIAlertController(title: "Success", message: "Remember to add your company onto the map by using 'Update With Current Location' through your dealer portal.", preferredStyle: .alert)
             secondAlert.addAction(UIAlertAction(title: "Close", style: .default, handler: { (alert) in
-                self.navigateToHome()
+                self.firebaseCloudRead.removeListeners()
+                self.navigationController?.popToRootViewController(animated: true)
             }))
             
             self.present(secondAlert, animated: true)
@@ -458,17 +453,17 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
     }
     
     private func registerUser() {
-        FirebaseCloudRead.init().firebaseReadUsers { (users) in
+        self.firebaseCloudRead.firebaseReadUsers { (users) in
             self.doesUserExist(users: users ?? [User]())
             if self.userApproved {
-                FirebaseCloudRead.init().firebaseReadCompanies { (companies) in
+                self.firebaseCloudRead.firebaseReadCompanies { (companies) in
                     self.doesCompanyExist(companies: companies ?? [Company]())
                     if self.companyApproved {
                         let newUser: User = User.init(email: self.textFieldEmail.text!, name: self.textFieldName.text!, password: self.textFieldPassword.text!, phonenumber: self.textFieldPhoneNumber.text!, company: self.textFieldCompanyName.text!)
-                        self.firebaseCloudUpdate.firebaseAddUser(newUser: newUser) { (user) in
+                        FirebaseCloudUpdate.init().firebaseAddUser(newUser: newUser) { (user) in
                             
                             let newCompany: Company = Company.init(name: self.textFieldCompanyName.text!, latitude: 0.0, longitude: 0.0, linkedwith: self.textFieldName.text!, venderverified: true, cuisine: self.textFieldCuisine.text!, phonenumber: self.textFieldPhoneNumber.text!, siteurl: self.textFieldSiteURL.text ?? "", lastupdated: self.dateTimeHelper.retrieveCurrentDateTime(), hours: "Update App", weeklyhours: self.hoursArray)
-                            self.firebaseCloudUpdate.firebaseAddCompany(newCompany: newCompany) { (company) in
+                            FirebaseCloudUpdate.init().firebaseAddCompany(newCompany: newCompany) { (company) in
                                 SwiftAppDefaults.shared.user = user
                                 SwiftAppDefaults.shared.company = company
                                 
@@ -531,16 +526,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
     }
     
     // MARK: Navigation Logic
-    private func navigateToHome() {
-        let mainVC = HomeViewController()
-        let destinationNC = UINavigationController(rootViewController: mainVC)
-        destinationNC.navigationBar.barTintColor = Constants.mainColor
-        destinationNC.navigationBar.tintColor = .white
-        destinationNC.navigationBar.isTranslucent = false
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.window?.rootViewController = destinationNC
-    }
     private func navigateToWeeklyHours(hoursArray: [String]) {
         let destinationVC = WeeklyHoursViewController.init()
         destinationVC.modalPresentationStyle = .overFullScreen

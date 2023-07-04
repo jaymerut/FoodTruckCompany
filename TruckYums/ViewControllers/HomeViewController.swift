@@ -127,15 +127,7 @@ class HomeViewController: UIViewController {
         
         // Setup
         setupHomeViewController()
-        
-        if SwiftAppDefaults.shared.user == nil {
-            self.buttonLogin.isHidden = false
-            self.buttonViewPortal.isHidden = true
-        } else {
-            self.buttonLogin.isHidden = true
-            self.buttonViewPortal.isHidden = false
-        }
-        
+    
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -144,6 +136,13 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        if SwiftAppDefaults.shared.user == nil {
+            self.buttonLogin.isHidden = false
+            self.buttonViewPortal.isHidden = true
+        } else {
+            self.buttonLogin.isHidden = true
+            self.buttonViewPortal.isHidden = false
+        }
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

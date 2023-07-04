@@ -14,7 +14,7 @@ class SelectCuisineValueViewController: UIViewController, UIPickerViewDelegate, 
     
     // MARK: - Variables
     public var cuisine: String = ""
-    public var delegate: SelectCuisineValueDelegate?
+    public weak var delegate: SelectCuisineValueDelegate?
     
     private var cuisineArray: [String] = ["American", "BBQ", "Breakfast", "Chinese", "French", "Greek", "Grill", "Hamburger", "Indian", "Italian", "Japanese", "Mexican", "Pizza", "Steak", "Thai"]
     
