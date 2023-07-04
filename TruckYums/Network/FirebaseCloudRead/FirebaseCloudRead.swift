@@ -66,7 +66,6 @@ class FirebaseCloudRead: NSObject {
                 }
             }
              
-            self.documents = snapshot.documents
             completion(results)
         }
     }
@@ -93,5 +92,8 @@ class FirebaseCloudRead: NSObject {
         }
     }
     
+    public func removeListeners() {
+        self.listener.remove()
+    }
     
 }

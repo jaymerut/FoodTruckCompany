@@ -12,7 +12,7 @@ class HoursSelectViewController: UIViewController {
     
     // MARK: - Variables
     public var hours: String = ""
-    public var delegate: HoursSelectDelegate?
+    public weak var delegate: HoursSelectDelegate?
     
     private lazy var contentView: UIView = {
         let view = UIView(frame: .zero)
