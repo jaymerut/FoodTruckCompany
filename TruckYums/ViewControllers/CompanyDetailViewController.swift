@@ -491,11 +491,7 @@ class CompanyDetailViewController: UIViewController {
     }
     @objc private func buttonPhoneNumber_TouchUpInside(sender: UIButton) {
         if let url = URL(string: "tel://\(self.company.phonenumber.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)"), UIApplication.shared.canOpenURL(url) {
-            if #available(iOS 10, *) {
-                UIApplication.shared.open(url)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
+            UIApplication.shared.open(url)
         }
     }
     @objc private func buttonDirections_TouchUpInside(sender: UIButton) {

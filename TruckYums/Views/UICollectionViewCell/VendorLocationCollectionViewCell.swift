@@ -77,6 +77,21 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    private lazy var buttonPhoneNumber: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "image_call"), for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
+        button.titleLabel?.font = UIFont.init(name: "Teko-Regular", size: 16.0)
+        button.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 5)
+        button.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: 5, bottom: 0, right: 0)
+        button.addTarget(self, action: #selector(buttonPhoneNumber_TouchUpInside), for: .touchUpInside)
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 20
+        
+        return button
+    }()
+    
     // MARK: - Initialization
     private func customInitVendorLocationCollectionViewCell() {
         
@@ -141,8 +156,21 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
             make.left.equalTo(self.labelHours.snp.right)
             make.centerY.equalTo(self.labelHours.snp.centerY)
         }
+        
+        self.containerView.addSubview(self.buttonPhoneNumber)
+        self.buttonPhoneNumber.snp.makeConstraints { (make) in
+            make.top.equalTo(self.labelHours.snp.bottom).offset(3)
+            make.left.equalTo(self.containerView.snp.left).offset(5)
+            make.height.equalTo(40)
+            make.width.equalTo(120)
+        }
     }
     
+    @objc private func buttonPhoneNumber_TouchUpInside(sender: UIButton) {
+        if let url = URL(string: "tel://\((sender.titleLabel?.text ?? "").addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)"), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+    }
     
     // MARK: - Public API
     public func update(_ model: VendorLocation) {
@@ -150,6 +178,7 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         self.imageViewOpenClosed.image = self.retrieveOpenClosedImage(weeklyHours: model.weeklyHours)
         self.labelCuisineValue.text = model.cuisine
         self.labelHoursValue.text = model.hours.count > 0 ? model.hours : "Call For Hours"
+        self.buttonPhoneNumber.setTitle(model.phoneNumber, for: .normal)
     }
     
     private func retrieveOpenClosedImage(weeklyHours: [String]) -> UIImage {

@@ -287,7 +287,8 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
                 name: value.name,
                 weeklyHours: value.weeklyhours,
                 cuisine: value.cuisine,
-                hours: value.hours
+                hours: value.hours,
+                phoneNumber: value.phonenumber
             ))
         }
         

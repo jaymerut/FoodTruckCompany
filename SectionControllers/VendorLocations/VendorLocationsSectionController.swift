@@ -33,7 +33,7 @@ class VendorLocationsSectionController: ListSectionController {
         return 1
     }
     internal override func sizeForItem(at index: Int) -> CGSize {
-        return CGSize(width: self.collectionContext?.containerSize.width ?? 0, height: 100)
+        return CGSize(width: self.collectionContext?.containerSize.width ?? 0, height: 150)
     }
     internal override func cellForItem(at index: Int) -> UICollectionViewCell {
         let cell: VendorLocationCollectionViewCell = (self.collectionContext?.dequeueReusableCell(of: VendorLocationCollectionViewCell.self, for: self, at: index))! as! VendorLocationCollectionViewCell
@@ -63,6 +63,7 @@ class VendorLocation: NSObject, ListDiffable {
     public var weeklyHours: [String] = [String]()
     public var cuisine: String = ""
     public var hours: String = ""
+    public var phoneNumber: String = ""
     
     // MARK: - Initialization
     private func customInitWeeklyHours() {
@@ -74,12 +75,13 @@ class VendorLocation: NSObject, ListDiffable {
         customInitWeeklyHours()
     }
     
-    init(name: String, weeklyHours: [String], cuisine: String, hours: String) {
+    init(name: String, weeklyHours: [String], cuisine: String, hours: String, phoneNumber: String) {
         super.init()
         self.name = name
         self.weeklyHours = weeklyHours
         self.cuisine = cuisine
         self.hours = hours
+        self.phoneNumber = phoneNumber
     }
     
     func diffIdentifier() -> NSObjectProtocol {
