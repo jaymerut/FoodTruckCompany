@@ -279,8 +279,10 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
     }
     
     func setGradientBackground() {
+        let gradientLayer = CAGradientLayer()
+
         gradientLayer.colors = [
-            yellow,
+            UIColor.init(hex: 0xffff00).cgColor,
             UIColor.init(hex: 0xFA8072).cgColor,
             UIColor.init(hex: 0xb6dde8).cgColor,
         ]

@@ -11,7 +11,7 @@ import SnapKit
 import MapKit
 import CoreLocation
 import GoogleMobileAds
-
+import SafariServices
 
 class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKMapViewDelegate, CLLocationManagerDelegate, GADBannerViewDelegate, UITextFieldDelegate, UIScrollViewDelegate {
     
@@ -391,6 +391,7 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
 
         self.firebaseCloudRead.firebaseReadCompanies { (companies) in
             for company in companies ?? [Company]() {
+                company.hours = company.weeklyhours[self.googlePlaceHelper.indexOfCurrentWeekDay()] ?? "Closed"
                 self.companies[company.name] = company
             }
             self.googlePlacesAPI.searchNearby("food trucks", latitude: locValue.latitude as NSNumber, longitude: locValue.longitude as NSNumber, radius: self.currentRadius as NSNumber) { (result) in
@@ -512,7 +513,7 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return VendorLocationsSectionController.init()
+        return VendorLocationsSectionController.init(delegate: self)
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
@@ -548,4 +549,19 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
         textField.resignFirstResponder()
     }
     
+}
+
+extension FindFoodTrucksViewController: VendorLocationsSectionControllerDelegate {
+    func navigateToWebView(urlString: String) {
+        var url: URL
+        if urlString.hasPrefix("http://") || urlString.hasPrefix("https://") {
+            url = URL(string: urlString)!
+        } else {
+            url = URL(string: "https://\(urlString)")!
+        }
+        let webView: SFSafariViewController = SFSafariViewController.init(url: url)
+        webView.preferredBarTintColor = Constants.mainColor
+        webView.preferredControlTintColor = .white
+        self.present(webView, animated: true, completion: nil)
+    }
 }
