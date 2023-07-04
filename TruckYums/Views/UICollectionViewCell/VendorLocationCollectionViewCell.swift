@@ -8,12 +8,16 @@
 
 import UIKit
 import SnapKit
+import CoreLocation
+import MapKit
 
 class VendorLocationCollectionViewCell: UICollectionViewCell {
     
     
     // MARK: - Variables
-    public var name: String = ""
+    public var navigateToWebView: ((String) -> ())?
+    
+    private var model = VendorLocation()
     
     private lazy var dateTimeHelper: DateTimeHelper = {
         let helper = DateTimeHelper.init()
@@ -80,6 +84,7 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
     private lazy var stackViewButtons: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.axis = .horizontal
+        stackView.spacing = 5
         stackView.distribution = .fillProportionally
         
         return stackView
@@ -94,6 +99,36 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         button.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 5)
         button.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: 5, bottom: 0, right: 0)
         button.addTarget(self, action: #selector(buttonPhoneNumber_TouchUpInside), for: .touchUpInside)
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 20
+        
+        return button
+    }()
+    private lazy var buttonDirections: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "image_directions"), for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
+        button.titleLabel?.font = UIFont.init(name: "Teko-Regular", size: 16.0)
+        button.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 5)
+        button.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: 5, bottom: 0, right: 0)
+        button.setTitle("Get Directions", for: .normal)
+        button.addTarget(self, action: #selector(buttonDirections_TouchUpInside), for: .touchUpInside)
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 20
+        
+        return button
+    }()
+    private lazy var buttonSite: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "image_site"), for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
+        button.titleLabel?.font = UIFont.init(name: "Teko-Regular", size: 16.0)
+        button.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 5)
+        button.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: 5, bottom: 0, right: 0)
+        button.setTitle("View Site", for: .normal)
+        button.addTarget(self, action: #selector(buttonSite_TouchUpInside), for: .touchUpInside)
         button.backgroundColor = .black
         button.layer.cornerRadius = 20
         
@@ -124,6 +159,13 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         customInitVendorLocationCollectionViewCell()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.stackViewButtons.subviews.forEach { view in
+            view.removeFromSuperview()
+        }
+    }
     
     
     // MARK: - Private API
@@ -193,8 +235,26 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    @objc private func buttonDirections_TouchUpInside(sender: UIButton) {
+        let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: self.model.latitude, longitude: self.model.longitude)
+        self.navigateToMapsAppWithDirections(to: coordinate, destinationName: self.model.name)
+    }
+    @objc private func buttonSite_TouchUpInside(sender: UIButton) {
+        self.navigateToWebView?(self.model.siteUrl)
+    }
+    
+    private func navigateToMapsAppWithDirections(to coordinate: CLLocationCoordinate2D, destinationName name: String) {
+      let options = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+      let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
+      let mapItem = MKMapItem(placemark: placemark)
+      mapItem.name = name
+      mapItem.openInMaps(launchOptions: options)
+    }
+    
     // MARK: - Public API
     public func update(_ model: VendorLocation) {
+        self.model = model
+        
         self.labelName.text = model.name
         self.imageViewOpenClosed.image = self.retrieveOpenClosedImage(weeklyHours: model.weeklyHours)
         self.labelCuisineValue.text = model.cuisine
@@ -203,6 +263,10 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         self.labelDistance.text = "\(model.distance.withCommas()) miles away"
         if (!model.phoneNumber.isEmpty) {
             self.stackViewButtons.addArrangedSubview(self.buttonPhoneNumber)
+        }
+        self.stackViewButtons.addArrangedSubview(self.buttonDirections)
+        if (!model.siteUrl.isEmpty) {
+            self.stackViewButtons.addArrangedSubview(self.buttonSite)
         }
     }
     

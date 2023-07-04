@@ -293,7 +293,10 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
                         cuisine: value.cuisine,
                         hours: value.hours,
                         phoneNumber: value.phonenumber,
-                        distance: calculateDistance(point: companyLocation)
+                        distance: calculateDistance(point: companyLocation),
+                        latitude: value.latitude,
+                        longitude: value.longitude,
+                        siteUrl: value.siteurl
                     ))
                 }
             }
