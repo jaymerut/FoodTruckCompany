@@ -77,6 +77,14 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    private lazy var stackViewButtons: UIStackView = {
+        let stackView = UIStackView(frame: .zero)
+        stackView.axis = .horizontal
+        stackView.distribution = .fillProportionally
+        
+        return stackView
+    }()
+    
     private lazy var buttonPhoneNumber: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "image_call"), for: .normal)
@@ -170,12 +178,12 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
             make.centerY.equalTo(self.labelHours.snp.centerY)
         }
         
-        self.containerView.addSubview(self.buttonPhoneNumber)
-        self.buttonPhoneNumber.snp.makeConstraints { (make) in
+        self.containerView.addSubview(self.stackViewButtons)
+        self.stackViewButtons.snp.makeConstraints { (make) in
             make.top.equalTo(self.labelHours.snp.bottom).offset(3)
             make.left.equalTo(self.containerView.snp.left).offset(5)
+            make.right.equalTo(self.containerView.snp.right).offset(-5)
             make.height.equalTo(40)
-            make.width.equalTo(120)
         }
     }
     
@@ -193,7 +201,9 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         self.labelHoursValue.text = model.hours.count > 0 ? model.hours : "Call For Hours"
         self.buttonPhoneNumber.setTitle(model.phoneNumber, for: .normal)
         self.labelDistance.text = "\(model.distance.withCommas()) miles away"
-        self.buttonPhoneNumber.isHidden = model.phoneNumber.isEmpty
+        if (!model.phoneNumber.isEmpty) {
+            self.stackViewButtons.addArrangedSubview(self.buttonPhoneNumber)
+        }
     }
     
     private func retrieveOpenClosedImage(weeklyHours: [String]) -> UIImage {
