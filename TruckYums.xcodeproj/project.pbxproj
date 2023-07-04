@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		268D01C42A53A4AD00E6CA97 /* String+Encryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268D01C32A53A4AD00E6CA97 /* String+Encryption.swift */; };
+		268D01C72A53A50D00E6CA97 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 268D01C62A53A50D00E6CA97 /* CryptoSwift */; };
 		5E8E10FE919FEE9AF87A6FE0 /* Pods_TruckYums.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF53B2AD6510846A0365E1A6 /* Pods_TruckYums.framework */; };
 		961ED139259BDD570012E55F /* QueryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961ED138259BDD570012E55F /* QueryHelper.swift */; };
 		961ED13E259C124E0012E55F /* MKPointOfInterestCategoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961ED13D259C124E0012E55F /* MKPointOfInterestCategoryHelper.swift */; };
@@ -87,6 +89,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		268D01C32A53A4AD00E6CA97 /* String+Encryption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Encryption.swift"; sourceTree = "<group>"; };
 		4B5A5EBC12B52B1D51F306E8 /* Pods-TruckYumsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TruckYumsTests.debug.xcconfig"; path = "Target Support Files/Pods-TruckYumsTests/Pods-TruckYumsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4B89F18179D49C5D1A6EDC84 /* Pods-TruckYums.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TruckYums.release.xcconfig"; path = "Target Support Files/Pods-TruckYums/Pods-TruckYums.release.xcconfig"; sourceTree = "<group>"; };
 		58C9DF1BA68B1CBD76BC257E /* Pods_TruckYumsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TruckYumsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,6 +188,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E8E10FE919FEE9AF87A6FE0 /* Pods_TruckYums.framework in Frameworks */,
+				268D01C72A53A50D00E6CA97 /* CryptoSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +436,7 @@
 			isa = PBXGroup;
 			children = (
 				96B78EB7258832D50067C147 /* String+Substring.swift */,
+				268D01C32A53A4AD00E6CA97 /* String+Encryption.swift */,
 			);
 			path = String;
 			sourceTree = "<group>";
@@ -634,6 +639,9 @@
 			dependencies = (
 			);
 			name = TruckYums;
+			packageProductDependencies = (
+				268D01C62A53A50D00E6CA97 /* CryptoSwift */,
+			);
 			productName = FoodTruckCompany;
 			productReference = 96EB9332250EB95C00ED0AB1 /* TruckYums.app */;
 			productType = "com.apple.product-type.application";
@@ -709,6 +717,9 @@
 				Base,
 			);
 			mainGroup = 96EB9329250EB95C00ED0AB1;
+			packageReferences = (
+				268D01C52A53A50D00E6CA97 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
+			);
 			productRefGroup = 96EB9333250EB95C00ED0AB1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -911,6 +922,7 @@
 				96685E9D25B695100047AD53 /* GooglePlacesOpeningHours.m in Sources */,
 				9684FE832570AE8A00830C46 /* RegisterViewController.swift in Sources */,
 				965CEAA22570105600ACE673 /* FindFoodTrucksViewController.swift in Sources */,
+				268D01C42A53A4AD00E6CA97 /* String+Encryption.swift in Sources */,
 				96685EA025B6954B0047AD53 /* GooglePlacesLocation.m in Sources */,
 				96685EA925B69CD60047AD53 /* GooglePlaceAPI.m in Sources */,
 				9672811E2581088600F482BC /* FirebaseCloudRead.swift in Sources */,
@@ -1266,6 +1278,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		268D01C52A53A50D00E6CA97 /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.7.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		268D01C62A53A50D00E6CA97 /* CryptoSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 268D01C52A53A50D00E6CA97 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
+			productName = CryptoSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 96EB932A250EB95C00ED0AB1 /* Project object */;
 }
