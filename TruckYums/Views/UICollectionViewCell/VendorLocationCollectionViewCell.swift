@@ -85,7 +85,7 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         let stackView = UIStackView(frame: .zero)
         stackView.axis = .horizontal
         stackView.spacing = 5
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fillEqually
         
         return stackView
     }()
@@ -174,34 +174,34 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         self.contentView.addSubview(self.containerView)
         self.containerView.snp.makeConstraints { (make) in
             make.top.equalTo(self.contentView.snp.top).offset(5)
-            make.left.equalTo(self.contentView.snp.left).offset(5)
-            make.right.equalTo(self.contentView.snp.right).offset(-5)
+            make.left.equalTo(self.contentView.snp.left).offset(10)
+            make.right.equalTo(self.contentView.snp.right).offset(-10)
             make.bottom.equalTo(self.contentView.snp.bottom).offset(-5)
         }
         
         self.containerView.addSubview(self.imageViewOpenClosed)
         self.imageViewOpenClosed.snp.makeConstraints { (make) in
-            make.top.equalTo(self.containerView.snp.top).offset(5)
-            make.right.equalTo(self.containerView.snp.right).offset(-5)
+            make.top.equalTo(self.containerView.snp.top).offset(10)
+            make.right.equalTo(self.containerView.snp.right).offset(-10)
         }
         
         self.containerView.addSubview(self.labelDistance)
         self.labelDistance.snp.makeConstraints { (make) in
             make.top.equalTo(self.imageViewOpenClosed.snp.bottom).offset(5)
-            make.right.equalTo(self.containerView.snp.right).offset(-5)
+            make.right.equalTo(self.containerView.snp.right).offset(-10)
         }
         
         self.containerView.addSubview(self.labelName)
         self.labelName.snp.makeConstraints { (make) in
-            make.top.equalTo(self.containerView.snp.top).offset(5)
-            make.left.equalTo(self.containerView.snp.left).offset(5)
+            make.top.equalTo(self.containerView.snp.top).offset(10)
+            make.left.equalTo(self.containerView.snp.left).offset(10)
             make.right.equalTo(self.imageViewOpenClosed.snp.left).offset(-5)
         }
         
         self.containerView.addSubview(self.labelCuisine)
         self.labelCuisine.snp.makeConstraints { (make) in
             make.top.equalTo(self.labelName.snp.bottom)
-            make.left.equalTo(self.containerView.snp.left).offset(5)
+            make.left.equalTo(self.containerView.snp.left).offset(10)
         }
         self.containerView.addSubview(self.labelCuisineValue)
         self.labelCuisineValue.snp.makeConstraints { (make) in
@@ -212,7 +212,7 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         self.containerView.addSubview(self.labelHours)
         self.labelHours.snp.makeConstraints { (make) in
             make.top.equalTo(self.labelCuisine.snp.bottom)
-            make.left.equalTo(self.containerView.snp.left).offset(5)
+            make.left.equalTo(self.containerView.snp.left).offset(10)
         }
         self.containerView.addSubview(self.labelHoursValue)
         self.labelHoursValue.snp.makeConstraints { (make) in
@@ -223,8 +223,8 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
         self.containerView.addSubview(self.stackViewButtons)
         self.stackViewButtons.snp.makeConstraints { (make) in
             make.top.equalTo(self.labelHours.snp.bottom).offset(3)
-            make.left.equalTo(self.containerView.snp.left).offset(5)
-            make.right.equalTo(self.containerView.snp.right).offset(-5)
+            make.left.equalTo(self.containerView.snp.left).offset(10)
+            make.right.equalTo(self.containerView.snp.right).offset(-10)
             make.height.equalTo(40)
         }
     }
