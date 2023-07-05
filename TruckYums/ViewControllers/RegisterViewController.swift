@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import FirebaseAnalytics
 
 class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelectDelegate, SelectCuisineValueDelegate, WeeklyHoursDelegate  {
     
@@ -467,6 +468,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, HoursSelect
                                 SwiftAppDefaults.shared.user = user
                                 SwiftAppDefaults.shared.company = company
                                 
+                                Analytics.logEvent("register", parameters: nil)
                                 self.displaySuccessMessages()
                             }
                             

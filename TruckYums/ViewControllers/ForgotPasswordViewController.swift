@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import FirebaseAnalytics
 
 class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
     
@@ -461,6 +461,7 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     @objc private func buttonApply_TouchUpInside(sender: UIButton) {
+        Analytics.logEvent("changepassword_clicked", parameters: nil)
         self.changePassword()
     }
     @objc private func gestureTap_Tap(gesture: UITapGestureRecognizer) {
