@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import CoreLocation
 import MapKit
+import FirebaseAnalytics
 
 class VendorLocationCollectionViewCell: UICollectionViewCell {
     
@@ -235,16 +236,19 @@ class VendorLocationCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func buttonPhoneNumber_TouchUpInside(sender: UIButton) {
+        Analytics.logEvent("phone_clicked", parameters: nil)
         if let url = URL(string: "tel://\((sender.titleLabel?.text ?? "").addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)"), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         }
     }
     
     @objc private func buttonDirections_TouchUpInside(sender: UIButton) {
+        Analytics.logEvent("directions_clicked", parameters: nil)
         let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: self.model.latitude, longitude: self.model.longitude)
         self.navigateToMapsAppWithDirections(to: coordinate, destinationName: self.model.name)
     }
     @objc private func buttonSite_TouchUpInside(sender: UIButton) {
+        Analytics.logEvent("site_clicked", parameters: nil)
         self.navigateToWebView?(self.model.siteUrl)
     }
     

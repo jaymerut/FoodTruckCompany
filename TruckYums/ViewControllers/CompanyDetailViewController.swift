@@ -10,6 +10,7 @@ import UIKit
 import WebKit
 import MapKit
 import SafariServices
+import FirebaseAnalytics
 
 class CompanyDetailViewController: UIViewController {
     
@@ -475,7 +476,7 @@ class CompanyDetailViewController: UIViewController {
       mapItem.name = name
       mapItem.openInMaps(launchOptions: options)
     }
-    private func navigateToCompanyDetail() {
+    private func navigateToMoreHours() {
         let destinationVC = MoreHoursViewController.init()
         destinationVC.modalPresentationStyle = .overFullScreen
         destinationVC.modalTransitionStyle = .crossDissolve
@@ -487,18 +488,22 @@ class CompanyDetailViewController: UIViewController {
     
     // MARK: UIResponders
     @objc private func buttonMoreHours_TouchUpInside(sender: UIButton) {
-        self.navigateToCompanyDetail()
+        Analytics.logEvent("morehours_clicked", parameters: nil)
+        self.navigateToMoreHours()
     }
     @objc private func buttonPhoneNumber_TouchUpInside(sender: UIButton) {
+        Analytics.logEvent("phone_clicked", parameters: nil)
         if let url = URL(string: "tel://\(self.company.phonenumber.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)"), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         }
     }
     @objc private func buttonDirections_TouchUpInside(sender: UIButton) {
+        Analytics.logEvent("directions_clicked", parameters: nil)
         let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: self.company.latitude, longitude: self.company.longitude)
         self.navigateToMapsAppWithDirections(to: coordinate, destinationName: self.company.name)
     }
     @objc private func buttonSite_TouchUpInside(sender: UIButton) {
+        Analytics.logEvent("site_clicked", parameters: nil)
         self.navigateToWebView(urlString: self.company.siteurl)
     }
     @objc private func buttonClose_TouchUpInside(sender: UIButton) {

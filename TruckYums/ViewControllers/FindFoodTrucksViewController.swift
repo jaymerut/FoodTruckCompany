@@ -12,6 +12,7 @@ import MapKit
 import CoreLocation
 import GoogleMobileAds
 import SafariServices
+import FirebaseAnalytics
 
 class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKMapViewDelegate, CLLocationManagerDelegate, GADBannerViewDelegate, UITextFieldDelegate, UIScrollViewDelegate {
     
@@ -364,6 +365,12 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
     @objc func toggleList() {
         self.isShowingList = !self.isShowingList
         self.updateRightBarButton()
+        
+        if (self.isShowingList) {
+            Analytics.logEvent("click_list", parameters: nil)
+        } else {
+            Analytics.logEvent("click_map", parameters: nil)
+        }
         
         self.mapView.isHidden = self.isShowingList
         self.collectionView.isHidden = !self.isShowingList
