@@ -416,6 +416,9 @@ class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKM
                         }
                         
                         if result!.results.count <= index + 1 {
+                            let allAnnotations = self.mapView.annotations
+                            self.mapView.removeAnnotations(allAnnotations)
+                            self.vendorLocations = [VendorLocation]()
                             self.addCompaniesToMap(companies: self.companies)
                             
                             let mapCamera = MKMapCamera(lookingAtCenter: locValue, fromEyeCoordinate: locValue, eyeAltitude: self.currentRadius)
