@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import CoreLocation
+import FirebaseAnalytics
 
 protocol WeeklyHoursDelegate: AnyObject {
     func updateHours(hoursArray: [String])
@@ -520,6 +521,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         self.navigateToHome()
     }
     @objc private func buttonUpdate_TouchUpInside(sender: UIButton) {
+        Analytics.logEvent("update_user", parameters: nil)
         self.showActivityIndicator()
         
         let modifiedUser: User = User.init()
@@ -537,7 +539,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
             modifiedCompany.name = self.textFieldCompanyName.text ?? ""
             modifiedCompany.phonenumber = self.textFieldPhoneNumber.text ?? ""
             modifiedCompany.lastupdated = self.dateTimeHelper.retrieveCurrentDateTime()
-            modifiedCompany.hours = "Update App"
+            modifiedCompany.hours = "Hours Not Set"
             modifiedCompany.weeklyhours = self.hoursArray
             modifiedCompany.cuisine = self.textFieldCuisine.text ?? ""
             modifiedCompany.siteurl = self.textFieldSiteURL.text ?? ""
@@ -554,6 +556,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         
     }
     @objc private func buttonChangeLocation_TouchUpInside(sender: UIButton) {
+        Analytics.logEvent("change_location", parameters: nil)
         self.showActivityIndicator()
         
         self.buttonRemoveLocation.isHidden = false
@@ -567,6 +570,7 @@ class DealerPortalViewController: UIViewController, UITextFieldDelegate, CLLocat
         }
     }
     @objc private func buttonRemoveLocation_TouchUpInside(sender: UIButton) {
+        Analytics.logEvent("remove_location", parameters: nil)
         self.showActivityIndicator()
         
         self.buttonRemoveLocation.isHidden = true

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>724406704992-a9usa9vscu7aedgmios1g965top6lrnf.apps.googleusercontent.com</string>
+	<string>724406704992-ihcq8gpc1rnn9279gs5srp4d7n6ck2v8.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.724406704992-a9usa9vscu7aedgmios1g965top6lrnf</string>
+	<string>com.googleusercontent.apps.724406704992-ihcq8gpc1rnn9279gs5srp4d7n6ck2v8</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAvId8yVJk3euk-3swNHCi1BDDJM-rPTrY</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.jay.rut.FoodTruckCompany</string>
+	<string>com.jayme.rutkoski.TruckYums</string>
 	<key>PROJECT_ID</key>
 	<string>foodtruck-locator</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,8 +29,10 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:724406704992:ios:309484ccb5a2fb071cdc05</string>
+	<string>1:724406704992:ios:b4b813ac1c5a0f261cdc05</string>
 	<key>DATABASE_URL</key>
 	<string>https://foodtruck-locator.firebaseio.com</string>
+	<key>ADMOB_APP_ID</key>
+	<string>ca-app-pub-7088839014127907~9522584888</string>
 </dict>
 </plist>

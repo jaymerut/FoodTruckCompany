@@ -29,26 +29,6 @@ class GooglePlaceHelper: NSObject {
     
     
     // MARK: - Private API
-    private func indexOfCurrentWeekDay() -> Int {
-        switch self.dateTimeHelper.retrieveCurrentWeekDay() {
-        case "Monday":
-            return 0
-        case "Tuesday":
-            return 1
-        case "Wednesday":
-            return 2
-        case "Thursday":
-            return 3
-        case "Friday":
-            return 4
-        case "Saturday":
-            return 5
-        case "Sunday":
-            return 6
-        default:
-            return 0
-        }
-    }
     private func correctHoursString(hours: String) -> String {
         var components = hours.components(separatedBy: "\(self.dateTimeHelper.retrieveCurrentWeekDay()): ")
         if components.count > 1 {
@@ -58,7 +38,6 @@ class GooglePlaceHelper: NSObject {
             return ""
         }
     }
-    
     
     // MARK: - Public API
     public func convertGooglePlaceDetailsToCompany(details: GooglePlacesDetails) -> Company {
@@ -79,5 +58,24 @@ class GooglePlaceHelper: NSObject {
         return company
     }
     
-    
+    public func indexOfCurrentWeekDay() -> Int {
+        switch self.dateTimeHelper.retrieveCurrentWeekDay() {
+        case "Monday":
+            return 0
+        case "Tuesday":
+            return 1
+        case "Wednesday":
+            return 2
+        case "Thursday":
+            return 3
+        case "Friday":
+            return 4
+        case "Saturday":
+            return 5
+        case "Sunday":
+            return 6
+        default:
+            return 0
+        }
+    }
 }

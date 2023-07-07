@@ -11,23 +11,43 @@ import SnapKit
 import MapKit
 import CoreLocation
 import GoogleMobileAds
+import SafariServices
+import FirebaseAnalytics
 
-
-class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, GADBannerViewDelegate {
+class FindFoodTrucksViewController: UIViewController, ListAdapterDataSource, MKMapViewDelegate, CLLocationManagerDelegate, GADBannerViewDelegate, UITextFieldDelegate, UIScrollViewDelegate {
     
     
     // MARK: - Variables
     public var companies: [String: Company] = [:]
     var bannerView: GADBannerView!
+    var currentLocation: CLLocation?
     
     let distanceSpan: Double = 50
     var currentRadius: Double = 0
+    var isShowingList: Bool = false
+    
+    private var vendorLocations: [VendorLocation] = [VendorLocation]()
     
     private lazy var stackViewBannerAds: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.axis = .vertical
         
         return stackView
+    }()
+    private lazy var adapter: ListAdapter = {
+        let adapter = ListAdapter(updater: ListAdapterUpdater.init(), viewController: self, workingRangeSize: 0)
+        adapter.scrollViewDelegate = self
+        
+        return adapter
+    }()
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+        collectionView.backgroundColor = .white
+        collectionView.isHidden = true
+        collectionView.backgroundColor = Constants.mainColor
+        collectionView.showsVerticalScrollIndicator = false
+        
+        return collectionView
     }()
     private lazy var labelTitle: UILabel = {
         let label = UILabel(frame: .zero)
@@ -69,6 +89,20 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     
     private let milesToMetersArray: [Double] = [8046.72, 16093.4, 32186.9, 48280.3]
     
+    private lazy var searchTextField: UITextField = {
+        let textField = UITextField(frame: .zero)
+        textField.backgroundColor = .white
+        textField.delegate = self
+        textField.placeholder = "Filter by Name"
+        textField.font = UIFont(name: "Teko-Regular", size: 18.0)
+        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
+        textField.layer.borderWidth = 1.5
+        textField.leftView = UIView.init(frame: CGRect.init(x: 0.0, y: 0.0, width: 10.0, height: 1.0))
+        textField.leftViewMode = .always
+        
+        return textField
+    }()
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView.init(frame: .zero)
         mapView.mapType = .standard
@@ -157,8 +191,11 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         
         self.getUserCoordinates()
         
+        self.updateRightBarButton()
+        
         // Setup
         setupFindFoodTrucksViewController()
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -174,6 +211,12 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
     
     // MARK: - Private API
     private func setupFindFoodTrucksViewController() {
+        
+        self.view.backgroundColor = Constants.mainColor
+        
+        // Adapter
+        self.adapter.collectionView = self.collectionView
+        self.adapter.dataSource = self
         
         self.view.addSubview(self.stackViewBannerAds)
         self.stackViewBannerAds.snp.makeConstraints { (make) in
@@ -194,9 +237,25 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
             make.edges.equalTo(self.viewControlContainer)
         }
         
+        self.view.addSubview(self.searchTextField)
+        self.searchTextField.snp.makeConstraints { (make) in
+            make.top.equalTo(self.viewControlContainer.snp.bottom)
+            make.left.equalTo(self.view.snp.left)
+            make.right.equalTo(self.view.snp.right)
+            make.height.equalTo(50)
+        }
+        
         self.view.addSubview(self.mapView)
         self.mapView.snp.makeConstraints { (make) in
-            make.top.equalTo(self.viewControlContainer.snp.bottom)
+            make.top.equalTo(self.searchTextField.snp.bottom)
+            make.left.equalTo(self.view.snp.left)
+            make.right.equalTo(self.view.snp.right)
+            make.bottom.equalTo(self.view.snp.bottom)
+        }
+        
+        self.view.addSubview(self.collectionView)
+        self.collectionView.snp.makeConstraints { (make) in
+            make.top.equalTo(self.searchTextField.snp.bottom).offset(5)
             make.left.equalTo(self.view.snp.left)
             make.right.equalTo(self.view.snp.right)
             make.bottom.equalTo(self.view.snp.bottom)
@@ -209,11 +268,57 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         }
         
     }
+    private func updateRightBarButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: self.isShowingList ? "Map" : "List", style: .plain, target: self, action: #selector(toggleList))
+    }
     private func getUserCoordinates() {
         self.activityIndicator.startAnimating()
         self.locationManager.requestWhenInUseAuthorization()
         
         self.locationManager.startUpdatingLocation()
+    }
+    
+    private func addCompaniesToMap(companies: [String: Company]) {
+        for (key, value) in companies {
+            if (value.longitude != 0 && value.latitude != 0) {
+                let companyLocation = CLLocation(latitude: value.latitude, longitude: value.longitude)
+                if (self.isWithinSpecifiedRadius(point: companyLocation)) {
+                    let annotation = MKPointAnnotation()
+                    annotation.title = key
+                    annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
+                    self.mapView.addAnnotation(annotation)
+                    
+                    self.vendorLocations.append(VendorLocation(
+                        name: value.name,
+                        weeklyHours: value.weeklyhours,
+                        cuisine: value.cuisine,
+                        hours: value.hours,
+                        phoneNumber: value.phonenumber,
+                        distance: calculateDistance(point: companyLocation),
+                        latitude: value.latitude,
+                        longitude: value.longitude,
+                        siteUrl: value.siteurl,
+                        isVerified: value.venderverified
+                    ))
+                }
+            }
+        }
+        
+        self.vendorLocations = self.vendorLocations.sorted(by: { $0.distance < $1.distance })
+        
+        self.adapter.performUpdates(animated: true, completion: nil)
+    }
+    
+    private func calculateDistance(point: CLLocation) -> Double {
+        let currentLoc = self.currentLocation ?? CLLocation(latitude: 0, longitude: 0)
+        let distanceInMeters = point.distance(from: currentLoc).magnitude
+        return distanceInMeters.convert(from: .meters, to: .miles).rounded(toPlaces: 2)
+    }
+    
+    private func isWithinSpecifiedRadius(point: CLLocation) -> Bool {
+        let currentLoc = self.currentLocation ?? CLLocation(latitude: 0, longitude: 0)
+        let distanceInMeters = point.distance(from: currentLoc).magnitude
+        return distanceInMeters <= self.currentRadius
     }
     
     // MARK: Navigation Logic
@@ -233,7 +338,42 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         self.companies = [:]
         let allAnnotations = self.mapView.annotations
         self.mapView.removeAnnotations(allAnnotations)
+        self.vendorLocations = [VendorLocation]()
         self.getUserCoordinates()
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        let allAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(allAnnotations)
+        self.vendorLocations = [VendorLocation]()
+
+        var filteredArray = [String: Company]()
+        
+        for (key, value) in self.companies {
+            if key.lowercased().contains((textField.text ?? "").lowercased()) {
+                filteredArray[key] = value
+            }
+        }
+        
+        if (textField.text?.isEmpty == true) {
+            filteredArray = self.companies
+        }
+        
+        self.addCompaniesToMap(companies: filteredArray)
+    }
+    
+    @objc func toggleList() {
+        self.isShowingList = !self.isShowingList
+        self.updateRightBarButton()
+        
+        if (self.isShowingList) {
+            Analytics.logEvent("click_list", parameters: nil)
+        } else {
+            Analytics.logEvent("click_map", parameters: nil)
+        }
+        
+        self.mapView.isHidden = self.isShowingList
+        self.collectionView.isHidden = !self.isShowingList
     }
     
     // MARK: Delegate Methods
@@ -243,19 +383,22 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         let region = MKCoordinateRegion.init(center: newLocation.coordinate, latitudinalMeters: self.distanceSpan, longitudinalMeters: self.distanceSpan)
         self.mapView.setRegion(region, animated: false)
         self.mapView.showsUserLocation = true
-        }
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         
-        let currentLocation:CLLocation = locations.last ?? CLLocation.init()
+        let location = locations.last ?? CLLocation.init()
+        self.currentLocation = location
+        
         let region = MKCoordinateRegion(
-              center: currentLocation.coordinate,
+            center: location.coordinate,
             latitudinalMeters: 50000,
             longitudinalMeters: 60000)
 
         self.firebaseCloudRead.firebaseReadCompanies { (companies) in
             for company in companies ?? [Company]() {
+                company.hours = company.weeklyhours[self.googlePlaceHelper.indexOfCurrentWeekDay()] ?? "Closed"
                 self.companies[company.name] = company
             }
             self.googlePlacesAPI.searchNearby("food trucks", latitude: locValue.latitude as NSNumber, longitude: locValue.longitude as NSNumber, radius: self.currentRadius as NSNumber) { (result) in
@@ -273,12 +416,10 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
                         }
                         
                         if result!.results.count <= index + 1 {
-                            for (key, value) in self.companies {
-                                let annotation = MKPointAnnotation()
-                                annotation.title = key
-                                annotation.coordinate = CLLocationCoordinate2D(latitude: value.latitude, longitude: value.longitude)
-                                self.mapView.addAnnotation(annotation)
-                            }
+                            let allAnnotations = self.mapView.annotations
+                            self.mapView.removeAnnotations(allAnnotations)
+                            self.vendorLocations = [VendorLocation]()
+                            self.addCompaniesToMap(companies: self.companies)
                             
                             let mapCamera = MKMapCamera(lookingAtCenter: locValue, fromEyeCoordinate: locValue, eyeAltitude: self.currentRadius)
                             self.mapView.setCamera(mapCamera, animated: true)
@@ -376,6 +517,23 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         return anView
     }
     
+    // ListAdapterDataSource
+    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
+        self.vendorLocations
+    }
+    
+    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        return VendorLocationsSectionController.init(delegate: self)
+    }
+    
+    func emptyView(for listAdapter: ListAdapter) -> UIView? {
+        let label = UILabel(frame: .zero)
+        label.text = "No Vendors Found"
+        label.textAlignment = .center
+        
+        return label
+    }
+    
     // MARK: - Public API
     
     // MARK: Delegate Methods
@@ -392,5 +550,28 @@ class FindFoodTrucksViewController: UIViewController, MKMapViewDelegate, CLLocat
         print("bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor.init(hex: "0x3C9ADC")?.cgColor
+        textField.becomeFirstResponder()
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor.init(hex: "0xE8ECF0")?.cgColor
+        textField.resignFirstResponder()
+    }
     
+}
+
+extension FindFoodTrucksViewController: VendorLocationsSectionControllerDelegate {
+    func navigateToWebView(urlString: String) {
+        var url: URL
+        if urlString.hasPrefix("http://") || urlString.hasPrefix("https://") {
+            url = URL(string: urlString)!
+        } else {
+            url = URL(string: "https://\(urlString)")!
+        }
+        let webView: SFSafariViewController = SFSafariViewController.init(url: url)
+        webView.preferredBarTintColor = Constants.mainColor
+        webView.preferredControlTintColor = .white
+        self.present(webView, animated: true, completion: nil)
+    }
 }
