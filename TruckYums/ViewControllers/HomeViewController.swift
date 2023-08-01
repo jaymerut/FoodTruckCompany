@@ -16,7 +16,7 @@ class HomeViewController: UIViewController {
     // MARK: - Variables
     private lazy var labelTitle: UILabel = {
         let label = UILabel(frame: .zero)
-        label.text = "TruckYums"
+        label.text = "TruckYums!"
         label.font = UIFont(name: "Teko-Medium", size: 24)
         label.textColor = .white
         
